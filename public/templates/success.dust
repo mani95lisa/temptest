@@ -1,0 +1,23 @@
+{>"layouts/weixin_master" /}
+<link rel="stylesheet" href="css/success.css"/>
+<script type="text/javascript" src="js/success.js"></script>
+
+<script type="text/javascript">
+</script>
+
+{<body}
+    <img class="bg" src="imgs/success_bg.jpg">
+    <img id="share" src="imgs/share.png"/>
+
+    <div id="numbers">
+        {#nums}
+            <span class="num">{value} ({status})</span>
+            <br>
+        {/nums}
+    </div>
+
+    <div id="share_pop">
+        <img class="share_content" src="imgs/share_content.png">
+        <img id="share_close" src="imgs/share_close.png">
+    </div>
+{/body}

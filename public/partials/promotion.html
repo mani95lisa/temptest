@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/components/ng-tags-input/ng-tags-input.css"/>
+<link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/plugins/timepicker/bootstrap-timepicker.min.css">
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">产品促销</h3>
+    </div>
+    <div class="box-body table-responsive">
+
+        <div class="form-group">
+            <label>活动时段设置，24小时制，比如 08:00 14:00，时段时间不可重叠，清空起止时间则可删除时段 <button class="btn btn-default btn-sm" ng-click="addTime()">新增时段</button></label>
+            <div class="input-group" style="float: left" ng-repeat="time in PMTimes.list">
+                <input type="text" placeholder="开始时间" class="form-control timepicker" ng-model="time.start">
+                <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                </div>
+                <input type="text" placeholder="截止时间" class="form-control timepicker" ng-model="time.end">
+                <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label style="margin-top: 15px">促销产品设置 </label>
+            <tags-input ng-model="PMProductNames.list"
+                        ng-disabled="handling"
+                        displayProperty="name"
+                        placeholder="添加促销产品"
+                        min-length="1"
+                        add-from-autocomplete-only="true"
+                        on-tag-removed="productRemove($tag)"
+                        on-tag-added="productAdded($tag)"
+                    >
+                <auto-complete source="loadTags($query)"
+                               displayProperty="name"
+                               min-length="1"
+                        ></auto-complete>
+            </tags-input>
+            <div class="input-group " style="width: 100%;padding-top: 10px" ng-repeat="product in PMProducts.list">
+                <input type="text" tooltip="产品名称" class="form-control" style="width: 50%" ng-model="product.name">
+                <input type="text" tooltip="价格标签" class="form-control" style="width: 50%" ng-model="product.price_info">
+            </div>
+        </div>
+
+        <button class="btn btn-primary" style="margin-top: 50px" ng-click="save()" ng-disabled="handling">保存</button>
+
+    </div>
+</div>

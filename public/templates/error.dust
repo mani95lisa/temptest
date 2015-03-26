@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script>
+            if(alert('{error}')){
+                window.close();
+            }
+        </script>
+
+    </head>
+</html>

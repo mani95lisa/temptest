@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{+title /}</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/components/humane/themes/flatty.css" />
+    <link rel="stylesheet" href="/css/AdminLTE.css" />
+
+    {+script /}
+
+</head>
+<body class="skin-blue wysihtml5-supported  pace-done">
+    {+body /}
+    <div id="err" style="visibility:hidden">{err}</div>
+</body>
+</html>

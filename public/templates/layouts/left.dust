@@ -1,0 +1,15 @@
+<aside class="left-side sidebar-offcanvas" style="min-height: 1772px;">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <ul class="sidebar-menu" ng-controller="Navigator">
+            {#nav}
+                <li ng-class="getStatus('{path}')">
+                    <a href="#{path}">
+                        <i class="{icon}"></i> <span>{name}</span>
+                    </a>
+                </li>
+            {/nav}
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="/components/angular-ui-grid/ui-grid-stable.css"/>
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">专辑详情</h3>
+        <button class="btn btn-default btn-flat" ng-click="back()">返回</button>
+        <button class="btn btn-primary btn-flat" ng-click="save()">保存</button>
+    </div>
+    <div class="box-body table-responsive">
+        <audio id="player" controls autoplay></audio>
+        <div>
+            {{ info }}
+        </div>
+        <div id="grid1" ui-grid="gridOptions2" external-scopes="externalScopes" style="height:500px"></div>
+    </div>
+</div>

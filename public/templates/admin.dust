@@ -1,0 +1,13 @@
+{>"layouts/master" /}
+
+<link rel="stylesheet" href="/components/fontawesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/admin.css" />
+
+{<body}
+
+    {>"layouts/header" /}
+    {>"layouts/left" /}
+    {>"layouts/right" /}
+
+    <script data-main="/js/admin" src="/components/requirejs/require.js"></script>
+{/body}

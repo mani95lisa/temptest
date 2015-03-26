@@ -1,0 +1,66 @@
+#section0,#section1,#section2,#section3,#section4 {
+  background-size: cover;
+}
+#section0 {
+  background-image: url(../imgs/baymax.jpg);
+}
+#section2 {
+  background-image: url(../imgs/baymax.jpg);
+}
+#section3 {
+  background-image: url(../imgs/baymax.jpg);
+}
+#section4 {
+  background-image: url(../imgs/baymax.jpg);
+}
+.arrow {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -10px;
+}
+.active {
+  .arrow {
+    -webkit-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
+    -moz-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
+  }
+}
+
+@-webkit-keyframes fadeOutUp {
+  0% {
+    opacity:0;
+    -webkit-transform:translateY(0)
+  }
+  30% {
+    opacity:.6;
+    -webkit-transform:translateY(-4px)
+  }
+  40% {
+    opacity:1;
+    -webkit-transform:translateY(-4px)
+  }
+  80% {
+    opacity:.8;
+    -webkit-transform:translateY(-4px)
+  }
+  90% {
+    opacity:.5;
+    -webkit-transform:translateY(-10px)
+  }
+  95% {
+    opacity:0;
+    -webkit-transform:translateY(-12px)
+  }
+  100% {
+    opacity:0;
+    -webkit-transform:translateY(-18px)
+  }
+}
+
+.goto_lottery {
+  width: 80%;
+  left: 10%;
+  position: absolute;
+  bottom: 30px;
+}
+

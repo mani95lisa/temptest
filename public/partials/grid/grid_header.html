@@ -1,0 +1,21 @@
+<div class="row" style="margin-bottom:10px">
+
+    <div class="col-md-4">
+        <form class="input-group" ng-submit="search()">
+            <input type="text" class="form-control" ng-model="$parent.keywords"
+                   placeholder="请输入关键词进行检索">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="search()">搜索</button>
+                  </span>
+        </form>
+    </div>
+
+    <div class="btn-group" ng-if="filters">
+        <label ng-repeat="filter in filters" class="btn btn-primary" ng-model="$parent.filter.value" btn-radio="'{{ filter }}'">{{ filter }}</label>
+    </div>
+
+    <div ng-if="functions">
+        <label ng-repeat="function in functions" ng-click="run(function)" class="btn btn-primary">{{ function }}</label>
+    </div>
+
+</div>
