@@ -1,0 +1,1 @@
+(function(dust){dust.register("layouts\/right",body_0);function body_0(chk,ctx){return chk.w("<aside class=\"right-side\"><!-- Content Header (Page header) --><!-- Main content --><section class=\"content\"><div ng-view></div></section><!-- /.content --></aside>");}body_0.__dustBody=!0;return body_0;})(dust);

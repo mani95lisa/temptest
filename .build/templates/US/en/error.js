@@ -1,0 +1,1 @@
+(function(dust){dust.register("error",body_0);function body_0(chk,ctx){return chk.w("<!DOCTYPE html><html><head><script>if(alert('").f(ctx.get(["error"], false),ctx,"h").w("')){window.close();}</script></head></html>");}body_0.__dustBody=!0;return body_0;})(dust);

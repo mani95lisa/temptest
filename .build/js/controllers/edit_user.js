@@ -1,0 +1,1 @@
+(function(){define(["console","humane","moment"],function(e,t,n){return function(t,n,r,i){return e.group("edit_user"),e.log(r),t.data=angular.copy(r),t.title="编辑用户 "+r.nickname,t.$apply(),t.ok=function(){return r=t.data,i.close(r)},t.cancel=function(){return i.dismiss("cancel")},e.groupEnd()}})}).call(this);

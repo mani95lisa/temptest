@@ -1,4 +1,3 @@
-/* line 1, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 #section0,
 #section1,
 #section2,
@@ -6,72 +5,58 @@
 #section4 {
   background-size: cover;
 }
-/* line 4, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 #section0 {
   background-image: url(../imgs/baymax.jpg);
 }
-/* line 7, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 #section2 {
   background-image: url(../imgs/baymax.jpg);
 }
-/* line 10, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 #section3 {
   background-image: url(../imgs/baymax.jpg);
 }
-/* line 13, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 #section4 {
   background-image: url(../imgs/baymax.jpg);
 }
-/* line 16, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 .arrow {
   position: absolute;
   bottom: 10px;
   left: 50%;
   margin-left: -10px;
 }
-/* line 23, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 .active .arrow {
   -webkit-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
   -moz-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
 }
 @-webkit-keyframes fadeOutUp {
-  /* line 30, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
   0% {
     opacity: 0;
     -webkit-transform: translateY(0);
   }
-  /* line 34, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
   30% {
     opacity: .6;
     -webkit-transform: translateY(-4px);
   }
-  /* line 38, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
   40% {
     opacity: 1;
     -webkit-transform: translateY(-4px);
   }
-  /* line 42, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
   80% {
     opacity: .8;
     -webkit-transform: translateY(-4px);
   }
-  /* line 46, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
   90% {
     opacity: .5;
     -webkit-transform: translateY(-10px);
   }
-  /* line 50, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
   95% {
     opacity: 0;
     -webkit-transform: translateY(-12px);
   }
-  /* line 54, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
   100% {
     opacity: 0;
     -webkit-transform: translateY(-18px);
   }
 }
-/* line 60, /Users/mani/outsourcing/rsct/baymax/baymax/css/pages */
 .goto_lottery {
   width: 80%;
   left: 10%;

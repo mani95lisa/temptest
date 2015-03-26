@@ -180,7 +180,6 @@ module.exports = (router)->
 
               res.render 'index', ordered:JSON.stringify(ordered),config:config,url: home_url, list:list, categories:cas, userinfo:JSON.stringify(user)
 
-            Product.find enabled:true, ep.done('products')
             Dict.findOne key:'PMTimes', ep.done('pmTimes')
             Dict.findOne key:'PMProducts', ep.done('pmProducts')
 
@@ -321,6 +320,9 @@ module.exports = (router)->
 
   router.get '/sign_up', (req, res)->
     res.render 'sign_up'
+
+  router.post '/do_sign_up', (req, res)->
+    res.redirect '/draw_lottery'
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [

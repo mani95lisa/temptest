@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="http://ui-grid.info/release/ui-grid-unstable.js"></script>
+    <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid-unstable.css" type="text/css">
+    <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+<body>
+
+<div ng-controller="MainCtrl">
+    <div id="grid1" ui-grid="myData" class="grid"></div>
+</div>
+
+
+<script>
+    var app = angular.module('app', ['ui.grid']);
+
+    app.controller('MainCtrl', ['$scope', function ($scope) {
+        $scope.myData = {data:[
+            {
+                "firstName": "Cox",
+                "lastName": "Carney",
+                "company": "Enormo",
+                "employed": true
+            },
+            {
+                "firstName": "Lorraine",
+                "lastName": "Wise",
+                "company": "Comveyer",
+                "employed": false
+            },
+            {
+                "firstName": "Nancy",
+                "lastName": "Waters",
+                "company": "Fuelton",
+                "employed": false
+            }
+        ]};
+    }]);
+
+</script>
+<script data-main="./test" src="/components/requirejs/require.js"></script>
+
+</body>
+</html>

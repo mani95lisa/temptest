@@ -1,0 +1,53 @@
+body {
+  margin: 0px;
+  background-color: #B31B19;
+}
+@media screen and (max-width: 320px) {
+  .field input {
+    font-size: 22px;
+  }
+  .verify_text {
+    font-size: 14px;
+  }
+}
+.bg {
+  width: 100%;
+}
+.field {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  float: left;
+}
+.field input {
+  background: transparent;
+  border: 0;
+  color: #ffffff;
+}
+.verify_text {
+  color: #ffffff;
+}
+::-webkit-input-placeholder {
+  color: #5F1400;
+}
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #5F1400;
+}
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #5F1400;
+}
+:-ms-input-placeholder {
+  color: #5F1400;
+}
+.submit {
+  background: url(../imgs/sign_up_and_lottery.png) no-repeat;
+  border: none;
+  background-size: cover;
+}
+.verify_btn {
+  background: #F1B424;
+  border-radius: 6px;
+  text-align: center;
+}

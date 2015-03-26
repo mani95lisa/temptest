@@ -1,0 +1,27 @@
+{>"layouts/weixin_master" /}
+<link rel="stylesheet" href="css/sign_up.css"/>
+<script type="text/javascript" src="js/sign_up.js"></script>
+
+<script type="text/javascript">
+</script>
+
+{<body}
+    <img class="bg" src="imgs/sign_up_bg.jpg">
+    <form id="form" action="/do_sign_up" method="post">
+        <div class="field">
+            <input type="text" placeholder="请输入手机号">
+        </div>
+        <div class="field" id="code_field">
+            <input type="text" placeholder="请输入验证码">
+        </div>
+        <div class="field">
+            <input type="text" placeholder="请输入密码">
+        </div>
+        <button type="submit" class="submit"></button>
+        <input type="hidden" name="_csrf" value="{_csrf}"/>
+    </form>
+
+    <div class="verify_btn">
+        <span class="verify_text">获取验证码</span>
+    </div>
+{/body}

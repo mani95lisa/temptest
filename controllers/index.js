@@ -281,9 +281,6 @@
                   userinfo: JSON.stringify(user)
                 });
               });
-              Product.find({
-                enabled: true
-              }, ep.done('products'));
               Dict.findOne({
                 key: 'PMTimes'
               }, ep.done('pmTimes'));
@@ -494,6 +491,9 @@
     });
     router.get('/sign_up', function(req, res) {
       return res.render('sign_up');
+    });
+    router.post('/do_sign_up', function(req, res) {
+      return res.redirect('/draw_lottery');
     });
     return router.get('/admin', auth.isAuthenticated(), function(req, res) {
       var nav;
