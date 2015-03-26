@@ -319,6 +319,9 @@ module.exports = (router)->
   router.get '/draw_lottery', (req, res)->
     res.render 'success', nums:[value:1234567,status:'未开奖']
 
+  router.get '/sign_up', (req, res)->
+    res.render 'sign_up'
+
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [
       {path:'dashboard',name:'仪表盘',icon:'fa fa-dashboard'}

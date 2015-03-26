@@ -492,6 +492,9 @@
         ]
       });
     });
+    router.get('/sign_up', function(req, res) {
+      return res.render('sign_up');
+    });
     return router.get('/admin', auth.isAuthenticated(), function(req, res) {
       var nav;
       nav = [
