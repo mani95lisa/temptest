@@ -221,7 +221,7 @@
             logger.error(err);
             return callback(err);
           } else {
-            return callback(null, number);
+            return callback(null, num);
           }
         });
       }
@@ -269,7 +269,7 @@
                     } else if (result) {
                       result.joined += 10000;
                       share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + params.c + ';;p___' + params.p + ';;id___' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
-                      countdown = moment(result.end).valueOf - moment().valueOf;
+                      countdown = moment(result.end).valueOf() - moment().valueOf();
                       draw_url = '/draw_lottery';
                       return res.render('lottery', {
                         uid: user._id,
