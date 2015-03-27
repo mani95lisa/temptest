@@ -26,19 +26,11 @@
       };
       $scope.$watch('channel', function() {
         if (data._id) {
-          return $scope.link_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c||' + $scope.channel + ';;p||lottery;;id||' + data._id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
+          return $scope.link_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c_|_' + $scope.channel + ';;p_|_lottery;;id_|_' + data._id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
         }
       });
       $scope.channel = 'weixin';
       $scope.$apply();
-      $scope.copyChanelUrl = function() {
-        if (!data._id) {
-          return humane.log('该功能需要活动保存一次后才可以使用');
-        } else {
-          $scope.link_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c||' + $scope.channel + ';;p||lottery;;id||' + data._id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
-          return humane.log('渠道链接已经复制好，直接粘贴使用即可');
-        }
-      };
       $scope.cancel = function() {
         return $modalInstance.dismiss('cancel');
       };
