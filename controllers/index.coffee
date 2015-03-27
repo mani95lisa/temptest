@@ -184,7 +184,8 @@ module.exports = (router)->
                   if err
                     logger.error err
                   else if result
-                    result.joined += 10000
+                    s = moment().format('YYMMDD')
+                    result.joined += parseInt(s)
                     share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
                     countdown = moment(result.end).valueOf() - moment().valueOf()
                     console.log 'CD:'+countdown
@@ -335,7 +336,7 @@ module.exports = (router)->
     res.render 'success'
 
   router.get '/lottery', (req, res)->
-    res.render 'lottery',joined:0, countdown:94170370
+    res.render 'lottery',joined:moment().format('YYMMDD'), countdown:94170370
 
   router.get '/draw_lottery', (req, res)->
     session = req.session

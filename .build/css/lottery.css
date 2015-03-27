@@ -1,58 +1,73 @@
+/* line 1, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
 body {
   margin: 0px;
   background-color: #FFF1CF;
 }
+/* line 6, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
 .joined_value {
   color: #FFE097;
 }
+/* line 10, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
 .joined_label {
   color: #FF942B;
 }
 @media screen and (max-width: 1400px) {
+  /* line 15, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_value {
     font-size: 66px;
   }
+  /* line 18, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_label {
     font-size: 34px;
   }
 }
 @media screen and (max-width: 640px) {
+  /* line 24, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_value {
     font-size: 26px;
   }
+  /* line 27, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_label {
     font-size: 14px;
   }
 }
 @media screen and (max-width: 400px) {
+  /* line 32, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_value {
     font-size: 22px;
   }
+  /* line 35, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_label {
     font-size: 14px;
   }
 }
 @media screen and (max-width: 320px) {
+  /* line 40, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_value {
     font-size: 22px;
   }
+  /* line 43, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
   .joined_label {
     font-size: 14px;
   }
 }
+/* line 48, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
 .bg {
   width: 100%;
 }
+/* line 52, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
 #button_mask {
   background: url(../imgs/lottery_normal.png) no-repeat;
   border: none;
   background-size: contain;
 }
+/* line 58, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
 #button_mask:active {
   background: url(../imgs/lottery_down.png) no-repeat;
   border: none;
   background-size: contain;
 }
+/* line 64, /Users/mani/outsourcing/rsct/baymax/baymax/css/lottery */
 button:focus {
   outline: none;
 }
