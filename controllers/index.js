@@ -513,7 +513,7 @@
               arr = [];
               result.forEach(function(r) {
                 var status;
-                status = r.status ? '已中奖' : '未中奖';
+                status = r.status ? '已中奖' : '未开奖';
                 return arr.push({
                   value: r.number,
                   status: status
@@ -581,7 +581,7 @@
               arr = [];
               result.forEach(function(r) {
                 var status;
-                status = r.status ? '已中奖' : '未中奖';
+                status = r.status ? '已中奖' : '未开奖';
                 return arr.push({
                   value: r.number,
                   status: status

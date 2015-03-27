@@ -349,7 +349,7 @@ module.exports = (router)->
           if result && result.length
             arr = []
             result.forEach (r)->
-              status = if r.status then '已中奖' else '未中奖'
+              status = if r.status then '已中奖' else '未开奖'
               arr.push value:r.number,status:status
             shareInfo.nums = arr
             shareInfo.uid = user._id
@@ -386,7 +386,7 @@ module.exports = (router)->
           if result.length == 3
             arr = []
             result.forEach (r)->
-              status = if r.status then '已中奖' else '未中奖'
+              status = if r.status then '已中奖' else '未开奖'
               arr.push value:r.number,status:status
             shareInfo.nums = arr
             shareInfo.uid = user._id
