@@ -109,8 +109,7 @@ menu =
 
 getConfig = (req, callback)->
   url = host + req.url
-  console.log('url:' + url)
-  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -322,7 +321,7 @@ module.exports = (router)->
     res.render 'pages', url:home_url
 
   router.get '/lottery', (req, res)->
-    res.render 'lottery',joined:0, countdown:1000000
+    res.render 'lottery',joined:0, countdown:94170370
 
   router.get '/draw_lottery', (req, res)->
     session = req.session

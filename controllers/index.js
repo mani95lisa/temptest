@@ -154,9 +154,8 @@
   getConfig = function(req, callback) {
     var url;
     url = host + req.url;
-    console.log('url:' + url);
     return api.getJsConfig({
-      debug: false,
+      debug: true,
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
       url: url
     }, function(err, result) {
@@ -480,7 +479,7 @@
     router.get('/lottery', function(req, res) {
       return res.render('lottery', {
         joined: 0,
-        countdown: 1000000
+        countdown: 94170370
       });
     });
     router.get('/draw_lottery', function(req, res) {
