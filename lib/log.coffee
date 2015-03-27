@@ -1,3 +1,5 @@
+'use strict'
+
 models = require '../models'
 Log = require('../models').Log
 logger = require('log4js').getDefaultLogger()

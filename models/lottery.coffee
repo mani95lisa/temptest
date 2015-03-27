@@ -1,3 +1,5 @@
+'use strict'
+
 Mongoose = require 'mongoose'
 Schema = Mongoose.Schema
 
