@@ -20,10 +20,10 @@
         });
         {/config}
 
-    var shared_success = function(){
+    var shared_success = function () {
         _hmt.push(['_trackEvent', '大白活动1', '中奖页分享', '{uid}']);
         window.location.href = '/shared_lottery';
-    }
+    };
 
     wx.ready(function () {
 

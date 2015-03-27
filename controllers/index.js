@@ -202,29 +202,29 @@
     num = utils.getRandomInt(1000000, 9999999);
     return LotteryRecord.findOne({
       lottery: lottery_id,
-      number: num(function(err, result) {
-        var lr;
-        if (err) {
-          logger.error(err);
-          return callback(err);
-        } else if (result) {
-          return getRewardNumber(lottery_id, user, callback);
-        } else {
-          lr = new LotteryRecord({
-            lottery: lottery_id,
-            user: user,
-            number: num
-          });
-          return lr.save(function(err, result) {
-            if (err) {
-              logger.error(err);
-              return callback(err);
-            } else {
-              return callback(null, number);
-            }
-          });
-        }
-      })
+      number: num
+    }, function(err, result) {
+      var lr;
+      if (err) {
+        logger.error(err);
+        return callback(err);
+      } else if (result) {
+        return getRewardNumber(lottery_id, user, callback);
+      } else {
+        lr = new LotteryRecord({
+          lottery: lottery_id,
+          user: user,
+          number: num
+        });
+        return lr.save(function(err, result) {
+          if (err) {
+            logger.error(err);
+            return callback(err);
+          } else {
+            return callback(null, number);
+          }
+        });
+      }
     });
   };
 
@@ -478,7 +478,8 @@
     });
     router.get('/lottery', function(req, res) {
       return res.render('lottery', {
-        joined: 0
+        joined: 0,
+        countdown: 1000000
       });
     });
     router.get('/draw_lottery', function(req, res) {

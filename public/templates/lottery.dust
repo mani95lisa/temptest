@@ -5,7 +5,7 @@
 <script type="text/javascript">
 
     var appId = '';
-    var countdown = {countdown};
+    var count_down_time = parseInt('{countdown}');
 
     {#config}
         var arr = "{config.jsApiList}";
@@ -23,7 +23,7 @@
 
     var shared_success = function(){
         _hmt.push(['_trackEvent', '大白活动1', '详情页分享', '{uid}']);
-    }
+    };
 
     wx.ready(function () {
 

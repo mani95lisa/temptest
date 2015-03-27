@@ -138,7 +138,7 @@ getParams = (state)->
 
 getRewardNumber = (lottery_id, user, callback)->
   num = utils.getRandomInt(1000000,9999999)
-  LotteryRecord.findOne lottery:lottery_id,number:num (err, result)->
+  LotteryRecord.findOne lottery:lottery_id,number:num, (err, result)->
     if err
       logger.error err
       callback err
@@ -321,7 +321,7 @@ module.exports = (router)->
     res.render 'pages', url:home_url
 
   router.get '/lottery', (req, res)->
-    res.render 'lottery',joined:0
+    res.render 'lottery',joined:0, countdown:1000000
 
   router.get '/draw_lottery', (req, res)->
     session = req.session

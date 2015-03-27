@@ -46,7 +46,6 @@ Base =
         setNumValue i1,value.slice(0,1)
         setNumValue i2,value.slice(1,2)
 
-    count_down_time = count_down
     interval = setInterval ->
       count_down_time-=1000
       if count_down_time > 0

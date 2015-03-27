@@ -4,7 +4,7 @@
 
   Base = {
     init: function() {
-      var count_down_time, gap1, gap2, i, interval, left, num_h, num_w, setNumValue, setTwoValue, top;
+      var gap1, gap2, i, interval, left, num_h, num_w, setNumValue, setTwoValue, top;
       this.windowWidth = $(window).width();
       this.windowHeight = $(window).height();
       this.scale = this.windowWidth / 640;
@@ -64,7 +64,6 @@
           return setNumValue(i2, value.slice(1, 2));
         }
       };
-      count_down_time = count_down;
       interval = setInterval(function() {
         var day, hours, minutes, seconds;
         count_down_time -= 1000;
