@@ -82,10 +82,10 @@ save_js_sdk_ticket = (type, ticket, cb)->
 api.registerTicketHandle get_js_sdk_ticket, save_js_sdk_ticket
 
 host = 'http://rsct.swift.tf'
-home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c_|_weixin;;p_|_lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
 getUrl = (channel, page)->
-  return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c_|_'+channel+';;p_|_'+page+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+  return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+channel+';;p___'+page+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
 menu =
   'button':[
@@ -130,7 +130,7 @@ getParams = (state)->
   params = {}
   arr = state.split(';;')
   arr.forEach (item)->
-    temp = item.split('_|_')
+    temp = item.split('___')
     if temp.length == 2
       params[temp[0]] = temp[1]
   return params
@@ -163,7 +163,7 @@ module.exports = (router)->
                     logger.error err
                   else if result
                     result.joined += 10000
-                    share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c_|_'+params.c+';;p_|_'+params.p+';;id_|_'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+                    share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
                     res.render 'lottery',joined:result.joined,config:config,desc:result.description,url:share_url,img:result.thumb
             else
               res.json status:false

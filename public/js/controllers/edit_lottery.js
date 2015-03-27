@@ -26,7 +26,7 @@
       };
       $scope.$watch('channel', function() {
         if (data._id) {
-          return $scope.link_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c_|_' + $scope.channel + ';;p_|_lottery;;id_|_' + data._id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
+          return $scope.link_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___' + $scope.channel + ';;p___lottery;;id___' + data._id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
         }
       });
       $scope.channel = 'weixin';

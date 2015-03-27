@@ -125,10 +125,10 @@
 
   host = 'http://rsct.swift.tf';
 
-  home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c_|_weixin;;p_|_lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
+  home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
 
   getUrl = function(channel, page) {
-    return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c_|_' + channel + ';;p_|_' + page + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
+    return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + channel + ';;p___' + page + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
   };
 
   menu = {
@@ -187,7 +187,7 @@
     arr = state.split(';;');
     arr.forEach(function(item) {
       var temp;
-      temp = item.split('_|_');
+      temp = item.split('___');
       if (temp.length === 2) {
         return params[temp[0]] = temp[1];
       }
@@ -234,7 +234,7 @@
                       return logger.error(err);
                     } else if (result) {
                       result.joined += 10000;
-                      share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c_|_' + params.c + ';;p_|_' + params.p + ';;id_|_' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
+                      share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + params.c + ';;p___' + params.p + ';;id___' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
                       return res.render('lottery', {
                         joined: result.joined,
                         config: config,
