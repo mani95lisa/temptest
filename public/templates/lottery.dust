@@ -5,6 +5,7 @@
 <script type="text/javascript">
 
     var appId = '';
+    var countdown = {countdown};
 
     {#config}
         var arr = "{config.jsApiList}";
@@ -20,6 +21,10 @@
         });
     {/config}
 
+    var shared_success = function(){
+        _hmt.push(['_trackEvent', '大白活动1', '详情页分享', '{uid}']);
+    }
+
     wx.ready(function () {
 
         var wxData = {
@@ -27,7 +32,8 @@
             "title" : '{name}',
             "desc" : '{desc}',
             "imgUrl" : '{img}',
-            "link" : $('#url').text()
+            "link" : $('#url').text(),
+            success:shared_success
         };
 
         wx.onMenuShareAppMessage(wxData);
@@ -37,7 +43,8 @@
             "appId":appId,
             "title" : '{desc}',
             "imgUrl" : '{img}',
-            "link" : $('#url').text()
+            "link" : $('#url').text(),
+            success:shared_success
         });
 
     });
@@ -45,7 +52,7 @@
 
 {<body}
     <img class="bg" src="imgs/lottery_bg.jpg">
-    <a href="/draw_lottery" onclick="_hmt.push(['_trackEvent', '大白活动1', '抽奖跳转', '直接抽奖']);">
+    <a href="{draw_url}" onclick="_hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);">
         <button id="button_mask"></button>
     </a>
     <div id="joined"><span class="joined_value">{joined}</span><span class="joined_label">人已参与</span></div>

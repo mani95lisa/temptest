@@ -15,6 +15,7 @@ EventProxy = require 'eventproxy'
 logger = require('log4js').getDefaultLogger()
 request = require 'request'
 moment = require 'moment'
+utils = require '../lib/utils'
 
 getToken = (cb)->
   Token.findOne appid:appid, (err, result)->
@@ -109,7 +110,7 @@ menu =
 getConfig = (req, callback)->
   url = host + req.url
   console.log('url:' + url)
-  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -135,6 +136,27 @@ getParams = (state)->
       params[temp[0]] = temp[1]
   return params
 
+getRewardNumber = (lottery_id, user, callback)->
+  num = utils.getRandomInt(1000000,9999999)
+  LotteryRecord.findOne lottery:lottery_id,number:num (err, result)->
+    if err
+      logger.error err
+      callback err
+    else if result
+      getRewardNumber lottery_id, user, callback
+    else
+      lr = new LotteryRecord(
+        lottery:lottery_id
+        user:user
+        number:num
+      )
+      lr.save (err, result)->
+        if err
+          logger.error err
+          callback err
+        else
+          callback null, number
+
 module.exports = (router)->
 
   init = (req, res, result)->
@@ -151,7 +173,8 @@ module.exports = (router)->
           getConfig req, (err, config)->
             if(err)
               logger.error 'ConfigError:'+err
-            req.session.user = user._id
+            req.session.user = user
+            req.session.state = state
             page = params.p
             if page == 'lottery'
               id = params.id
@@ -164,7 +187,9 @@ module.exports = (router)->
                   else if result
                     result.joined += 10000
                     share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
-                    res.render 'lottery',joined:result.joined,config:config,desc:result.description,url:share_url,img:result.thumb
+                    countdown = moment(result.end).valueOf - moment().valueOf
+                    draw_url = '/draw_lottery'
+                    res.render 'lottery',uid:user._id,draw_url:draw_url,joined:result.joined,config:config,desc:result.description,url:share_url,img:result.thumb,countdown:countdown
             else
               res.json status:false
 
@@ -299,10 +324,60 @@ module.exports = (router)->
     res.render 'lottery',joined:0
 
   router.get '/draw_lottery', (req, res)->
-    arr = [value:1234567,status:'未开奖']
-    arr.push value:1234567,status:'未开奖'
-    arr.push value:1234567,status:'未开奖'
-    res.render 'success', nums:arr
+    session = req.session
+    user = session.user
+    state = session.state
+    if !user || !state
+      res.json status:false
+    else if !user.registered
+      params = getParams(state)
+      LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
+        if result && result.length
+          arr = []
+          result.forEach (r)->
+            status = if r.status then '已中奖' else '未中奖'
+            arr.push value:r.number,status:status
+          r.render 'success', nums:arr,uid:user._id
+        else
+          getRewardNumber params.id, user._id, (err, result)->
+            if err
+              res.josn status:false
+            else
+              arr = [value:result,status:'未开奖']
+              r.render 'success', nums:arr,uid:user._id
+    else
+      res.render 'sign_up'
+
+  router.get '/shared_lottery', (req, res)->
+    session = req.session
+    user = session.user
+    state = session.state
+    if !user || !state
+      res.json status:false
+    else if !user.registered
+      params = getParams(state)
+      LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
+        if result.length == 3
+          arr = []
+          result.forEach (r)->
+            status = if r.status then '已中奖' else '未中奖'
+            arr.push value:r.number,status:status
+          r.render 'success', nums:arr,uid:user._id
+        else if result.length == 1
+          ep = new EventProxy()
+          ep.all 'n1', 'n2', (n1, n2)->
+            arr = [value:result[0].number,status:'未开奖']
+            arr.push value:n1, status:'未开奖'
+            arr.push value:n2, status:'未开奖'
+            r.render 'success', nums:arr,uid:user._id
+
+          ep.fail (err)->
+            logger.error err
+            res.json status:false
+
+          getRewardNumber params.id, user._id, ep.done 'n1'
+          getRewardNumber params.id, user._id, ep.done 'n2'
+
 
   router.get '/sign_up', (req, res)->
     res.render 'sign_up'

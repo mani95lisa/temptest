@@ -64,7 +64,7 @@
           return setNumValue(i2, value.slice(1, 2));
         }
       };
-      count_down_time = 24 * 60 * 60 * 1000;
+      count_down_time = count_down;
       interval = setInterval(function() {
         var day, hours, minutes, seconds;
         count_down_time -= 1000;

@@ -22,6 +22,7 @@ UserSchema = new Schema
   score:Number #积分
   order_times:type:Number,default:0
   login_times:type:Number,default:0
+  registered:type:Boolean,default:false
   last_login:Date
   created_at:Date
 

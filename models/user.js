@@ -40,6 +40,10 @@
       type: Number,
       "default": 0
     },
+    registered: {
+      type: Boolean,
+      "default": false
+    },
     last_login: Date,
     created_at: Date
   });
