@@ -23,11 +23,9 @@
 
   module.exports = function(router) {
     router.post('/add', auth.isAuthenticated(), function(req, res) {
-      var arr, data, lottery;
+      var data, lottery;
       data = req.body;
-      if (data.price) {
-        arr = data.price.split(' ');
-      }
+      logger.trace(JSON.stringify(data));
       lottery = new Lottery(data);
       return lottery.save(function(err, result) {
         if (err) {
@@ -45,6 +43,7 @@
     router.post('/update', auth.isAuthenticated(), function(req, res) {
       var data;
       data = req.body;
+      logger.trace(JSON.stringify(data));
       return Lottery.findById(data._id, function(err, result) {
         var diff;
         if (err) {

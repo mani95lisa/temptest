@@ -14,8 +14,7 @@ module.exports = (router)->
 
   router.post '/add', auth.isAuthenticated(), (req, res)->
     data = req.body
-    if data.price
-      arr = data.price.split(' ')
+    logger.trace JSON.stringify(data)
     lottery = new Lottery(data)
     lottery.save (err, result)->
       if err
@@ -26,6 +25,7 @@ module.exports = (router)->
 
   router.post '/update', auth.isAuthenticated(), (req, res)->
     data = req.body
+    logger.trace JSON.stringify(data)
     Lottery.findById data._id, (err, result) ->
       if err
         logger.error 'PFind:'+err

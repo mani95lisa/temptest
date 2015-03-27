@@ -1,6 +1,6 @@
 <header class="header">
 <a href="/admin" class="logo">
-    COFFEE
+    RSCT
 </a>
 <!-- Header Navbar: style can be found in header.less -->
 {!<nav class="navbar navbar-static-top" role="navigation">!}

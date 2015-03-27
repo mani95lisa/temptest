@@ -67,16 +67,16 @@ module.exports = (app)->
   config =
     token:'wechat'
     appid:appid
-    encodingAESKey:'CputhJEkwmqdsGbVer6bqikT79mGvfA6vvWEfZt2Dgn'
+    encodingAESKey:'YN8K5TKe0aY2fBmYGKHPpDNxu4TRnD7hSyt8wVwb3dw'
 
   reply1 = (res)->
-    s = '欢迎关注爱咖啡公众号，点击下方订餐可享特殊优惠哦^_^'
+    s = '欢迎关注润石创投服务号，我们将竭诚为您服务！\n\n<a href="http://www.rsct.com">免费抽奖</a>\n客服电话：400-690-8862\n官方网址：<a href="http://www.rsct.com">www.rsct.com</a>'
     res.reply s
 
   app.use('/wechat', wechat(config, (req, res, next)->
       message = req.weixin
 
-      console.log('WXM:'+JSON.stringify(message))
+      logger.trace('WXM:'+JSON.stringify(message))
 
       if message.Event == 'subscribe'
         initUser message.FromUserName, (err, result)->

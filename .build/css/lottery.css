@@ -8,6 +8,14 @@ body {
 .joined_label {
   color: #FF942B;
 }
+@media screen and (max-width: 1400px) {
+  .joined_value {
+    font-size: 66px;
+  }
+  .joined_label {
+    font-size: 34px;
+  }
+}
 @media screen and (max-width: 640px) {
   .joined_value {
     font-size: 26px;
@@ -44,4 +52,7 @@ body {
   background: url(../imgs/lottery_down.png) no-repeat;
   border: none;
   background-size: contain;
+}
+button:focus {
+  outline: none;
 }

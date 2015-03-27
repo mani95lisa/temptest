@@ -9,6 +9,8 @@ models = require '../models/index'
 User = models.User
 Token = models.Token
 Dict = models.Dict
+Lottery = models.Lottery
+LotteryRecord = models.LotteryRecord
 EventProxy = require 'eventproxy'
 logger = require('log4js').getDefaultLogger()
 request = require 'request'
@@ -79,23 +81,35 @@ save_js_sdk_ticket = (type, ticket, cb)->
 
 api.registerTicketHandle get_js_sdk_ticket, save_js_sdk_ticket
 
-home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx147e9f502d858faa&redirect_uri=http://lovecoffee.duapp.com/init_auto&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+host = 'http://rsct.swift.tf'
+home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c||weixin;;p||lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+
+getUrl = (channel, page)->
+  return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c||'+channel+';;p||'+page+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
 menu =
   'button':[
     {
-      name:'点餐'
+      name:'我的账户'
       type:'view'
-      url:home_url
+      url:'http://www.rsct.com/finance/website/to_login.action'
+    }
+    {
+      name:'帮你赚钱'
+      type:'view'
+      url:'http://www.rsct.com/finance/website/index.action'
+    }
+    {
+      name:'关于润石'
+      type:'view'
+      url:'http://www.rsct.com/finance/website/dima.action'
     }
   ]
-
-host = 'http://lovecoffee.duapp.com'
 
 getConfig = (req, callback)->
   url = host + req.url
   console.log('url:' + url)
-  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -112,11 +126,21 @@ inTime = (times)->
         result = true
     return result
 
+getParams = (state)->
+  params = {}
+  arr = state.split(';;')
+  arr.forEach (item)->
+    temp = item.split('||')
+    if temp.length == 2
+      params[temp[0]] = temp[1]
+  return params
+
 module.exports = (router)->
 
   init = (req, res, result)->
     state = req.query.state
-    console.log 'State:'+state
+    params = getParams(state)
+    console.log 'State:'+state+'Page:'+params.p
     User.findOne openid:result.openid, (err, userResult)->
       if err
         logger.error 'UserFindError:'+err
@@ -128,60 +152,21 @@ module.exports = (router)->
             if(err)
               logger.error 'ConfigError:'+err
             req.session.user = user._id
-            ep = new EventProxy()
-            ep.all 'products', 'pmTimes', 'pmProducts', (products, pmTimes, pmProducts)->
-              categories = []
-              cas = []
-              dic = {}
-              list = []
-              newPrices = {}
-              times = pmTimes.list if pmTimes
-              pmProducts = pmProducts.list if pmProducts
-              pmEnabled = inTime(times)
-              if !user.order_times
-                pmEnabled = false
-              products.forEach (p)->
-                if !dic[p.category]
-                  dic[p.category] = []
-                arr = dic[p.category]
-
-                if pmEnabled && pmProducts && pmProducts.length
-                  pmProducts.every (pm)->
-                    if p.name == pm.name
-                      p.prices = pm.prices
-                      p.discount = true
-                      return false
-                    else
-                      return true
-
-                p.prices.reverse()
-                newPrices[p.id] = p.prices
-                arr.push p
-                index = categories.indexOf(p.category)
-                if index == -1
-                  categories.push p.category
-                  ca = name:p.category,index:categories.indexOf(p.category)
-                  cas.push ca
-                  list.push category:ca,products:dic[p.category]
-              last_ordered = userResult.last_ordered
-              ordered = []
-              dic = {}
-              last_ordered.forEach (o)->
-                arr = newPrices[o.id]
-                arr.every (p)->
-                  if p.label == o.price_label
-                    o.price = p.value
-
-                if !dic[o.id]
-                  dic[o.id] = id:o.id,name:o.name,detail:[type:o.price_label,count:o.sum,price:o.price]
-                  ordered.push dic[o.id]
-                else
-                  dic[o.id].detail.push type:o.price_label,count:o.sum,price:o.price
-
-              res.render 'index', ordered:JSON.stringify(ordered),config:config,url: home_url, list:list, categories:cas, userinfo:JSON.stringify(user)
-
-            Dict.findOne key:'PMTimes', ep.done('pmTimes')
-            Dict.findOne key:'PMProducts', ep.done('pmProducts')
+            page = params.p
+            if page == 'lottery'
+              id = params.id
+              if !id
+                res.json status:false
+              else
+                Lottery.findById id, (err, result)->
+                  if err
+                    logger.error err
+                  else if result
+                    result.joined += 10000
+                    share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c||'+params.c+';;p||'+params.p+';;id||'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+                    res.render 'lottery',joined:result.joined,config:config,desc:result.description,url:share_url,img:result.thumb
+            else
+              res.json status:false
 
         user = ''
         if userResult
@@ -250,7 +235,7 @@ module.exports = (router)->
             request.get 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid+'&lang=zh_CN', (err, result)->
 
               reinit = ->
-                res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri=http://lovecoffee.duapp.com/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
+                res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
 
               if err
                 logger.error 'UserCodeError3:'+err
@@ -273,7 +258,6 @@ module.exports = (router)->
     request.get 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appid+'&secret='+secret+'&code='+data.code+'&grant_type=authorization_code', (err, result)->
       if err
         logger.error 'UserCodeError1:'+err
-        console.log 'UCErr1'+err
         res.jsonp status:false
       else
         result = JSON.parse result.body
@@ -291,7 +275,6 @@ module.exports = (router)->
           else
             request.get 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid+'&lang=zh_CN', (err, result)->
               if err
-                console.log 'UCErr2'+err
                 logger.error 'UserCodeError3:'+err
                 res.jsonp status:false
               else
@@ -310,13 +293,16 @@ module.exports = (router)->
       res.json err:err, result:result
 
   router.get '/pages', (req, res)->
-    res.render 'pages'
+    res.render 'pages', url:home_url
 
   router.get '/lottery', (req, res)->
     res.render 'lottery',joined:0
 
   router.get '/draw_lottery', (req, res)->
-    res.render 'success', nums:[value:1234567,status:'未开奖']
+    arr = [value:1234567,status:'未开奖']
+    arr.push value:1234567,status:'未开奖'
+    arr.push value:1234567,status:'未开奖'
+    res.render 'success', nums:arr
 
   router.get '/sign_up', (req, res)->
     res.render 'sign_up'

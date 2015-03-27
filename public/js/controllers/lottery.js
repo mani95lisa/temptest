@@ -23,7 +23,7 @@
         var modalInstance;
         modalInstance = $modal.open({
           templateUrl: 'modals/lottery.html',
-          controller: 'EditProduct',
+          controller: 'EditLottery',
           backdrop: 'static',
           resolve: {
             data: function() {
@@ -32,6 +32,7 @@
           }
         });
         return modalInstance.result.then(function(data) {
+          data._csrf = csrf;
           if (data._id) {
             return $http.post('/lottery/update', data).success(function(result) {
               if (result.err) {
@@ -45,7 +46,6 @@
               return console.log('dismiss');
             });
           } else {
-            console.log(data);
             return $http.post('/lottery/add', data).success(function(result) {
               if (result.err) {
                 return humane.log(result.err);
@@ -75,7 +75,7 @@
           var modalInstance;
           modalInstance = $modal.open({
             templateUrl: 'modals/lottery.html',
-            controller: 'EditProduct',
+            controller: 'EditLottery',
             backdrop: 'static',
             resolve: {
               data: function() {
@@ -84,6 +84,7 @@
             }
           });
           return modalInstance.result.then(function(data) {
+            data._csrf = csrf;
             return $http.post('/lottery/update', data).success(function(result) {
               if (result.err) {
                 return humane.error(result.err);
@@ -102,6 +103,7 @@
           data = row.entity;
           data.enabled = !data.enabled;
           console.log(data.enabled);
+          data._csrf = csrf;
           return $http.post('/lottery/update', data).success(function(result) {
             if (result.err) {
               return humane.error(result.err);
@@ -132,23 +134,23 @@
         enableSorting: false,
         columnDefs: [
           {
-            name: '产品名称',
+            name: '活动名称',
             field: 'name',
             enableSorting: false
           }, {
-            name: '购买次数',
-            field: 'ordered',
+            name: '开始时间',
+            field: 'begin',
             width: 100,
             enableSorting: false
           }, {
-            name: '分类',
-            field: 'category',
+            name: '截止时间',
+            field: 'end',
             width: 100,
             enableSorting: false
           }, {
-            name: '价格',
-            field: 'price',
-            width: 200,
+            name: '参与人数',
+            field: 'joined',
+            width: 100,
             enableSorting: false
           }, {
             name: '创建时间',
@@ -186,13 +188,8 @@
             $scope.count = result.count;
             if (result.result) {
               result.result.forEach(function(r) {
-                var arr, prices;
-                prices = r.prices;
-                arr = [];
-                prices.forEach(function(p) {
-                  return arr.push(p.label + '=' + p.value);
-                });
-                r.price = arr.join(' ');
+                r.begin = moment(r.begin).format('YYYY-MM-DD HH:mm:ss');
+                r.end = moment(r.end).format('YYYY-MM-DD HH:mm:ss');
                 return r.created_at = moment(r.created_at).format('YYYY-MM-DD HH:mm:ss');
               });
             }

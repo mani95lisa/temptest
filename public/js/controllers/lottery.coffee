@@ -23,12 +23,13 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     addProduct = ->
       modalInstance = $modal.open
         templateUrl:'modals/lottery.html'
-        controller:'EditProduct'
+        controller:'EditLottery'
         backdrop:'static'
         resolve:
           data:->
             return ''
       modalInstance.result.then (data)->
+        data._csrf = csrf
         if data._id
           $http.post('/lottery/update',data).success (result)->
             if result.err
@@ -41,7 +42,6 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
             ->
               console.log 'dismiss'
         else
-          console.log data
           $http.post('/lottery/add',data).success (result)->
             if result.err
               humane.log result.err
@@ -70,12 +70,13 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
       edit:(row)->
         modalInstance = $modal.open
           templateUrl:'modals/lottery.html'
-          controller:'EditProduct'
+          controller:'EditLottery'
           backdrop:'static'
           resolve:
             data:->
               return row.entity
         modalInstance.result.then (data)->
+          data._csrf = csrf
           $http.post('/lottery/update',data).success (result)->
             if result.err
               humane.error result.err
@@ -90,6 +91,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
         data = row.entity
         data.enabled = !data.enabled
         console.log data.enabled
+        data._csrf = csrf
         $http.post('/lottery/update',data).success (result)->
           if result.err
             humane.error result.err
@@ -110,10 +112,10 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.gridOptions =
       enableSorting: false
       columnDefs:[
-        {name:'产品名称', field:'name', enableSorting: false}
-        {name:'购买次数', field:'ordered', width:100, enableSorting: false}
-        {name:'分类', field:'category', width:100, enableSorting: false}
-        {name:'价格', field:'price', width:200, enableSorting: false}
+        {name:'活动名称', field:'name', enableSorting: false}
+        {name:'开始时间', field:'begin', width:100, enableSorting: false}
+        {name:'截止时间', field:'end', width:100, enableSorting: false}
+        {name:'参与人数', field:'joined', width:100, enableSorting: false}
         {name: '创建时间',field: 'created_at',width: 200, enableSorting: false}
         {name: '操作',field: 'created_at',width: 120, enableSorting: false, cellTemplate:handler}
       ]
@@ -133,11 +135,8 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
           $scope.count = result.count
           if result.result
             result.result.forEach (r)->
-              prices = r.prices
-              arr = []
-              prices.forEach (p)->
-                arr.push p.label+'='+p.value
-              r.price = arr.join ' '
+              r.begin = moment(r.begin).format('YYYY-MM-DD HH:mm:ss')
+              r.end = moment(r.end).format('YYYY-MM-DD HH:mm:ss')
               r.created_at = moment(r.created_at).format('YYYY-MM-DD HH:mm:ss')
           $scope.gridOptions.data = result.result
       ).error (err)->

@@ -8,6 +8,7 @@
       this.windowHeight = $(window).height();
       this.scale = this.windowWidth / 640;
       Base.position($('#share'), 540, 80, 50, 779);
+      Base.position($('#share_close'), 51, 52, 40, 40);
       $('#numbers').css({
         position: 'absolute',
         width: '100%',

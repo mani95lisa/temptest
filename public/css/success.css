@@ -22,28 +22,24 @@ body {
   top: 20px;
   position: absolute;
 }
-@media screen and (max-width: 640px) {
-  .joined_value {
-    font-size: 26px;
+@media screen and (max-width: 1400px) {
+  .num {
+    font-size: 40px;
   }
-  .joined_label {
-    font-size: 14px;
+}
+@media screen and (max-width: 640px) {
+  .num {
+    font-size: 16px;
   }
 }
 @media screen and (max-width: 400px) {
-  .joined_value {
-    font-size: 22px;
-  }
-  .joined_label {
+  .num {
     font-size: 14px;
   }
 }
 @media screen and (max-width: 320px) {
-  .joined_value {
-    font-size: 22px;
-  }
-  .joined_label {
-    font-size: 14px;
+  .num {
+    font-size: 12px;
   }
 }
 .bg {

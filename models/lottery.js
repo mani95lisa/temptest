@@ -16,12 +16,17 @@
     },
     value: String,
     thumb: String,
+    begin: Date,
     end: Date,
     joined: {
       type: Number,
       "default": 0
     },
-    link: String,
+    link_url: String,
+    enabled: {
+      type: Boolean,
+      "default": false
+    },
     description: String
   });
 

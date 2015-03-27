@@ -2,7 +2,7 @@ body {
   margin: 0px;
   background-color: #B31B19;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1400px) {
   .field input {
     font-size: 50px;
   }

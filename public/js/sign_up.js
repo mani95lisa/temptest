@@ -46,6 +46,8 @@
     }
   };
 
-  Base.init();
+  $(document).ready(function() {
+    return Base.init();
+  });
 
 }).call(this);

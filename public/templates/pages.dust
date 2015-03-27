@@ -9,22 +9,26 @@
             verticalCentered: false
 
         });
+
+        this.windowWidth = $(window).width();
+        this.scale = this.windowWidth/320;
+        $('.arrow').css({width:24*this.scale,height:14*this.scale});
     });
 </script>
 
 {<body}
     <div id="fullpage">
         <div class="section " id="section0">
-            <img class="arrow" src="imgs/arrow2.png" width="24" height="14">
+            <img class="arrow" src="imgs/arrow2.png">
         </div>
         <div class="section" id="section2">
-            <img class="arrow" src="imgs/arrow2.png" width="24" height="14">
+            <img class="arrow" src="imgs/arrow2.png">
         </div>
         <div class="section" id="section3">
-            <img class="arrow" src="imgs/arrow2.png" width="24" height="14">
+            <img class="arrow" src="imgs/arrow2.png">
         </div>
         <div class="section" id="section4">
-            <a href="/lottery"><img src="imgs/goto_lottery.png" class="goto_lottery"></a>
+            <a href="{url}" onclick="_hmt.push(['_trackEvent', '大白活动1', '抽奖跳转', '跳转']);"><img src="imgs/goto_lottery.png" class="goto_lottery"></a>
         </div>
     </div>
 {/body}

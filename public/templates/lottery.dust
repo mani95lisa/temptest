@@ -3,11 +3,51 @@
 <script type="text/javascript" src="js/lottery.js"></script>
 
 <script type="text/javascript">
+
+    var appId = '';
+
+    {#config}
+        var arr = "{config.jsApiList}";
+        arr = arr.split(',');
+        appId = "{config.appId}";
+        wx.config({
+            debug:{config.debug},
+            appId: "{config.appId}",
+            timestamp: "{config.timestamp}",
+            nonceStr: "{config.nonceStr}",
+            signature: "{config.signature}",
+            jsApiList: arr
+        });
+    {/config}
+
+    wx.ready(function () {
+
+        var wxData = {
+            "appId":appId,
+            "title" : '{name}',
+            "desc" : '{desc}',
+            "imgUrl" : '{img}',
+            "link" : $('#url').text()
+        };
+
+        wx.onMenuShareAppMessage(wxData);
+        wx.onMenuShareQQ(wxData);
+        wx.onMenuShareWeibo(wxData);
+        wx.onMenuShareTimeline({
+            "appId":appId,
+            "title" : '{desc}',
+            "imgUrl" : '{img}',
+            "link" : $('#url').text()
+        });
+
+    });
 </script>
 
 {<body}
     <img class="bg" src="imgs/lottery_bg.jpg">
-    <a href="/draw_lottery"><button id="button_mask"></button></a>
+    <a href="/draw_lottery" onclick="_hmt.push(['_trackEvent', '大白活动1', '抽奖跳转', '直接抽奖']);">
+        <button id="button_mask"></button>
+    </a>
     <div id="joined"><span class="joined_value">{joined}</span><span class="joined_label">人已参与</span></div>
     <div id="count_down">
         <img id="time_bg" src="imgs/time_bg.png">
@@ -27,4 +67,5 @@
     <img id="red_line" src="imgs/red_line.png">
     <img id="need_know_detail" src="imgs/need_know_detail.jpg">
     <img id="rule_detail" src="imgs/rule_detail.jpg">
+    <div style="display: none" id="url">{url}</div>
 {/body}
