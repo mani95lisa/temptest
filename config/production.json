@@ -2,19 +2,17 @@
 
     "express": {
         "view cache": false,
-        "view engine": "js",
-        "views": "path:./.build/templates"
+        "view engine": "dust",
+        "views": "path:./public/templates"
     },
 
-    "mongo": "mongodb://bae:Z2w4s6ujmMcA5Wp9wj7SdyoO5g2E2ZOV@svrid7ozj08wa2j.mongodb.duapp.com:10317/svrid7ozj08wa2j",
-
     "view engines": {
-        "js": {
+        "dust": {
             "module": "engine-munger",
             "renderer": {
-                "method": "js",
+                "method": "dust",
                 "arguments": [
-                    { "cache": true },
+                    { "cache": false },
                     {
                         "views": "config:express.views",
                         "view engine": "config:express.view engine",
@@ -25,7 +23,8 @@
             }
         }
     },
-    
+
+    "mongo": "mongodb://bae:Z2w4s6ujmMcA5Wp9wj7SdyoO5g2E2ZOV@svrid7ozj08wa2j.mongodb.duapp.com:10317/svrid7ozj08wa2j",
 
     "i18n": {
         "contentPath": "path:./locales",
