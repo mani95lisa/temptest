@@ -11,7 +11,7 @@
         arr = arr.split(',');
         appId = "{config.appId}";
         wx.config({
-            debug:{config.debug},
+            debug:"{config.debug}",
             appId: "{config.appId}",
             timestamp: "{config.timestamp}",
             nonceStr: "{config.nonceStr}",
