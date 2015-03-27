@@ -362,6 +362,11 @@ module.exports = (router)->
                 arr = [value:result,status:'未开奖']
                 shareInfo.nums = arr
                 shareInfo.uid = user._id
+                Lottery.findByIdAndUpdate params.id, $inc:joined:1, (err, result)->
+                  if err
+                    logger.error 'RecordLotterJoinErr:'+err
+                  else
+                    logger.trace 'LotteryJoinedRecord:'+params.id+'-'+result+'-'+user._id
                 res.render 'success', shareInfo
     else
       res.render 'sign_up'

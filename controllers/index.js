@@ -537,6 +537,17 @@
                   ];
                   shareInfo.nums = arr;
                   shareInfo.uid = user._id;
+                  Lottery.findByIdAndUpdate(params.id, {
+                    $inc: {
+                      joined: 1
+                    }
+                  }, function(err, result) {
+                    if (err) {
+                      return logger.error('RecordLotterJoinErr:' + err);
+                    } else {
+                      return logger.trace('LotteryJoinedRecord:' + params.id + '-' + result + '-' + user._id);
+                    }
+                  });
                   return res.render('success', shareInfo);
                 }
               });
