@@ -188,6 +188,7 @@ module.exports = (router)->
                     result.joined += 10000
                     share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
                     countdown = moment(result.end).valueOf() - moment().valueOf()
+                    console.log 'CD:'+countdown
                     draw_url = '/draw_lottery'
                     res.render 'lottery',uid:user._id,draw_url:draw_url,joined:result.joined,config:config,desc:result.description,url:share_url,img:result.thumb,countdown:countdown
             else
@@ -337,14 +338,14 @@ module.exports = (router)->
           result.forEach (r)->
             status = if r.status then '已中奖' else '未中奖'
             arr.push value:r.number,status:status
-          r.render 'success', nums:arr,uid:user._id
+          res.render 'success', nums:arr,uid:user._id
         else
           getRewardNumber params.id, user._id, (err, result)->
             if err
               res.josn status:false
             else
               arr = [value:result,status:'未开奖']
-              r.render 'success', nums:arr,uid:user._id
+              res.render 'success', nums:arr,uid:user._id
     else
       res.render 'sign_up'
 

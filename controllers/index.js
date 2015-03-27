@@ -270,6 +270,7 @@
                       result.joined += 10000;
                       share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + params.c + ';;p___' + params.p + ';;id___' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
                       countdown = moment(result.end).valueOf() - moment().valueOf();
+                      console.log('CD:' + countdown);
                       draw_url = '/draw_lottery';
                       return res.render('lottery', {
                         uid: user._id,
@@ -508,7 +509,7 @@
                 status: status
               });
             });
-            return r.render('success', {
+            return res.render('success', {
               nums: arr,
               uid: user._id
             });
@@ -525,7 +526,7 @@
                     status: '未开奖'
                   }
                 ];
-                return r.render('success', {
+                return res.render('success', {
                   nums: arr,
                   uid: user._id
                 });
