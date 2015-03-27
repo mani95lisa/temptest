@@ -9,6 +9,7 @@
       this.scale = this.windowWidth / 640;
       Base.position($('#share'), 540, 80, 50, 779);
       Base.position($('#share_close'), 51, 52, 40, 40);
+      Base.position($('#qrcode'), 180, 180, 344, 941);
       $('#numbers').css({
         position: 'absolute',
         width: '100%',

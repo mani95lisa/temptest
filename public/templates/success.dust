@@ -61,8 +61,12 @@
         {/nums}
     </div>
 
+    <img id="qrcode" src="imgs/qrcode.jpg">
+
     <div id="share_pop">
         <img class="share_content" src="imgs/share_content.png">
         <img id="share_close" src="imgs/share_close.png">
     </div>
+
+    <div style="display: none" id="url">{url}</div>
 {/body}

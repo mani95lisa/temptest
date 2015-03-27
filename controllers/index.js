@@ -484,6 +484,9 @@
         url: home_url
       });
     });
+    router.get('/success', function(req, res) {
+      return res.render('success');
+    });
     router.get('/lottery', function(req, res) {
       return res.render('lottery', {
         joined: 0,

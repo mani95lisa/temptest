@@ -331,6 +331,9 @@ module.exports = (router)->
   router.get '/pages', (req, res)->
     res.render 'pages', url:home_url
 
+  router.get '/success', (req, res)->
+    res.render 'success'
+
   router.get '/lottery', (req, res)->
     res.render 'lottery',joined:0, countdown:94170370
 
