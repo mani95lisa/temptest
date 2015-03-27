@@ -155,7 +155,7 @@
     var url;
     url = host + req.url;
     return api.getJsConfig({
-      debug: true,
+      debug: false,
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
       url: url
     }, function(err, result) {
@@ -502,43 +502,46 @@
         });
       } else if (!user.registered) {
         params = getParams(state);
-        return LotteryRecord.find({
-          lottery: params.id,
-          user: user._id
-        }, function(err, result) {
-          var arr;
-          if (result && result.length) {
-            arr = [];
-            result.forEach(function(r) {
-              var status;
-              status = r.status ? '已中奖' : '未中奖';
-              return arr.push({
-                value: r.number,
-                status: status
-              });
-            });
-            shareInfo.nums = arr;
-            shareInfo.uid = user._id;
-            return res.render('success', shareInfo);
-          } else {
-            return getRewardNumber(params.id, user._id, function(err, result) {
-              if (err) {
-                return res.josn({
-                  status: false
+        return getConfig(req, function(err, config) {
+          shareInfo.config = config;
+          return LotteryRecord.find({
+            lottery: params.id,
+            user: user._id
+          }, function(err, result) {
+            var arr;
+            if (result && result.length) {
+              arr = [];
+              result.forEach(function(r) {
+                var status;
+                status = r.status ? '已中奖' : '未中奖';
+                return arr.push({
+                  value: r.number,
+                  status: status
                 });
-              } else {
-                arr = [
-                  {
-                    value: result,
-                    status: '未开奖'
-                  }
-                ];
-                shareInfo.nums = arr;
-                shareInfo.uid = user._id;
-                return res.render('success', shareInfo);
-              }
-            });
-          }
+              });
+              shareInfo.nums = arr;
+              shareInfo.uid = user._id;
+              return res.render('success', shareInfo);
+            } else {
+              return getRewardNumber(params.id, user._id, function(err, result) {
+                if (err) {
+                  return res.josn({
+                    status: false
+                  });
+                } else {
+                  arr = [
+                    {
+                      value: result,
+                      status: '未开奖'
+                    }
+                  ];
+                  shareInfo.nums = arr;
+                  shareInfo.uid = user._id;
+                  return res.render('success', shareInfo);
+                }
+              });
+            }
+          });
         });
       } else {
         return res.render('sign_up');
@@ -556,54 +559,57 @@
         });
       } else if (!user.registered) {
         params = getParams(state);
-        return LotteryRecord.find({
-          lottery: params.id,
-          user: user._id
-        }, function(err, result) {
-          var arr, ep;
-          if (result.length === 3) {
-            arr = [];
-            result.forEach(function(r) {
-              var status;
-              status = r.status ? '已中奖' : '未中奖';
-              return arr.push({
-                value: r.number,
-                status: status
-              });
-            });
-            shareInfo.nums = arr;
-            shareInfo.uid = user._id;
-            return res.render('success', shareInfo);
-          } else if (result.length === 1) {
-            ep = new EventProxy();
-            ep.all('n1', 'n2', function(n1, n2) {
-              arr = [
-                {
-                  value: result[0].number,
-                  status: '未开奖'
-                }
-              ];
-              arr.push({
-                value: n1,
-                status: '未开奖'
-              });
-              arr.push({
-                value: n2,
-                status: '未开奖'
+        return getConfig(req, function(err, config) {
+          shareInfo.config = config;
+          return LotteryRecord.find({
+            lottery: params.id,
+            user: user._id
+          }, function(err, result) {
+            var arr, ep;
+            if (result.length === 3) {
+              arr = [];
+              result.forEach(function(r) {
+                var status;
+                status = r.status ? '已中奖' : '未中奖';
+                return arr.push({
+                  value: r.number,
+                  status: status
+                });
               });
               shareInfo.nums = arr;
               shareInfo.uid = user._id;
               return res.render('success', shareInfo);
-            });
-            ep.fail(function(err) {
-              logger.error(err);
-              return res.json({
-                status: false
+            } else if (result.length === 1) {
+              ep = new EventProxy();
+              ep.all('n1', 'n2', function(n1, n2) {
+                arr = [
+                  {
+                    value: result[0].number,
+                    status: '未开奖'
+                  }
+                ];
+                arr.push({
+                  value: n1,
+                  status: '未开奖'
+                });
+                arr.push({
+                  value: n2,
+                  status: '未开奖'
+                });
+                shareInfo.nums = arr;
+                shareInfo.uid = user._id;
+                return res.render('success', shareInfo);
               });
-            });
-            getRewardNumber(params.id, user._id, ep.done('n1'));
-            return getRewardNumber(params.id, user._id, ep.done('n2'));
-          }
+              ep.fail(function(err) {
+                logger.error(err);
+                return res.json({
+                  status: false
+                });
+              });
+              getRewardNumber(params.id, user._id, ep.done('n1'));
+              return getRewardNumber(params.id, user._id, ep.done('n2'));
+            }
+          });
         });
       }
     });

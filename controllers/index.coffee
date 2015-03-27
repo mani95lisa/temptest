@@ -109,7 +109,7 @@ menu =
 
 getConfig = (req, callback)->
   url = host + req.url
-  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -343,24 +343,26 @@ module.exports = (router)->
       res.json status:false
     else if !user.registered
       params = getParams(state)
-      LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
-        if result && result.length
-          arr = []
-          result.forEach (r)->
-            status = if r.status then '已中奖' else '未中奖'
-            arr.push value:r.number,status:status
-          shareInfo.nums = arr
-          shareInfo.uid = user._id
-          res.render 'success', shareInfo
-        else
-          getRewardNumber params.id, user._id, (err, result)->
-            if err
-              res.josn status:false
-            else
-              arr = [value:result,status:'未开奖']
-              shareInfo.nums = arr
-              shareInfo.uid = user._id
-              res.render 'success', shareInfo
+      getConfig req, (err, config)->
+        shareInfo.config = config
+        LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
+          if result && result.length
+            arr = []
+            result.forEach (r)->
+              status = if r.status then '已中奖' else '未中奖'
+              arr.push value:r.number,status:status
+            shareInfo.nums = arr
+            shareInfo.uid = user._id
+            res.render 'success', shareInfo
+          else
+            getRewardNumber params.id, user._id, (err, result)->
+              if err
+                res.josn status:false
+              else
+                arr = [value:result,status:'未开奖']
+                shareInfo.nums = arr
+                shareInfo.uid = user._id
+                res.render 'success', shareInfo
     else
       res.render 'sign_up'
 
@@ -373,31 +375,33 @@ module.exports = (router)->
       res.json status:false
     else if !user.registered
       params = getParams(state)
-      LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
-        if result.length == 3
-          arr = []
-          result.forEach (r)->
-            status = if r.status then '已中奖' else '未中奖'
-            arr.push value:r.number,status:status
-          shareInfo.nums = arr
-          shareInfo.uid = user._id
-          res.render 'success', shareInfo
-        else if result.length == 1
-          ep = new EventProxy()
-          ep.all 'n1', 'n2', (n1, n2)->
-            arr = [value:result[0].number,status:'未开奖']
-            arr.push value:n1, status:'未开奖'
-            arr.push value:n2, status:'未开奖'
+      getConfig req, (err, config)->
+        shareInfo.config = config
+        LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
+          if result.length == 3
+            arr = []
+            result.forEach (r)->
+              status = if r.status then '已中奖' else '未中奖'
+              arr.push value:r.number,status:status
             shareInfo.nums = arr
             shareInfo.uid = user._id
             res.render 'success', shareInfo
+          else if result.length == 1
+            ep = new EventProxy()
+            ep.all 'n1', 'n2', (n1, n2)->
+              arr = [value:result[0].number,status:'未开奖']
+              arr.push value:n1, status:'未开奖'
+              arr.push value:n2, status:'未开奖'
+              shareInfo.nums = arr
+              shareInfo.uid = user._id
+              res.render 'success', shareInfo
 
-          ep.fail (err)->
-            logger.error err
-            res.json status:false
+            ep.fail (err)->
+              logger.error err
+              res.json status:false
 
-          getRewardNumber params.id, user._id, ep.done 'n1'
-          getRewardNumber params.id, user._id, ep.done 'n2'
+            getRewardNumber params.id, user._id, ep.done 'n1'
+            getRewardNumber params.id, user._id, ep.done 'n2'
 
 
   router.get '/sign_up', (req, res)->
