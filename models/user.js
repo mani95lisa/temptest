@@ -16,7 +16,6 @@
     },
     nickname: String,
     truename: String,
-    mobile: String,
     birthday: Date,
     address: String,
     addresses: [],

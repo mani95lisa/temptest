@@ -7,7 +7,6 @@ UserSchema = new Schema
   openid:type:String,index:unique:true
   nickname:String
   truename:String
-  mobile:String
   birthday:Date
   address:String
   addresses:[]
