@@ -155,7 +155,7 @@
     var url;
     url = host + req.url;
     return api.getJsConfig({
-      debug: true,
+      debug: false,
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
       url: url
     }, function(err, result) {
@@ -262,7 +262,7 @@
                   });
                 } else {
                   return Lottery.findById(id, function(err, result) {
-                    var countdown, draw_url, share_url;
+                    var countdown, data, draw_url, share_url;
                     if (err) {
                       return logger.error(err);
                     } else if (result) {
@@ -271,7 +271,13 @@
                       countdown = moment(result.end).valueOf() - moment().valueOf();
                       console.log('CD:' + countdown);
                       draw_url = '/draw_lottery';
-                      return res.render('lottery', {
+                      req.session.shareInfo = {
+                        name: result.name,
+                        desc: result.description,
+                        img: result.thumb,
+                        url: share_url
+                      };
+                      data = {
                         uid: user._id,
                         draw_url: draw_url,
                         joined: result.joined,
@@ -279,8 +285,10 @@
                         desc: result.description,
                         url: share_url,
                         img: result.thumb,
-                        countdown: countdown
-                      });
+                        countdown: countdown,
+                        name: result.name
+                      };
+                      return res.render('lottery', data);
                     }
                   });
                 }
@@ -483,10 +491,11 @@
       });
     });
     router.get('/draw_lottery', function(req, res) {
-      var params, session, state, user;
+      var params, session, shareInfo, state, user;
       session = req.session;
       user = session.user;
       state = session.state;
+      shareInfo = req.session.shareInfo;
       if (!user || !state) {
         return res.json({
           status: false
@@ -508,10 +517,9 @@
                 status: status
               });
             });
-            return res.render('success', {
-              nums: arr,
-              uid: user._id
-            });
+            shareInfo.nums = arr;
+            shareInfo.uid = user._id;
+            return res.render('success', shareInfo);
           } else {
             return getRewardNumber(params.id, user._id, function(err, result) {
               if (err) {
@@ -525,10 +533,9 @@
                     status: '未开奖'
                   }
                 ];
-                return res.render('success', {
-                  nums: arr,
-                  uid: user._id
-                });
+                shareInfo.nums = arr;
+                shareInfo.uid = user._id;
+                return res.render('success', shareInfo);
               }
             });
           }
@@ -538,10 +545,11 @@
       }
     });
     router.get('/shared_lottery', function(req, res) {
-      var params, session, state, user;
+      var params, session, shareInfo, state, user;
       session = req.session;
       user = session.user;
       state = session.state;
+      shareInfo = req.session.shareInfo;
       if (!user || !state) {
         return res.json({
           status: false
@@ -563,10 +571,9 @@
                 status: status
               });
             });
-            return r.render('success', {
-              nums: arr,
-              uid: user._id
-            });
+            shareInfo.nums = arr;
+            shareInfo.uid = user._id;
+            return res.render('success', shareInfo);
           } else if (result.length === 1) {
             ep = new EventProxy();
             ep.all('n1', 'n2', function(n1, n2) {
@@ -584,10 +591,9 @@
                 value: n2,
                 status: '未开奖'
               });
-              return r.render('success', {
-                nums: arr,
-                uid: user._id
-              });
+              shareInfo.nums = arr;
+              shareInfo.uid = user._id;
+              return res.render('success', shareInfo);
             });
             ep.fail(function(err) {
               logger.error(err);

@@ -109,7 +109,7 @@ menu =
 
 getConfig = (req, callback)->
   url = host + req.url
-  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -189,7 +189,18 @@ module.exports = (router)->
                     countdown = moment(result.end).valueOf() - moment().valueOf()
                     console.log 'CD:'+countdown
                     draw_url = '/draw_lottery'
-                    res.render 'lottery',uid:user._id,draw_url:draw_url,joined:result.joined,config:config,desc:result.description,url:share_url,img:result.thumb,countdown:countdown
+                    req.session.shareInfo = name:result.name,desc:result.description,img:result.thumb,url:share_url
+                    data =
+                      uid:user._id
+                      draw_url:draw_url
+                      joined:result.joined
+                      config:config
+                      desc:result.description
+                      url:share_url
+                      img:result.thumb
+                      countdown:countdown
+                      name:result.name
+                    res.render 'lottery',data
             else
               res.json status:false
 
@@ -327,6 +338,7 @@ module.exports = (router)->
     session = req.session
     user = session.user
     state = session.state
+    shareInfo = req.session.shareInfo
     if !user || !state
       res.json status:false
     else if !user.registered
@@ -337,14 +349,18 @@ module.exports = (router)->
           result.forEach (r)->
             status = if r.status then '已中奖' else '未中奖'
             arr.push value:r.number,status:status
-          res.render 'success', nums:arr,uid:user._id
+          shareInfo.nums = arr
+          shareInfo.uid = user._id
+          res.render 'success', shareInfo
         else
           getRewardNumber params.id, user._id, (err, result)->
             if err
               res.josn status:false
             else
               arr = [value:result,status:'未开奖']
-              res.render 'success', nums:arr,uid:user._id
+              shareInfo.nums = arr
+              shareInfo.uid = user._id
+              res.render 'success', shareInfo
     else
       res.render 'sign_up'
 
@@ -352,6 +368,7 @@ module.exports = (router)->
     session = req.session
     user = session.user
     state = session.state
+    shareInfo = req.session.shareInfo
     if !user || !state
       res.json status:false
     else if !user.registered
@@ -362,14 +379,18 @@ module.exports = (router)->
           result.forEach (r)->
             status = if r.status then '已中奖' else '未中奖'
             arr.push value:r.number,status:status
-          r.render 'success', nums:arr,uid:user._id
+          shareInfo.nums = arr
+          shareInfo.uid = user._id
+          res.render 'success', shareInfo
         else if result.length == 1
           ep = new EventProxy()
           ep.all 'n1', 'n2', (n1, n2)->
             arr = [value:result[0].number,status:'未开奖']
             arr.push value:n1, status:'未开奖'
             arr.push value:n2, status:'未开奖'
-            r.render 'success', nums:arr,uid:user._id
+            shareInfo.nums = arr
+            shareInfo.uid = user._id
+            res.render 'success', shareInfo
 
           ep.fail (err)->
             logger.error err
