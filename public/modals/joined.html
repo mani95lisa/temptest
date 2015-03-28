@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="form-group" ng-include="radioModel==2">
+    <div class="form-group" ng-if="status=='2'">
         <label>中奖通知，通知内容会自动加上（请在输入框回复 领奖 两字进入领奖流程）</label>
         <input class="form-control" placeholder="中奖后服务号通知用户的文字内容" ng-model="data.notify">
     </div>

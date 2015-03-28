@@ -44,7 +44,7 @@
     return router.get('/count', auth.isAuthenticated(), function(req, res) {
       var ep;
       ep = new EventProxy();
-      ep.all('user', 'lottery', 'record', function(c1, c2, c3, c4, c5) {
+      ep.all('user', 'lottery', 'record', 'got', 'dispatched', function(c1, c2, c3, c4, c5) {
         return res.json({
           user: c1,
           lottery: c2,

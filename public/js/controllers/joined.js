@@ -101,9 +101,14 @@
             width: 100,
             enableSorting: false
           }, {
-            name: '抽奖号状态',
+            name: '是否中奖',
             field: 'status',
-            width: 200,
+            width: 100,
+            enableSorting: false
+          }, {
+            name: '是否派奖',
+            field: 'dispatched',
+            width: 100,
             enableSorting: false
           }, {
             name: '操作',
