@@ -69,7 +69,7 @@ module.exports = (app)->
   app.on 'middleware:after:session', (args)->
     passport.use(auth.localStrategy())
     app.use(passport.initialize())
-#    app.use(passport.session())
+    app.use(passport.session())
     app.use(auth.injectUser())
     passport.serializeUser(auth.serialize)
     passport.deserializeUser(auth.deserialize)
@@ -87,7 +87,8 @@ module.exports = (app)->
   app.use('/wechat', wechat(config, (req, res, next)->
       message = req.weixin
 
-      logger.trace('WXM:'+JSON.stringify(message))
+      wxmessage = JSON.stringify(message)
+      logger.trace('WXM:'+wxmessage)
 
       content = message.Content
 
@@ -95,70 +96,93 @@ module.exports = (app)->
         initUser message.FromUserName, (err, result)->
           reply1 res
       else
-        if req.session && !req.session.r
-          req.session.r = Math.random()
-        console.log 'WXSession:'+req.wxsession+'-'+req.session
-        wxsession = if req.wxsession then req.wxsession else {}
         openid = message.FromUserName
-        if content == '领奖'
-          q = openid:openid,status:true,dispatched:false
-          LotteryRecord.find(q).populate('lottery', 'name').exec (err, result)->
-            if err
-              logger.error 'FindLRError:'+err
-              res.reply '系统出错，请稍候再试'
-            else if result && result.length
-              wxsession.lid = result[0]._id
-              wxsession.input_address = true
-              s = '系统查询到您中了以下活动的奖品：\n'
-              result.forEach (r)->
-                s+= r.lottery.name+'\n'
-              User.findOne openid:openid, 'mobile truename address', (err, result)->
-                info = result.truename+' '+result.mobile+' '+result.address
-                if result.address
-                  s += '\n 系统查询到您曾使用过收货信息为：\n'+info+'\n 如果继续使用该地址请回复Y，重新输入请回复N'
-                  wxsession.userinfo = info
-                  wxsession.hasAddress = true
+        wxsession = {}
+        User.findOne openid:openid, (err, result)->
+          if err
+            logger.error 'FindUserError:'+err
+            res.reply '系统出错，请稍候再试'
+          else if result
+            user = result
+            if content == '领奖'
+              q = openid:openid,status:true,dispatched:false
+              LotteryRecord.find(q).populate('lottery', 'name').exec (err, result)->
+                if err
+                  logger.error 'FindLRError:'+err
+                  res.reply '系统出错，请稍候再试'
+                else if result && result.length
+                  wxsession.lid = result[0]._id
+                  wxsession.input_address = true
+                  s = '系统查询到您中了以下活动的奖品：\n'
+                  result.forEach (r)->
+                    s+= r.lottery.name+'\n'
+                  info = user.truename+' '+user.mobile+' '+user.address
+                  if user.address
+                    s += '\n 系统查询到您曾使用过收货信息为：\n'+info+'\n 如果继续使用该地址请回复Y，重新输入请回复N'
+                    wxsession.userinfo = info
+                    wxsession.hasAddress = true
+                  else
+                    s += '请输入您的收件人姓名、手机号码和收件地址，我们将会尽快为您派发奖品（以空格隔开，如：收件人 手机号码 收货地址）'
+                  user.wx_status = JSON.stringify(wxsession)
+                  user.save (err, result)->
+                    if err
+                      logger.error 'wx_status save error:'+err
+                      res.reply '系统出错，请稍候再试'
+                    else
+                      res.reply s
                 else
-                  s += '请输入您的收件人姓名、手机号码和收件地址，我们将会尽快为您派发奖品（以空格隔开，如：收件人 手机号码 收货地址）'
-                res.reply s
+                  res.reply '未查询到中奖结果，请您关注并参与其它抽奖活动，感谢您的对润石创投的支持！'
             else
-              res.reply '未查询到中奖结果，请您关注并参与其它抽奖活动，感谢您的对润石创投的支持！'
-        else
-          if content && wxsession.input_address
-            ep = new EventProxy()
-            saveInfo = (truename, address, mobile)->
-              ep.all 'lr', 'user', ->
-                wxsession.input_address = false
-                res.reply '信息已经提交成功，我们会尽快为您派发奖品，请耐心等待'
+              wxsession = JSON.parse(user.wx_status) if user.wx_status
+              if content && wxsession.input_address
+                ep = new EventProxy()
+                saveInfo = (truename, address, mobile)->
+                  ep.all 'lr', 'user', ->
+                    wxsession.input_address = false
+                    user.wx_status = JSON.stringify(wxsession)
+                    user.save (err, result)->
+                      if err
+                        logger.error 'SavewxStatusE1:'+err
+                        res.reply '抱歉，系统出错，请稍候再试'
+                      else
+                        res.reply '信息已经提交成功，我们会尽快为您派发奖品，请耐心等待'
 
-              ep.fail (err)->
-                logger.error 'SaveAddressError:'+err
-                res.reply '抱歉，系统出错，请稍候再试'
+                  ep.fail (err)->
+                    logger.error 'SaveAddressError:'+err
+                    res.reply '抱歉，系统出错，请稍候再试'
 
-              LotteryRecord.findByIdAndUpdate lid, $set:truename:truename,address:address,mobile:mobile, ep.done 'lr'
-              User.findOneAndUpdate openid, $set:truename:truename,address:address, ep.done 'user'
+                  LotteryRecord.findByIdAndUpdate lid, $set:truename:truename,address:address,mobile:mobile, ep.done 'lr'
+                  User.findOneAndUpdate openid, $set:truename:truename,address:address, ep.done 'user'
 
-            if wxsession.hasAddress
-              if content == 'Y' || content == 'y'
-                arr = wxsession.userinfo.split(' ')
-                saveInfo arr[0], arr[2], arr[1]
-              else if content == 'N' || content == 'n'
-                wxsession.hasAddress = false
-                res.reply '请输入您的收件人姓名、手机号码和收件地址，我们将会尽快为您派发奖品（以空格隔开，如：收件人 手机号码 收货地址）'
+                if wxsession.hasAddress
+                  if content == 'Y' || content == 'y'
+                    arr = wxsession.userinfo.split(' ')
+                    saveInfo arr[0], arr[2], arr[1]
+                  else if content == 'N' || content == 'n'
+                    user.wx_status = JSON.stringify(wxsession)
+                    user.save (err, result)->
+                      if err
+                        logger.error 'SavewxStatusE2:'+err
+                        res.reply '抱歉，系统出错，请稍候再试'
+                      else
+                        res.reply '请输入您的收件人姓名、手机号码和收件地址，我们将会尽快为您派发奖品（以空格隔开，如：收件人 手机号码 收货地址）'
+                  else
+                    res.reply '输入错误，请输入 Y 或者 N'
+                else
+                  lid = wxsession.lid
+                  arr = content.split(' ')
+                  mobile = arr[1]
+                  if arr.length < 3 || mobile.length != 11
+                    res.reply '格式不正确，请注意在收件人和手机号码后面添加空格及手机号码是否正确'
+                  else
+                    truename = arr[0]
+                    address = content.replace truename+' ', ''
+                    saveInfo truename, address, mobile
               else
-                res.reply '输入错误，请输入 Y 或者 N'
-            else
-              lid = wxsession.lid
-              arr = content.split(' ')
-              mobile = arr[1]
-              if arr.length < 3 || mobile.length != 11
-                res.reply '格式不正确，请注意在收件人和手机号码后面添加空格及手机号码是否正确'
-              else
-                truename = arr[0]
-                address = content.replace truename+' ', ''
-                saveInfo truename, address, mobile
+                reply1 res
           else
-            reply1 res
+            logger.error 'no user:'+wxmessage
+            res.reply '系统出错，请稍候再试'
     )
   )
 
@@ -175,6 +199,6 @@ module.exports = (app)->
           if err
             console.log err
           else
-            console.log result
+            console.log 'ManagerInited'
 
     next(null, config)

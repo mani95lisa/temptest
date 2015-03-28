@@ -44,7 +44,7 @@
       type: Boolean,
       "default": false
     },
-    status: Number,
+    wx_status: String,
     last_login: Date,
     created_at: Date
   });
