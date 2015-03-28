@@ -3,22 +3,42 @@
 <script type="text/javascript" src="js/sign_up.js"></script>
 
 <script type="text/javascript">
+
+    var appId = '';
+
+    {#config}
+        var arr = "{config.jsApiList}";
+        arr = arr.split(',');
+        appId = "{config.appId}";
+        wx.config({
+            debug:"{config.debug}",
+            appId: "{config.appId}",
+            timestamp: "{config.timestamp}",
+            nonceStr: "{config.nonceStr}",
+            signature: "{config.signature}",
+            jsApiList: arr
+        });
+    {/config}
+
+    wx.ready(function () {
+        wx.hideOptionMenu();
+    });
 </script>
 
 {<body}
     <img class="bg" src="imgs/sign_up_bg.jpg">
-    <form id="form" action="/do_sign_up" method="post">
+    <form id="form">
         <div class="field">
-            <input type="text" placeholder="请输入手机号">
+            <input id="mobileNum" type="text" name="mobile" placeholder="请输入手机号">
         </div>
         <div class="field" id="code_field">
-            <input type="text" placeholder="请输入验证码">
+            <input type="text" name="code" placeholder="请输入验证码">
         </div>
         <div class="field">
-            <input type="text" placeholder="请输入密码">
+            <input type="text" name="password" placeholder="请输入密码">
         </div>
-        <button type="submit" class="submit"></button>
-        <input type="hidden" name="_csrf" value="{_csrf}"/>
+        <img class="submit_btn">
+        <input type="hidden" id="csrf" name="_csrf" value="{_csrf}"/>
     </form>
 
     <div class="verify_btn">

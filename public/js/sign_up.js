@@ -4,6 +4,7 @@
 
   Base = {
     init: function() {
+      var countdown, interval, sentCode, switchCodeBtnStatus;
       this.windowWidth = $(window).width();
       this.windowHeight = $(window).height();
       this.scale = this.windowWidth / 640;
@@ -27,12 +28,67 @@
         'line-height': 100 * this.scale + 'px',
         padding: 0
       });
+      sentCode = false;
+      interval = '';
+      countdown = 60;
+      switchCodeBtnStatus = function() {
+        if (sentCode) {
+          $('.verify_btn').css({
+            background: '#cccccc'
+          });
+          $('.verify_text').text('重发(' + countdown + ')');
+          return interval = setInterval(function() {
+            if (countdown <= 0) {
+              clearInterval(interval);
+              sentCode = false;
+              countdown = 60;
+              return switchCodeBtnStatus();
+            } else {
+              $('.verify_text').text('重发(' + countdown + ')');
+              return countdown--;
+            }
+          }, 1000);
+        } else {
+          $('.verify_btn').css({
+            background: '#F1B424'
+          });
+          return $('.verify_text').text('获取验证码');
+        }
+      };
       $('.verify_btn').click(function() {
-        return console.log('send code');
+        var data;
+        if (!sentCode) {
+          sentCode = true;
+          switchCodeBtnStatus();
+          data = {
+            mobile: $('#mobileNum').val(),
+            _csrf: $('#csrf').val()
+          };
+          return $.post('/verify_code', data, function(result) {
+            if (result.err) {
+              alert(result.err);
+              sentCode = false;
+              return switchCodeBtnStatus();
+            }
+          });
+        }
       });
-      return $('.submit').css({
+      $('.submit_btn').css({
         width: 520 * this.scale,
         height: 100 * this.scale
+      });
+      return $('.submit_btn').click(function() {
+        var data, o;
+        data = $('#form').serializeArray();
+        o = {};
+        data.forEach(function(d) {
+          return o[d.name] = d.value;
+        });
+        return $.post('/do_sign_up', o, function(result) {
+          if (result.err) {
+            return alert(result.err);
+          }
+        });
       });
     },
     position: function(item, width, height, x, y) {

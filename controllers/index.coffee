@@ -156,6 +156,9 @@ getRewardNumber = (lottery_id, user, callback)->
         else
           callback null, num
 
+code_url = 'http://182.92.237.234:8080/finance/weixin/sendverifycode.action'
+regist_url = 'http://182.92.237.234:8080/finance/weixin/register.action'
+
 module.exports = (router)->
 
   init = (req, res, result)->
@@ -412,12 +415,55 @@ module.exports = (router)->
             getRewardNumber params.id, user._id, ep.done 'n1'
             getRewardNumber params.id, user._id, ep.done 'n2'
 
+  router.post '/verify_code', (req, res)->
+    mobile = req.body.mobile
+    if !mobile
+      res.json err:'手机号不能为空'
+    else
+      request.post code_url, form:mobileNo:mobile, (err, result, body)->
+        if err
+          res.json err:err
+        else
+          body = JSON.parse(body)
+          if body.result == '1'
+            res.json err:body.tip
+          else
+            res.json result:true
+
 
   router.get '/sign_up', (req, res)->
     res.render 'sign_up'
 
+  router.post '/code', (req, res)->
+    console.log req.body
+
   router.post '/do_sign_up', (req, res)->
-    res.redirect '/draw_lottery'
+    console.log req.body
+    data = req.body
+    user = req.session.user
+    nickname = if user then user.nickname else 'test'
+    if !data.mobile
+      res.json err:'请输入手机号'
+    else if !data.code
+      res.json err:'请输入验证码'
+    else if !data.password
+      res.json err:'请输入密码'
+    else
+      request.post regist_url, form:mobileNo:data.mobile,nickName:nickname,password:data.password,rePassword:data.password,verifyCode:data.code, (err, result, body)->
+        if err
+          res.json err:err
+        else
+          body = JSON.parse(body)
+          if body.result == '1'
+            res.json err:body.tip
+          else
+            if user
+              User.findByIdAndUpdate user._id, $set:mobile:data.mobile, (err, result)->
+                if err
+                  logger.error 'UserSetMobileError:'+user._id+'-'+data.mobile+'-'+err
+                res.redirect '/draw_lottery'
+            else
+              res.redirect '/draw_lottery'
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [

@@ -6,7 +6,7 @@
 
     var appId = '';
 
-        {#config}
+    {#config}
         var arr = "{config.jsApiList}";
         arr = arr.split(',');
         appId = "{config.appId}";
@@ -18,7 +18,7 @@
             signature: "{config.signature}",
             jsApiList: arr
         });
-        {/config}
+    {/config}
 
     var shared_success = function () {
         _hmt.push(['_trackEvent', '大白活动1', '中奖页分享', '{uid}']);
