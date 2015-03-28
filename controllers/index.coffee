@@ -348,7 +348,7 @@ module.exports = (router)->
     shareInfo = req.session.shareInfo
     if !user || !state
       res.json status:false
-    else if user.registered
+    else if user.mobile
       params = getParams(state)
       getConfig req, (err, config)->
         shareInfo.config = config
