@@ -30,7 +30,7 @@ module.exports = (router)->
             res.json err:err
           else
             if result.status && result.notify
-              api.sendMessage '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify+'\n\n（请在输入框输入【领奖】两字进入领奖流程）'
+              api.sendText '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify+'\n\n（请在输入框输入【领奖】两字进入领奖流程）'
             logger.warn 'LRUpdated:'+diff
             res.json result:result
 

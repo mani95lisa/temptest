@@ -66,6 +66,14 @@ initUser = (openid, callback)->
 
 module.exports = (app)->
 
+  app.on 'middleware:after:session', (args)->
+    passport.use(auth.localStrategy())
+    app.use(passport.initialize())
+    app.use(passport.session())
+    app.use(auth.injectUser())
+    passport.serializeUser(auth.serialize)
+    passport.deserializeUser(auth.deserialize)
+
   config =
     token:'wechat'
     appid:appid
@@ -89,7 +97,7 @@ module.exports = (app)->
       else
         if req.session && !req.session.r
           req.session.r = Math.random()
-        console.log 'WXSession:'+req.wxsession+'-'+req.session.r
+        console.log 'WXSession:'+req.wxsession+'-'+req.session
         wxsession = if req.wxsession then req.wxsession else {}
         openid = message.FromUserName
         if content == '领奖'
@@ -152,14 +160,6 @@ module.exports = (app)->
             reply1 res
     )
   )
-
-  app.on 'middleware:after:session', (args)->
-    passport.use(auth.localStrategy())
-    app.use(passport.initialize())
-    app.use(passport.session())
-    app.use(auth.injectUser())
-    passport.serializeUser(auth.serialize)
-    passport.deserializeUser(auth.deserialize)
 
   onconfig: (config, next) ->
     mongo.config(config.get('mongo'))
