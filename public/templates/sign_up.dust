@@ -35,7 +35,7 @@
             <input type="text" name="code" placeholder="请输入验证码">
         </div>
         <div class="field">
-            <input type="text" name="password" placeholder="请输入密码">
+            <input type="password" name="password" placeholder="请输入密码">
         </div>
         <img id="submit_btn" src="/imgs/sign_up_and_lottery.png">
         <input type="hidden" id="csrf" name="_csrf" value="{_csrf}"/>

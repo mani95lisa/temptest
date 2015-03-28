@@ -455,6 +455,7 @@ module.exports = (router)->
           res.json err:err
         else
           body = JSON.parse(body)
+          logger.trace 'Registered:'+JSON.stringify(body)
           if body.result == '1'
             res.json err:body.tip
           else

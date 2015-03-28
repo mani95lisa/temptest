@@ -705,6 +705,7 @@
             });
           } else {
             body = JSON.parse(body);
+            logger.trace('Registered:' + JSON.stringify(body));
             if (body.result === '1') {
               return res.json({
                 err: body.tip
