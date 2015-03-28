@@ -671,8 +671,7 @@
       return console.log(req.body);
     });
     router.post('/do_sign_up', function(req, res) {
-      var data, nickname, user;
-      console.log(req.body);
+      var data, formData, nickname, user;
       data = req.body;
       user = req.session.user;
       nickname = user ? user.nickname : 'test';
@@ -689,7 +688,7 @@
           err: '请输入密码'
         });
       } else {
-        return request.post(regist_url, {
+        formData = {
           form: {
             mobileNo: data.mobile,
             nickName: nickname,
@@ -697,7 +696,9 @@
             rePassword: data.password,
             verifyCode: data.code
           }
-        }, function(err, result, body) {
+        };
+        logger.trace(JSON.stringify(formData));
+        return request.post(regist_url, formData, function(err, result, body) {
           if (err) {
             return res.json({
               err: err

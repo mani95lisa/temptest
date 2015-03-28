@@ -4,7 +4,7 @@ require('coffee-script/register');
 var express = require('express');
 var kraken = require('kraken-js');
 
-if(process.env.ENV == 'production'){
+if(process.env.NODE_ENV == 'production'){
     var log4js = require('log4js');
     log4js.loadAppender('baev3-log');
     var options = {

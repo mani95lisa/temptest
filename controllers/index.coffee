@@ -438,7 +438,6 @@ module.exports = (router)->
     console.log req.body
 
   router.post '/do_sign_up', (req, res)->
-    console.log req.body
     data = req.body
     user = req.session.user
     nickname = if user then user.nickname else 'test'
@@ -449,7 +448,9 @@ module.exports = (router)->
     else if !data.password
       res.json err:'请输入密码'
     else
-      request.post regist_url, form:mobileNo:data.mobile,nickName:nickname,password:data.password,rePassword:data.password,verifyCode:data.code, (err, result, body)->
+      formData = form:mobileNo:data.mobile,nickName:nickname,password:data.password,rePassword:data.password,verifyCode:data.code
+      logger.trace JSON.stringify(formData)
+      request.post regist_url, formData, (err, result, body)->
         if err
           res.json err:err
         else
