@@ -6,6 +6,7 @@ models = require('../../models/index')
 Manager = models.Manager
 User = models.User
 Lottery = models.Lottery
+LotteryRecord = models.LotteryRecord
 moment = require 'moment'
 logger = require('log4js').getDefaultLogger()
 passport = require 'passport'
@@ -27,8 +28,8 @@ module.exports = (router)->
 
   router.get '/count',auth.isAuthenticated() , (req, res)->
     ep = new EventProxy()
-    ep.all 'user', 'lottery', (c1, c2, c3)->
-      res.json user:c1,lottery:c2
+    ep.all 'user', 'lottery', 'record', (c1, c2, c3,c4,c5)->
+      res.json user:c1,lottery:c2,record:c3,got:c4,dispatched:c5
 
 #    ep.all 'author', 'collection', 'content','size', 'sms', (c1, c2, c3, c4, c5)->
 #      console.log c4
@@ -43,6 +44,9 @@ module.exports = (router)->
 
     User.count {}, ep.done 'user'
     Lottery.count {}, ep.done 'lottery'
+    LotteryRecord.count {}, ep.done 'record'
+    LotteryRecord.count {status:true}, ep.done 'got'
+    LotteryRecord.count {dispatched:true}, ep.done 'dispatched'
 #
 #    SMS.left ep.done 'sms'
 #    Author.count {}, ep.done 'author'

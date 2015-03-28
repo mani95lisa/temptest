@@ -58,9 +58,6 @@
       data = req.query;
       ep = new EventProxy();
       ep.all('count', 'result', function(count, result) {
-        result.forEach(function(r) {
-          return r.status = r.status ? '已中奖' : '未中奖';
-        });
         return res.json({
           count: count,
           result: result,

@@ -39,8 +39,6 @@ module.exports = (router)->
 
     ep = new EventProxy()
     ep.all 'count', 'result', (count, result)->
-      result.forEach (r)->
-        r.status = if r.status then '已中奖' else '未中奖'
       res.json count:count, result:result, pageSize:data.pageSize
 
     ep.fail (err)->

@@ -87,7 +87,9 @@ module.exports = (app)->
         initUser message.FromUserName, (err, result)->
           reply1 res
       else
-        console.log 'WXSession:'+req.wxsession
+        if req.session && !req.session.r
+          req.session.r = Math.random()
+        console.log 'WXSession:'+req.wxsession+'-'+req.session.r
         wxsession = if req.wxsession then req.wxsession else {}
         openid = message.FromUserName
         if content == '领奖'
