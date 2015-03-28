@@ -44,12 +44,7 @@ body {
   width: 100%;
 }
 #button_mask {
-  background: url(../imgs/lottery_normal.png) no-repeat;
-  border: none;
-  background-size: contain;
-}
-#button_mask:active {
-  background: url(../imgs/lottery_down.png) no-repeat;
+  background: url(../imgs/lottery_btn.png) no-repeat;
   border: none;
   background-size: contain;
 }

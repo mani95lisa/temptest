@@ -89,8 +89,9 @@ module.exports = (app)->
         wxsession = req.wxsession
         openid = message.FromUserName
         if content == '领奖'
-          LotteryRecord.find('user.openid':openid,status:true,$exist:dispatched:false).populate('lottery', 'name').exec (err, result)->
+          LotteryRecord.find('user.openid':openid,status:true,dispatched:$exist:false).populate('lottery', 'name').exec (err, result)->
             if err
+              logger.error 'FindLRError:'+err
               res.reply '系统出错，请稍候再试'
             else if result && result.length
               wxsession.lid = result[0]._id

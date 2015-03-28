@@ -7,7 +7,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
 
     console.log data
     $scope.data = angular.copy data
-    $scope.title = if data then '编辑用户 '+ data.user.nickname+ ' 抽奖号'
+    $scope.title = if data then '编辑用户 '+ data.user.nickname+ ' 抽奖号【'+data.number+'】'
 
     $scope.ok = ->
       data = $scope.data

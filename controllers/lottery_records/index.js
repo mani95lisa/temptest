@@ -24,7 +24,7 @@
       var data;
       data = req.body;
       logger.trace('LotteryRecordUpdate:' + JSON.stringify(data));
-      return LotteryRecord.findById(data._id).populate('user', 'openid').populate('lottery', 'name').exec(err, result)(function() {
+      return LotteryRecord.findById(data._id).populate('user', 'openid').populate('lottery', 'name').exec(function(err, result) {
         var diff, lname;
         if (err) {
           logger.error('LRind:' + err);
@@ -32,7 +32,7 @@
             err: err
           });
         } else {
-          diff = UpdateObject(result, data, ['created_at']);
+          diff = UpdateObject(result, data, ['created_at', 'lottery', 'user', 'updated_at']);
           lname = result.lottery.name;
           return result.save(function(err, result) {
             if (err) {
@@ -87,8 +87,8 @@
       }
       query = {};
       if (data.keywords) {
-        switch (parseInt(data.keywords).length) {
-          case 13:
+        switch (parseInt(data.keywords).toString().length) {
+          case 11:
             query['user.mobile'] = data.keywords;
             break;
           case 7:
@@ -100,13 +100,13 @@
       }
       filter = data.filter;
       switch (filter) {
-        case 1:
+        case '1':
           query['status'] = false;
           break;
-        case 2:
+        case '2':
           query['status'] = true;
           break;
-        case 3:
+        case '3':
           query['dispatched'] = true;
       }
       console.log('LRQuerry:' + JSON.stringify(query));

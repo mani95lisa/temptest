@@ -6,7 +6,7 @@
       console.group('edit_joined');
       console.log(data);
       $scope.data = angular.copy(data);
-      $scope.title = data ? '编辑用户 ' + data.user.nickname + ' 抽奖号' : void 0;
+      $scope.title = data ? '编辑用户 ' + data.user.nickname + ' 抽奖号【' + data.number + '】' : void 0;
       $scope.ok = function() {
         data = $scope.data;
         switch ($scope.radioModel) {

@@ -17,12 +17,12 @@ module.exports = (router)->
     LotteryRecord.findById(data._id)
     .populate('user', 'openid')
     .populate('lottery', 'name')
-    .exec(err, result) ->
+    .exec (err, result) ->
       if err
         logger.error 'LRind:'+err
         res.json err:err
       else
-        diff = UpdateObject result, data, ['created_at']
+        diff = UpdateObject result, data, ['created_at','lottery','user','updated_at']
         lname = result.lottery.name
         result.save (err, result) ->
           if err
@@ -55,8 +55,8 @@ module.exports = (router)->
       options.limit = data.pageSize
     query = {}
     if data.keywords
-      switch parseInt(data.keywords).length
-        when 13
+      switch parseInt(data.keywords).toString().length
+        when 11
           query['user.mobile'] = data.keywords
         when 7
           query['number'] = data.keywords
@@ -65,11 +65,11 @@ module.exports = (router)->
 
     filter = data.filter
     switch filter
-      when 1
+      when '1'
         query['status'] = false
-      when 2
+      when '2'
         query['status'] = true
-      when 3
+      when '3'
         query['dispatched'] = true
 
     console.log('LRQuerry:'+JSON.stringify(query))
