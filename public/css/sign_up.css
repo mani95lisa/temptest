@@ -65,11 +65,6 @@ body {
 :-ms-input-placeholder {
   color: #5F1400;
 }
-.submit_btn {
-  background: url(../imgs/sign_up_and_lottery.png) no-repeat;
-  border: none;
-  background-size: cover;
-}
 .verify_btn {
   background: #F1B424;
   border-radius: 6px;

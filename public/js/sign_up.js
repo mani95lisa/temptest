@@ -74,11 +74,11 @@
           });
         }
       });
-      $('.submit_btn').css({
+      $('#submit_btn').css({
         width: 520 * this.scale,
         height: 100 * this.scale
       });
-      return $('.submit_btn').click(function() {
+      return $('#submit_btn').click(function() {
         var data, o;
         data = $('#form').serializeArray();
         o = {};

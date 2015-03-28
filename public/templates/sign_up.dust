@@ -37,7 +37,7 @@
         <div class="field">
             <input type="text" name="password" placeholder="请输入密码">
         </div>
-        <img class="submit_btn">
+        <img id="submit_btn" src="/imgs/sign_up_and_lottery.png">
         <input type="hidden" id="csrf" name="_csrf" value="{_csrf}"/>
     </form>
 

@@ -45,8 +45,8 @@ Base =
             countdown = 0
             switchCodeBtnStatus()
 
-    $('.submit_btn').css(width:520*this.scale,height:100*this.scale)
-    $('.submit_btn').click ->
+    $('#submit_btn').css(width:520*this.scale,height:100*this.scale)
+    $('#submit_btn').click ->
       data = $('#form').serializeArray()
       o = {}
       data.forEach (d)->
