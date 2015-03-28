@@ -36,6 +36,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
             data:->
               return row.entity
         modalInstance.result.then (data)->
+          data._csrf = csrf
           $http.post('/user/update',data).success (result)->
             if result.err
               humane.error result.err

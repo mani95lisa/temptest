@@ -4,7 +4,7 @@
 
   Base = {
     init: function() {
-      var countdown, interval, sentCode, switchCodeBtnStatus;
+      var countdown, interval, registing, sentCode, switchCodeBtnStatus;
       this.windowWidth = $(window).width();
       this.windowHeight = $(window).height();
       this.scale = this.windowWidth / 640;
@@ -78,18 +78,25 @@
         width: 520 * this.scale,
         height: 100 * this.scale
       });
+      registing = false;
       return $('#submit_btn').click(function() {
         var data, o;
-        data = $('#form').serializeArray();
-        o = {};
-        data.forEach(function(d) {
-          return o[d.name] = d.value;
-        });
-        return $.post('/do_sign_up', o, function(result) {
-          if (result.err) {
-            return alert(result.err);
-          }
-        });
+        if (registing) {
+
+        } else {
+          registing = true;
+          data = $('#form').serializeArray();
+          o = {};
+          data.forEach(function(d) {
+            return o[d.name] = d.value;
+          });
+          return $.post('/do_sign_up', o, function(result) {
+            if (result.err) {
+              registing = false;
+              return alert(result.err);
+            }
+          });
+        }
       });
     },
     position: function(item, width, height, x, y) {

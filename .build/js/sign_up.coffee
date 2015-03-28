@@ -46,14 +46,20 @@ Base =
             switchCodeBtnStatus()
 
     $('#submit_btn').css(width:520*this.scale,height:100*this.scale)
+    registing = false
     $('#submit_btn').click ->
-      data = $('#form').serializeArray()
-      o = {}
-      data.forEach (d)->
-        o[d.name] = d.value
-      $.post '/do_sign_up', o, (result)->
-        if result.err
-          alert(result.err)
+      if registing
+        return
+      else
+        registing = true
+        data = $('#form').serializeArray()
+        o = {}
+        data.forEach (d)->
+          o[d.name] = d.value
+        $.post '/do_sign_up', o, (result)->
+          if result.err
+            registing = false
+            alert(result.err)
 
   position : (item,width,height,x,y)->
     item.css(position:'absolute',width:width*this.scale,height:height*this.scale,top:y*this.scale,left:x*this.scale)

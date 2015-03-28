@@ -36,6 +36,7 @@
             }
           });
           return modalInstance.result.then(function(data) {
+            data._csrf = csrf;
             return $http.post('/user/update', data).success(function(result) {
               if (result.err) {
                 return humane.error(result.err);
