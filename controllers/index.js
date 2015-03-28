@@ -754,13 +754,23 @@
                 err: err
               });
             } else {
-              if (result.status && result.notify) {
-                api.sendText('恭喜您于活动【' + lname + '】中奖\n\n' + result.notify + '\n\n（请在输入框输入【领奖】两字进入领奖流程）');
-              }
               logger.warn('LRUpdated:' + diff);
-              return res.json({
-                result: result
-              });
+              if (result.status && result.notify) {
+                return api.sendText(result.user.openid, '恭喜您于活动【' + lname + '】中奖\n\n' + result.notify + '\n\n（请在输入框输入【领奖】两字进入领奖流程）', function(err, result) {
+                  if (err) {
+                    logger.error('notify error:' + err);
+                    return res.err('发送通知失败，请再试一次');
+                  } else {
+                    return res.json({
+                      result: result
+                    });
+                  }
+                });
+              } else {
+                return res.json({
+                  result: result
+                });
+              }
             }
           });
         }
