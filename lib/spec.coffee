@@ -72,7 +72,8 @@ module.exports = (app)->
     encodingAESKey:'YN8K5TKe0aY2fBmYGKHPpDNxu4TRnD7hSyt8wVwb3dw'
 
   reply1 = (res)->
-    s = '欢迎关注润石创投服务号，我们将竭诚为您服务！\n\n<a href="http://www.rsct.com">免费抽奖</a>\n客服电话：400-690-8862\n官方网址：<a href="http://www.rsct.com">www.rsct.com</a>'
+    lottery_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___5514fa807fa5ed31c0408bd0&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+    s = '欢迎关注润石创投服务号，我们将竭诚为您服务！\n\n<a href="'+lottery_url+'">正版大白求收留 猛戳免费带回家</a>\n\n客服电话：400-690-8862\n官方网址：<a href="http://www.rsct.com">www.rsct.com</a>'
     res.reply s
 
   app.use('/wechat', wechat(config, (req, res, next)->
@@ -90,7 +91,7 @@ module.exports = (app)->
         wxsession = if req.wxsession then req.wxsession else {}
         openid = message.FromUserName
         if content == '领奖'
-          LotteryRecord.find('user.openid':openid,status:true,dispatched:$exist:false).populate('lottery', 'name').exec (err, result)->
+          LotteryRecord.find('user.openid':openid,status:true,dispatched:false).populate('lottery', 'name').exec (err, result)->
             if err
               logger.error 'FindLRError:'+err
               res.reply '系统出错，请稍候再试'

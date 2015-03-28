@@ -24,11 +24,17 @@
       index: true
     },
     notify: String,
-    status: Boolean,
+    status: {
+      type: Boolean,
+      "default": false
+    },
     truename: String,
     address: String,
     mobile: Number,
-    dispatched: Boolean
+    dispatched: {
+      type: Boolean,
+      "default": false
+    }
   });
 
   Timestamps = require('mongoose-times');

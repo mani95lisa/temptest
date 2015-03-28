@@ -9,7 +9,7 @@
       $scope.title = data ? '编辑用户 ' + data.user.nickname + ' 抽奖号【' + data.number + '】' : void 0;
       $scope.ok = function() {
         data = $scope.data;
-        switch ($scope.radioModel) {
+        switch ($scope.status) {
           case '1':
             data.status = false;
             break;

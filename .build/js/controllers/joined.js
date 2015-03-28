@@ -56,14 +56,6 @@
           return console.log('dismiss');
         });
       };
-      editRow({
-        entity: {
-          name: 'test',
-          user: {
-            nickname: 'test'
-          }
-        }
-      });
       $scope.externalScopes = {
         edit: function(row) {
           return editRow(row);

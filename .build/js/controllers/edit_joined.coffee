@@ -12,7 +12,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.ok = ->
       data = $scope.data
 
-      switch $scope.radioModel
+      switch $scope.status
         when '1'
           data.status = false
         when '2'

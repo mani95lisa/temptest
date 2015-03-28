@@ -52,7 +52,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
       ->
         console.log 'dismiss'
 
-    editRow {entity:name:'test',user:nickname:'test'}
+#    editRow {entity:name:'test',user:nickname:'test'}
 
     $scope.externalScopes =
       edit:(row)->
