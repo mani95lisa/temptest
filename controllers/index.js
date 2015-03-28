@@ -508,7 +508,7 @@
         return res.json({
           status: false
         });
-      } else if (!user.registered) {
+      } else if (user.registered) {
         params = getParams(state);
         return getConfig(req, function(err, config) {
           shareInfo.config = config;
