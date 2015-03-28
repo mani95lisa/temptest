@@ -12,6 +12,7 @@ User = require('../models').User
 LotteryRecord = require('../models').LotteryRecord
 logger = require('log4js').getDefaultLogger()
 EventProxy = require 'eventproxy'
+connect = require 'connect'
 
 getToken = (cb)->
   Token.findOne appid:appid, (err, result)->
@@ -75,6 +76,7 @@ module.exports = (app)->
     s = '欢迎关注润石创投服务号，我们将竭诚为您服务！\n\n<a href="http://www.rsct.com">免费抽奖</a>\n客服电话：400-690-8862\n官方网址：<a href="http://www.rsct.com">www.rsct.com</a>'
     res.reply s
 
+  app.use(connect.session({secret: 'rsct', cookie: {maxAge: 60000}}));
   app.use('/wechat', wechat(config, (req, res, next)->
       message = req.weixin
 
@@ -86,7 +88,8 @@ module.exports = (app)->
         initUser message.FromUserName, (err, result)->
           reply1 res
       else
-        wxsession = req.wxsession
+        console.log 'WXSession:'+req.wxsession
+        wxsession = if req.wxsession then req.wxsession else {}
         openid = message.FromUserName
         if content == '领奖'
           LotteryRecord.find('user.openid':openid,status:true,dispatched:$exist:false).populate('lottery', 'name').exec (err, result)->
