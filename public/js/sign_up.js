@@ -68,6 +68,7 @@
             if (result.err) {
               alert(result.err);
               sentCode = false;
+              countdown = 0;
               return switchCodeBtnStatus();
             }
           });
