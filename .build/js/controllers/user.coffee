@@ -57,8 +57,6 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
         {name:'手机号', field:'mobile', width:100, enableSorting: false}
         {name:'姓名', field:'truename', width:100, enableSorting: false}
         {name:'昵称', field:'nickname', width:100, enableSorting: false}
-        {name:'角色', field:'role', width:100, enableSorting: false}
-        {name:'点餐次数', field:'order_times', width:100, enableSorting: false}
         {name:'最近登录', field:'last_login', width:200, enableSorting: false}
         {name: '创建时间',field: 'created_at',width: 200, enableSorting: false}
         {name: '操作',field: 'created_at',width: 120, enableSorting: false, cellTemplate:handler}

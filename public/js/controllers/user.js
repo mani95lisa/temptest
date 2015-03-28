@@ -70,16 +70,6 @@
             width: 100,
             enableSorting: false
           }, {
-            name: '角色',
-            field: 'role',
-            width: 100,
-            enableSorting: false
-          }, {
-            name: '点餐次数',
-            field: 'order_times',
-            width: 100,
-            enableSorting: false
-          }, {
             name: '最近登录',
             field: 'last_login',
             width: 200,

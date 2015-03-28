@@ -16,6 +16,7 @@ logger = require('log4js').getDefaultLogger()
 request = require 'request'
 moment = require 'moment'
 utils = require '../lib/utils'
+UpdateObject = utils.updateObject
 
 getToken = (cb)->
   Token.findOne appid:appid, (err, result)->
@@ -450,7 +451,7 @@ module.exports = (router)->
       res.json err:'请输入密码'
     else
       formData = form:mobileNo:data.mobile,nickName:nickname,password:data.password,rePassword:data.password,verifyCode:data.code
-      logger.trace JSON.stringify(formData)
+      logger.trace 'DoSignUp:'+JSON.stringify(formData)
       request.post regist_url, formData, (err, result, body)->
         if err
           res.json err:err
