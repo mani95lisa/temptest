@@ -4,6 +4,7 @@ Mongoose = require 'mongoose'
 Schema = Mongoose.Schema
 
 LotteryRecordSchema = new Schema
+  openid:type:String,index:true
   lottery:type:Schema.Types.ObjectId,ref:'Lottery',index:true
   user:type:Schema.Types.ObjectId,ref:'User',index:true
   number:type:Number,required:true,index:true

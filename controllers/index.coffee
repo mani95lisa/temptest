@@ -82,8 +82,6 @@ save_js_sdk_ticket = (type, ticket, cb)->
 
 api.registerTicketHandle get_js_sdk_ticket, save_js_sdk_ticket
 
-exports.api = api
-
 host = 'http://rsct.swift.tf'
 home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
@@ -137,7 +135,7 @@ getParams = (state)->
       params[temp[0]] = temp[1]
   return params
 
-getRewardNumber = (lottery_id, user, callback)->
+getRewardNumber = (lottery_id, user,openid, callback)->
   num = utils.getRandomInt(1000000,9999999)
   LotteryRecord.findOne lottery:lottery_id,number:num, (err, result)->
     if err
@@ -150,6 +148,7 @@ getRewardNumber = (lottery_id, user, callback)->
         lottery:lottery_id
         user:user
         number:num
+        openid:openid
       )
       lr.save (err, result)->
         if err
@@ -364,7 +363,7 @@ module.exports = (router)->
             shareInfo.uid = user._id
             res.render 'success', shareInfo
           else
-            getRewardNumber params.id, user._id, (err, result)->
+            getRewardNumber params.id, user._id, user.openid, (err, result)->
               if err
                 res.josn status:false
               else
@@ -414,8 +413,8 @@ module.exports = (router)->
               logger.error err
               res.json status:false
 
-            getRewardNumber params.id, user._id, ep.done 'n1'
-            getRewardNumber params.id, user._id, ep.done 'n2'
+            getRewardNumber params.id, user._id, user.openid, ep.done 'n1'
+            getRewardNumber params.id, user._id, user.openid, ep.done 'n2'
 
   router.post '/verify_code', (req, res)->
     mobile = req.body.mobile
@@ -468,6 +467,29 @@ module.exports = (router)->
                 res.redirect '/draw_lottery'
             else
               res.redirect '/draw_lottery'
+
+  router.post '/lottery_records/update', auth.isAuthenticated(), (req, res)->
+    data = req.body
+    logger.trace 'LotteryRecordUpdate:'+JSON.stringify(data)
+    LotteryRecord.findById(data._id)
+    .populate('user', 'openid')
+    .populate('lottery', 'name')
+    .exec (err, result) ->
+      if err
+        logger.error 'LRind:'+err
+        res.json err:err
+      else
+        diff = UpdateObject result, data, ['created_at','lottery','user','updated_at']
+        lname = result.lottery.name
+        result.save (err, result) ->
+          if err
+            logger.error 'LRUpdated:'+err
+            res.json err:err
+          else
+            if result.status && result.notify
+              api.sendText '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify+'\n\n（请在输入框输入【领奖】两字进入领奖流程）'
+            logger.warn 'LRUpdated:'+diff
+            res.json result:result
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [

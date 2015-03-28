@@ -125,8 +125,6 @@
 
   api.registerTicketHandle(get_js_sdk_ticket, save_js_sdk_ticket);
 
-  exports.api = api;
-
   host = 'http://rsct.swift.tf';
 
   home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
@@ -198,7 +196,7 @@
     return params;
   };
 
-  getRewardNumber = function(lottery_id, user, callback) {
+  getRewardNumber = function(lottery_id, user, openid, callback) {
     var num;
     num = utils.getRandomInt(1000000, 9999999);
     return LotteryRecord.findOne({
@@ -215,7 +213,8 @@
         lr = new LotteryRecord({
           lottery: lottery_id,
           user: user,
-          number: num
+          number: num,
+          openid: openid
         });
         return lr.save(function(err, result) {
           if (err) {
@@ -533,7 +532,7 @@
               shareInfo.uid = user._id;
               return res.render('success', shareInfo);
             } else {
-              return getRewardNumber(params.id, user._id, function(err, result) {
+              return getRewardNumber(params.id, user._id, user.openid, function(err, result) {
                 if (err) {
                   return res.josn({
                     status: false
@@ -627,8 +626,8 @@
                   status: false
                 });
               });
-              getRewardNumber(params.id, user._id, ep.done('n1'));
-              return getRewardNumber(params.id, user._id, ep.done('n2'));
+              getRewardNumber(params.id, user._id, user.openid, ep.done('n1'));
+              return getRewardNumber(params.id, user._id, user.openid, ep.done('n2'));
             }
           });
         });
@@ -731,6 +730,39 @@
           }
         });
       }
+    });
+    router.post('/lottery_records/update', auth.isAuthenticated(), function(req, res) {
+      var data;
+      data = req.body;
+      logger.trace('LotteryRecordUpdate:' + JSON.stringify(data));
+      return LotteryRecord.findById(data._id).populate('user', 'openid').populate('lottery', 'name').exec(function(err, result) {
+        var diff, lname;
+        if (err) {
+          logger.error('LRind:' + err);
+          return res.json({
+            err: err
+          });
+        } else {
+          diff = UpdateObject(result, data, ['created_at', 'lottery', 'user', 'updated_at']);
+          lname = result.lottery.name;
+          return result.save(function(err, result) {
+            if (err) {
+              logger.error('LRUpdated:' + err);
+              return res.json({
+                err: err
+              });
+            } else {
+              if (result.status && result.notify) {
+                api.sendText('恭喜您于活动【' + lname + '】中奖\n\n' + result.notify + '\n\n（请在输入框输入【领奖】两字进入领奖流程）');
+              }
+              logger.warn('LRUpdated:' + diff);
+              return res.json({
+                result: result
+              });
+            }
+          });
+        }
+      });
     });
     return router.get('/admin', auth.isAuthenticated(), function(req, res) {
       var nav;

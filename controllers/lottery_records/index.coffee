@@ -7,32 +7,8 @@ auth = require('../../lib/auth')
 EventProxy = require 'eventproxy'
 moment = require 'moment'
 logger = require('log4js').getDefaultLogger()
-api = require('../index').api
 
 module.exports = (router)->
-
-  router.post '/update', auth.isAuthenticated(), (req, res)->
-    data = req.body
-    logger.trace 'LotteryRecordUpdate:'+JSON.stringify(data)
-    LotteryRecord.findById(data._id)
-    .populate('user', 'openid')
-    .populate('lottery', 'name')
-    .exec (err, result) ->
-      if err
-        logger.error 'LRind:'+err
-        res.json err:err
-      else
-        diff = UpdateObject result, data, ['created_at','lottery','user','updated_at']
-        lname = result.lottery.name
-        result.save (err, result) ->
-          if err
-            logger.error 'LRUpdated:'+err
-            res.json err:err
-          else
-            if result.status && result.notify
-              api.sendText '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify+'\n\n（请在输入框输入【领奖】两字进入领奖流程）'
-            logger.warn 'LRUpdated:'+diff
-            res.json result:result
 
   router.get '/list', auth.isAuthenticated(), (req, res)->
     data = req.query

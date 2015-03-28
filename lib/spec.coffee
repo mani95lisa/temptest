@@ -69,7 +69,7 @@ module.exports = (app)->
   app.on 'middleware:after:session', (args)->
     passport.use(auth.localStrategy())
     app.use(passport.initialize())
-    app.use(passport.session())
+#    app.use(passport.session())
     app.use(auth.injectUser())
     passport.serializeUser(auth.serialize)
     passport.deserializeUser(auth.deserialize)
@@ -101,7 +101,8 @@ module.exports = (app)->
         wxsession = if req.wxsession then req.wxsession else {}
         openid = message.FromUserName
         if content == '领奖'
-          LotteryRecord.find('user.openid':openid,status:true,dispatched:false).populate('lottery', 'name').exec (err, result)->
+          q = openid:openid,status:true,dispatched:false
+          LotteryRecord.find(q).populate('lottery', 'name').exec (err, result)->
             if err
               logger.error 'FindLRError:'+err
               res.reply '系统出错，请稍候再试'

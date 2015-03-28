@@ -8,6 +8,10 @@
   Schema = Mongoose.Schema;
 
   LotteryRecordSchema = new Schema({
+    openid: {
+      type: String,
+      index: true
+    },
     lottery: {
       type: Schema.Types.ObjectId,
       ref: 'Lottery',
