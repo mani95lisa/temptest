@@ -82,6 +82,8 @@ save_js_sdk_ticket = (type, ticket, cb)->
 
 api.registerTicketHandle get_js_sdk_ticket, save_js_sdk_ticket
 
+exports.api = api
+
 host = 'http://rsct.swift.tf'
 home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
@@ -373,7 +375,7 @@ module.exports = (router)->
                   if err
                     logger.error 'RecordLotterJoinErr:'+err
                   else
-                    logger.trace 'LotteryJoinedRecord:'+params.id+'-'+result+'-'+user._id
+                    logger.trace 'LotteryJoinedRecord:'+params.id+'-'+arr[0].value+'-'+user._id
                 res.render 'success', shareInfo
     else
       res.render 'sign_up'

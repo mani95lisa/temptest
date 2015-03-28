@@ -23,6 +23,7 @@ UserSchema = new Schema
   order_times:type:Number,default:0
   login_times:type:Number,default:0
   registered:type:Boolean,default:false
+  status:Number
   last_login:Date
   created_at:Date
 

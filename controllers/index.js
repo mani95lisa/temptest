@@ -125,6 +125,8 @@
 
   api.registerTicketHandle(get_js_sdk_ticket, save_js_sdk_ticket);
 
+  exports.api = api;
+
   host = 'http://rsct.swift.tf';
 
   home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
@@ -553,7 +555,7 @@
                     if (err) {
                       return logger.error('RecordLotterJoinErr:' + err);
                     } else {
-                      return logger.trace('LotteryJoinedRecord:' + params.id + '-' + result + '-' + user._id);
+                      return logger.trace('LotteryJoinedRecord:' + params.id + '-' + arr[0].value + '-' + user._id);
                     }
                   });
                   return res.render('success', shareInfo);

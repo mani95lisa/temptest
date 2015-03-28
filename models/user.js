@@ -44,6 +44,7 @@
       type: Boolean,
       "default": false
     },
+    status: Number,
     last_login: Date,
     created_at: Date
   });

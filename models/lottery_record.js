@@ -23,7 +23,12 @@
       required: true,
       index: true
     },
-    status: Boolean
+    notify: String,
+    status: Boolean,
+    truename: String,
+    address: String,
+    mobile: Number,
+    dispatched: Boolean
   });
 
   Timestamps = require('mongoose-times');

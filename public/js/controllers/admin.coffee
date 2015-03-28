@@ -15,14 +15,14 @@ define ['angular', 'console'], (angular, console)->
   ).controller('Lottery', ($scope, $injector)->
     require ['controllers/lottery'], (controller)->
       $injector.invoke controller, this, '$scope':$scope
-  ).controller('Order', ($scope, $injector)->
-    require ['controllers/order'], (controller)->
-      $injector.invoke controller, this, '$scope':$scope
-  ).controller('Product', ($scope, $injector)->
-    require ['controllers/product'], (controller)->
-      $injector.invoke controller, this, '$scope':$scope
   ).controller('EditLottery', ($scope, $injector, data, $modalInstance)->
     require ['controllers/edit_lottery'], (controller)->
+      $injector.invoke controller, this, {'$scope':$scope,'data':data,'$modalInstance':$modalInstance}
+  ).controller('Joined', ($scope, $injector)->
+    require ['controllers/joined'], (controller)->
+      $injector.invoke controller, this, '$scope':$scope
+  ).controller('EditJoined', ($scope, $injector, data, $modalInstance)->
+    require ['controllers/edit_joined'], (controller)->
       $injector.invoke controller, this, {'$scope':$scope,'data':data,'$modalInstance':$modalInstance}
   ).controller('EditUser', ($scope, $injector, data, $modalInstance)->
     require ['controllers/edit_user'], (controller)->

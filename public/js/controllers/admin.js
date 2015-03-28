@@ -26,20 +26,22 @@
           '$scope': $scope
         });
       });
-    }).controller('Order', function($scope, $injector) {
-      return require(['controllers/order'], function(controller) {
-        return $injector.invoke(controller, this, {
-          '$scope': $scope
-        });
-      });
-    }).controller('Product', function($scope, $injector) {
-      return require(['controllers/product'], function(controller) {
-        return $injector.invoke(controller, this, {
-          '$scope': $scope
-        });
-      });
     }).controller('EditLottery', function($scope, $injector, data, $modalInstance) {
       return require(['controllers/edit_lottery'], function(controller) {
+        return $injector.invoke(controller, this, {
+          '$scope': $scope,
+          'data': data,
+          '$modalInstance': $modalInstance
+        });
+      });
+    }).controller('Joined', function($scope, $injector) {
+      return require(['controllers/joined'], function(controller) {
+        return $injector.invoke(controller, this, {
+          '$scope': $scope
+        });
+      });
+    }).controller('EditJoined', function($scope, $injector, data, $modalInstance) {
+      return require(['controllers/edit_joined'], function(controller) {
         return $injector.invoke(controller, this, {
           '$scope': $scope,
           'data': data,

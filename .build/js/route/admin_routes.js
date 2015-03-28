@@ -16,6 +16,10 @@
           templateUrl: 'partials/lottery.html',
           controller: 'Lottery'
         });
+        $routeProvider.when('/joined', {
+          templateUrl: 'partials/joined.html',
+          controller: 'Joined'
+        });
         $routeProvider.when('/setting', {
           templateUrl: 'partials/setting.html',
           controller: 'Setting'
