@@ -3,7 +3,7 @@
   'use strict';
   define(['console', 'humane', 'moment'], function(console, humane, moment) {
     return function($scope, $http, uiGridConstants, $modal, $interval, $location) {
-      var caching, handler;
+      var caching, editRow, handler;
       console.group('joined');
       $scope.page = 1;
       $scope.search = function() {
@@ -29,33 +29,44 @@
       });
       caching = [];
       $scope.requesting = false;
-      $scope.externalScopes = {
-        edit: function(row) {
-          var modalInstance;
-          modalInstance = $modal.open({
-            templateUrl: 'modals/joined.html',
-            controller: 'EditJoined',
-            backdrop: 'static',
-            resolve: {
-              data: function() {
-                return row.entity;
-              }
+      editRow = function(row) {
+        var modalInstance;
+        modalInstance = $modal.open({
+          templateUrl: 'modals/joined.html',
+          controller: 'EditJoined',
+          backdrop: 'static',
+          resolve: {
+            data: function() {
+              return row.entity;
+            }
+          }
+        });
+        return modalInstance.result.then(function(data) {
+          data._csrf = csrf;
+          return $http.post('/lottery_records/update', data).success(function(result) {
+            if (result.err) {
+              return humane.error(result.err);
+            } else {
+              humane.log('更新成功');
+              console.log(result);
+              return $scope.getData();
             }
           });
-          return modalInstance.result.then(function(data) {
-            data._csrf = csrf;
-            return $http.post('/lottery_records/update', data).success(function(result) {
-              if (result.err) {
-                return humane.error(result.err);
-              } else {
-                humane.log('更新成功');
-                console.log(result);
-                return $scope.getData();
-              }
-            });
-          }, function() {
-            return console.log('dismiss');
-          });
+        }, function() {
+          return console.log('dismiss');
+        });
+      };
+      editRow({
+        entity: {
+          name: 'test',
+          user: {
+            nickname: 'test'
+          }
+        }
+      });
+      $scope.externalScopes = {
+        edit: function(row) {
+          return editRow(row);
         },
         enable: function(row) {
           var data;

@@ -31,27 +31,32 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
 
     $scope.requesting = false
 
+    editRow = (row)->
+      modalInstance = $modal.open
+        templateUrl:'modals/joined.html'
+        controller:'EditJoined'
+        backdrop:'static'
+        resolve:
+          data:->
+            return row.entity
+      modalInstance.result.then (data)->
+        data._csrf = csrf
+        $http.post('/lottery_records/update',data).success (result)->
+          if result.err
+            humane.error result.err
+          else
+            humane.log '更新成功'
+            console.log result
+            $scope.getData()
+      ,
+      ->
+        console.log 'dismiss'
+
+    editRow {entity:name:'test',user:nickname:'test'}
+
     $scope.externalScopes =
       edit:(row)->
-        modalInstance = $modal.open
-          templateUrl:'modals/joined.html'
-          controller:'EditJoined'
-          backdrop:'static'
-          resolve:
-            data:->
-              return row.entity
-        modalInstance.result.then (data)->
-          data._csrf = csrf
-          $http.post('/lottery_records/update',data).success (result)->
-            if result.err
-              humane.error result.err
-            else
-              humane.log '更新成功'
-              console.log result
-              $scope.getData()
-        ,
-          ->
-            console.log 'dismiss'
+        editRow row
       enable:(row)->
         data = row.entity
         data.enabled = !data.enabled

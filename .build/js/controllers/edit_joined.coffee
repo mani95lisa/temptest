@@ -23,11 +23,11 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
       $modalInstance.close(data)
 
     if data.dispatched
-      $scope.radioModel = '3'
+      $scope.status = '3'
     else if data.status
-      $scope.radioModel = '2'
+      $scope.status = '2'
     else
-      $scope.radioModel = '1'
+      $scope.status = '1'
 
     $scope.$apply()
 
