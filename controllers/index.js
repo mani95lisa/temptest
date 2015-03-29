@@ -508,7 +508,7 @@
                 status: false
               });
             } else if (result) {
-              share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + params.c + ';;p___' + params.p + ';;id___' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
+              share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + chanel + ';;p___lottery;;id___' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
               data = {
                 config: config,
                 desc: result.description,
