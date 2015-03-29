@@ -13,49 +13,50 @@
         this.scale = this.windowWidth/320;
         $('.arrow').css({width:24*this.scale,height:14*this.scale});
 
-        {#config}
-            var arr = "{config.jsApiList}";
-            arr = arr.split(',');
-            appId = "{config.appId}";
-                wx.config({
-                    debug:"{config.debug}",
-                appId: "{config.appId}",
-                    timestamp: "{config.timestamp}",
-                    nonceStr: "{config.nonceStr}",
-                signature: "{config.signature}",
-                    jsApiList: arr
-                });
-        {/config}
+    });
 
-        var shared_success = function(){
-            _hmt.push(['_trackEvent', '大白活动1', '拉页分享', '']);
-        };
+{#config}
+var arr = "{config.jsApiList}";
+arr = arr.split(',');
+appId = "{config.appId}";
+        wx.config({
+    debug:"{config.debug}",
+appId: "{config.appId}",
+    timestamp: "{config.timestamp}",
+    nonceStr: "{config.nonceStr}",
+signature: "{config.signature}",
+    jsApiList: arr
+});
+{/config}
+
+var shared_success = function(){
+    _hmt.push(['_trackEvent', '大白活动1', '拉页分享', '']);
+};
 
         wx.ready(function () {
 
-            var wxData = {
-                "appId":appId,
-                "title" : '{name}',
-                "desc" : '{desc}',
-                "imgUrl" : '{img}',
-                "link" : $('#url').text(),
-                success:shared_success
-            };
+var wxData = {
+    "appId":appId,
+    "title" : '{name}',
+    "desc" : '{desc}',
+"imgUrl" : '{img}',
+    "link" : $('#url').text(),
+    success:shared_success
+};
 
-                wx.onMenuShareAppMessage(wxData);
-                wx.onMenuShareQQ(wxData);
-                wx.onMenuShareWeibo(wxData);
-                wx.onMenuShareTimeline({
-                    "appId":appId,
-                    "title" : '{group_desc}',
-                    "imgUrl" : '{img}',
-                    "link" : $('#url').text(),
-                    success:shared_success
-                });
+    wx.onMenuShareAppMessage(wxData);
+    wx.onMenuShareQQ(wxData);
+    wx.onMenuShareWeibo(wxData);
+    wx.onMenuShareTimeline({
+        "appId":appId,
+        "title" : '{group_desc}',
+        "imgUrl" : '{img}',
+        "link" : $('#url').text(),
+        success:shared_success
+    });
 
-            });
+});
 
-        });
 </script>
 
 {<body}
