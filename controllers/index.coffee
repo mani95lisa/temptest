@@ -341,7 +341,7 @@ module.exports = (router)->
     res.render 'success'
 
   router.get '/lottery', (req, res)->
-    res.render 'lottery',joined:moment().format('YYMMDD'), countdown:94170370
+    res.render 'lottery',draw_url:'/draw_lottery',joined:moment().format('YYMMDD'), countdown:94170370
 
   router.get '/draw_lottery', (req, res)->
     session = req.session

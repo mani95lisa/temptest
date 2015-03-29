@@ -10,7 +10,13 @@
       this.scale = this.windowWidth / 640;
       Base.position($('#button_mask'), 242, 251, 199, 592);
       $('#button_mask').click(function() {
-        return console.log('check lotterys');
+        if (count_down_time <= 0) {
+          return alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持');
+        } else {
+          _hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);
+          console.log(draw_url);
+          return window.location = draw_url;
+        }
       });
       Base.position($('#joined'), this.windowWidth / this.scale, 40, 0, 440);
       $('#joined').css({
@@ -62,14 +68,6 @@
           value = value + '';
           setNumValue(i1, value.slice(0, 1));
           return setNumValue(i2, value.slice(1, 2));
-        }
-      };
-      $('#button_mask').click = function() {
-        if (count_down_time <= 0) {
-          return alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持');
-        } else {
-          _hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);
-          return window.location = draw_url;
         }
       };
       interval = setInterval(function() {

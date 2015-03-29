@@ -497,6 +497,7 @@
     });
     router.get('/lottery', function(req, res) {
       return res.render('lottery', {
+        draw_url: '/draw_lottery',
         joined: moment().format('YYMMDD'),
         countdown: 94170370
       });
