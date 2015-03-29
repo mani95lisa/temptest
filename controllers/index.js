@@ -491,8 +491,11 @@
       });
     });
     router.get('/pages', function(req, res) {
+      var chanel, url;
+      chanel = req.query.c ? req.query.c : 'weixin';
+      url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___' + chanel + ';;p___lottery;;id___5516adc23348ddc57e8c0dcb&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
       return res.render('pages', {
-        url: home_url
+        url: url
       });
     });
     router.get('/success', function(req, res) {

@@ -337,7 +337,9 @@ module.exports = (router)->
       res.json err:err, result:result
 
   router.get '/pages', (req, res)->
-    res.render 'pages', url:home_url
+    chanel = if req.query.c then req.query.c else 'weixin'
+    url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___'+chanel+';;p___lottery;;id___5516adc23348ddc57e8c0dcb&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+    res.render 'pages', url:url
 
   router.get '/success', (req, res)->
     res.render 'success'
