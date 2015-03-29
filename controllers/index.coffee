@@ -195,13 +195,14 @@ module.exports = (router)->
                     countdown = moment(result.end).valueOf() - moment().valueOf()
                     console.log 'CD:'+countdown
                     draw_url = '/draw_lottery'
-                    req.session.shareInfo = name:result.name,desc:result.description,img:result.thumb,url:share_url
+                    req.session.shareInfo = name:result.name,group_desc:result.group_desc,desc:result.description,img:result.thumb,url:share_url
                     data =
                       uid:user._id
                       draw_url:draw_url
                       joined:result.joined
                       config:config
                       desc:result.description
+                      group_desc:result.group_desc
                       url:share_url
                       img:result.thumb
                       countdown:countdown

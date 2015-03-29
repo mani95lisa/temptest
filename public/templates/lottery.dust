@@ -42,7 +42,7 @@
         wx.onMenuShareWeibo(wxData);
         wx.onMenuShareTimeline({
             "appId":appId,
-            "title" : '{desc}',
+            "title" : '{group_desc}',
             "imgUrl" : '{img}',
             "link" : $('#url').text(),
             success:shared_success

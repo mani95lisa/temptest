@@ -28,6 +28,7 @@
       type: Boolean,
       "default": false
     },
+    group_desc: String,
     description: String
   });
 

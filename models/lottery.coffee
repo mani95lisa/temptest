@@ -12,6 +12,7 @@ LotterySchema = new Schema
   joined:type:Number,default:0
   link_url:String
   enabled:type:Boolean,default:false
+  group_desc:String
   description:String
 
 Timestamps = require('mongoose-times')
