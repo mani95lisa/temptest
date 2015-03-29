@@ -161,6 +161,7 @@ getRewardNumber = (lottery_id, user,openid, callback)->
 
 code_url = 'http://www.rsct.com/finance/weixin/sendverifycode.action'
 regist_url = 'http://www.rsct.com/finance/weixin/register.action'
+sign_in_url = 'http://www.rsct.com/finance/weixin/login.action'
 
 module.exports = (router)->
 
@@ -465,6 +466,40 @@ module.exports = (router)->
   router.post '/code', (req, res)->
     console.log req.body
 
+  router.post '/do_sign_in', (req, res)->
+    data = req.body
+    user = req.session.user
+    if req.session.doing
+      return
+    req.session.doing = true
+    if !data.mobile
+      res.json err:'请输入手机号'
+    else if !data.password
+      res.json err:'请输入密码'
+    else
+      formData = form:nickName:data.mobile,password:data.password
+      logger.trace 'DoSignSignIn:'+JSON.stringify(formData)
+      request.post sign_in_url, formData, (err, result, body)->
+        req.session.doing = false
+        if err
+          res.json err:err
+        else
+          body = JSON.parse(body)
+          logger.trace 'Registered:'+JSON.stringify(body)
+          if body.result == '1'
+            res.json err:body.tip
+          else
+            if user
+              User.findByIdAndUpdate user._id, $set:mobile:data.mobile, (err, result)->
+                if err
+                  logger.error 'UserSetMobileError:'+user._id+'-'+data.mobile+'-'+err
+                else
+                  logger.warn 'UserSetMobileOK:'+user._id+'-'+data.mobile
+                  req.session.user = result
+                res.json result:true
+            else
+              res.json result:true
+
   router.post '/do_sign_up', (req, res)->
     data = req.body
     user = req.session.user
@@ -500,6 +535,7 @@ module.exports = (router)->
                 if err
                   logger.error 'UserSetMobileError:'+user._id+'-'+data.mobile+'-'+err
                 else
+                  logger.warn 'UserSetMobileOK:'+user._id+'-'+data.mobile
                   req.session.user = result
                 res.json result:true
             else

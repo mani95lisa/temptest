@@ -78,7 +78,8 @@ Base =
         o = {}
         data.forEach (d)->
           o[d.name] = d.value
-        $.post '/do_sign_up', o, (result)->
+        url = if sign_up then '/do_sign_up' else '/do_sign_in'
+        $.post url, o, (result)->
           if result.err
             registing = false
             alert(result.err)

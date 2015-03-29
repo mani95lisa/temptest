@@ -105,7 +105,7 @@
       });
       switchStatus();
       return $('#submit_btn').click(function() {
-        var data, o;
+        var data, o, url;
         if (registing) {
 
         } else {
@@ -115,7 +115,8 @@
           data.forEach(function(d) {
             return o[d.name] = d.value;
           });
-          return $.post('/do_sign_up', o, function(result) {
+          url = sign_up ? '/do_sign_up' : '/do_sign_in';
+          return $.post(url, o, function(result) {
             if (result.err) {
               registing = false;
               return alert(result.err);
