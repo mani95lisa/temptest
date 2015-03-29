@@ -223,6 +223,7 @@
             logger.error(err);
             return callback(err);
           } else {
+            logger.warn('NumberSaved:' + lottery_id + '-' + openid + '-' + num);
             return callback(null, num);
           }
         });
@@ -559,7 +560,7 @@
                     if (err) {
                       return logger.error('RecordLotterJoinErr:' + err);
                     } else {
-                      return logger.trace('LotteryJoinedRecord:' + params.id + '-' + arr[0].value + '-' + user._id);
+                      return logger.warn('LotteryJoinedRecord:' + params.id + '-' + arr[0].value + '-' + user._id);
                     }
                   });
                   return res.render('success', shareInfo);
@@ -781,7 +782,9 @@
                 return api.sendText(result.user.openid, '恭喜您于活动【' + lname + '】中奖\n\n' + result.notify + '\n\n（请在输入框输入【领奖】两字进入领奖流程）', function(err, result) {
                   if (err) {
                     logger.error('notify error:' + err);
-                    return res.err('发送通知失败，请再试一次');
+                    return res.json({
+                      err: '发送通知失败，请再试一次，有可能是用户尚未关注服务号所致'
+                    });
                   } else {
                     return res.json({
                       result: result

@@ -156,6 +156,7 @@ getRewardNumber = (lottery_id, user,openid, callback)->
           logger.error err
           callback err
         else
+          logger.warn 'NumberSaved:'+lottery_id+'-'+openid+'-'+num
           callback null, num
 
 code_url = 'http://www.rsct.com/finance/weixin/sendverifycode.action'
@@ -376,7 +377,7 @@ module.exports = (router)->
                   if err
                     logger.error 'RecordLotterJoinErr:'+err
                   else
-                    logger.trace 'LotteryJoinedRecord:'+params.id+'-'+arr[0].value+'-'+user._id
+                    logger.warn 'LotteryJoinedRecord:'+params.id+'-'+arr[0].value+'-'+user._id
                 res.render 'success', shareInfo
     else
       res.render 'sign_up'
@@ -506,7 +507,7 @@ module.exports = (router)->
               api.sendText result.user.openid, '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify+'\n\n（请在输入框输入【领奖】两字进入领奖流程）', (err, result)->
                 if err
                   logger.error 'notify error:'+err
-                  res.err '发送通知失败，请再试一次'
+                  res.json err:'发送通知失败，请再试一次，有可能是用户尚未关注服务号所致'
                 else
                   res.json result:result
             else

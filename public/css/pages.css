@@ -2,8 +2,9 @@
 #section1,
 #section2,
 #section3,
-#section4 {
-  background-size: contain;
+#section4,
+#section5 {
+  background-size: cover;
 }
 #section0 {
   background-image: url(../imgs/pages/p1.jpg);
