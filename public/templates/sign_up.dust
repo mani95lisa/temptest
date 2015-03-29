@@ -25,6 +25,10 @@
     });
 </script>
 
+{<title}
+    润石创投
+{/title}
+
 {<body}
     <img class="bg" src="imgs/sign_up_bg.jpg">
     <form id="form">
