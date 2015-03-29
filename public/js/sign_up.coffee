@@ -46,8 +46,29 @@ Base =
             switchCodeBtnStatus()
 
     $('#submit_btn').css(width:520*this.scale,height:100*this.scale)
+    $('#switch_btn').css(width:520*this.scale,height:100*this.scale)
     registing = false
 
+    sign_up = true
+    switchStatus = ->
+      if sign_up
+        $('#submit_btn').attr('src', 'imgs/sign_up_and_lottery.png')
+        $('#switch_btn').attr('src', 'imgs/sign_in.png')
+        $('#code_field').show()
+        $('#nickname').show()
+        $('.verify_btn').show()
+      else
+        $('#submit_btn').attr('src', 'imgs/sign_in_and_lottery.png')
+        $('#switch_btn').attr('src', 'imgs/sign_up.png')
+        $('#code_field').hide()
+        $('#nickname').hide()
+        $('.verify_btn').hide()
+
+    $('#switch_btn').click ->
+      sign_up = !sign_up
+      switchStatus()
+
+    switchStatus()
     $('#submit_btn').click ->
       if registing
         return

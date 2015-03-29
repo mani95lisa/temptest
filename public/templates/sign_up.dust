@@ -41,10 +41,11 @@
         <div class="field">
             <input type="password" name="password" placeholder="请输入密码">
         </div>
-        <div class="field">
+        <div class="field" id="nickname">
             <input type="text" name="nickname" placeholder="昵称，为空则默认微信昵称">
         </div>
-        <img id="submit_btn" src="/imgs/sign_up_and_lottery.png">
+        <img id="submit_btn" src="imgs/sign_up_and_lottery.png">
+        <img id="switch_btn" src="imgs/sign_in.png">
         <input type="hidden" id="csrf" name="_csrf" value="{_csrf}"/>
     </form>
 

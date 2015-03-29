@@ -4,7 +4,7 @@
 
   Base = {
     init: function() {
-      var countdown, interval, registing, sentCode, switchCodeBtnStatus;
+      var countdown, interval, registing, sentCode, sign_up, switchCodeBtnStatus, switchStatus;
       this.windowWidth = $(window).width();
       this.windowHeight = $(window).height();
       this.scale = this.windowWidth / 640;
@@ -78,7 +78,32 @@
         width: 520 * this.scale,
         height: 100 * this.scale
       });
+      $('#switch_btn').css({
+        width: 520 * this.scale,
+        height: 100 * this.scale
+      });
       registing = false;
+      sign_up = true;
+      switchStatus = function() {
+        if (sign_up) {
+          $('#submit_btn').attr('src', 'imgs/sign_up_and_lottery.png');
+          $('#switch_btn').attr('src', 'imgs/sign_in.png');
+          $('#code_field').show();
+          $('#nickname').show();
+          return $('.verify_btn').show();
+        } else {
+          $('#submit_btn').attr('src', 'imgs/sign_in_and_lottery.png');
+          $('#switch_btn').attr('src', 'imgs/sign_up.png');
+          $('#code_field').hide();
+          $('#nickname').hide();
+          return $('.verify_btn').hide();
+        }
+      };
+      $('#switch_btn').click(function() {
+        sign_up = !sign_up;
+        return switchStatus();
+      });
+      switchStatus();
       return $('#submit_btn').click(function() {
         var data, o;
         if (registing) {
