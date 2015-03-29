@@ -25,9 +25,6 @@
 
     wx.ready(function () {
 
-        alert('ready')
-        alert(appId)
-
         var wxData = {
             "appId":appId,
             "title" : '{name}',
