@@ -177,7 +177,8 @@ module.exports = (app)->
                     res.reply '格式不正确，请注意在收件人和手机号码后面添加空格及手机号码是否正确'
                   else
                     truename = arr[0]
-                    address = content.replace truename+' ', ''
+                    mobile = arr[1]
+                    address = content.replace truename+' '+mobile+' ', ''
                     saveInfo truename, address, mobile
               else
                 reply1 res

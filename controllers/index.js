@@ -677,7 +677,11 @@
       var data, formData, nickname, user;
       data = req.body;
       user = req.session.user;
-      nickname = user ? user.nickname : 'test';
+      if (data.nickname) {
+        nickname = data.nickname;
+      } else if (user) {
+        nickname = user.nickname;
+      }
       if (req.session.doing) {
         console.log('doing');
         return;

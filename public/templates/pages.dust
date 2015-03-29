@@ -29,6 +29,9 @@
             <img class="arrow" src="imgs/arrow2.png">
         </div>
         <div class="section" id="section4">
+            <img class="arrow" src="imgs/arrow2.png">
+        </div>
+        <div class="section" id="section5">
             <a href="{url}" onclick="_hmt.push(['_trackEvent', '大白活动1', '抽奖跳转', '跳转']);"><img src="imgs/goto_lottery.png" class="goto_lottery"></a>
         </div>
     </div>

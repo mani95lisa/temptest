@@ -442,7 +442,10 @@ module.exports = (router)->
   router.post '/do_sign_up', (req, res)->
     data = req.body
     user = req.session.user
-    nickname = if user then user.nickname else 'test'
+    if data.nickname
+      nickname = data.nickname
+    else if user
+      nickname = user.nickname
     if req.session.doing
       console.log 'doing'
       return

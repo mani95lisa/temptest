@@ -6,6 +6,7 @@
 
     var appId = '';
     var count_down_time = parseInt('{countdown}');
+    var draw_url = '{draw_url}';
 
     {#config}
         var arr = "{config.jsApiList}";
@@ -52,9 +53,7 @@
 
 {<body}
     <img class="bg" src="imgs/lottery_bg.jpg">
-    <a href="{draw_url}" onclick="_hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);">
-        <button id="button_mask"></button>
-    </a>
+    <button id="button_mask"></button>
     <div id="joined"><span class="joined_value">{joined}</span><span class="joined_label">人已参与</span></div>
     <div id="count_down">
         <img id="time_bg" src="imgs/time_bg.png">

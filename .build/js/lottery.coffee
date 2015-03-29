@@ -46,6 +46,13 @@ Base =
         setNumValue i1,value.slice(0,1)
         setNumValue i2,value.slice(1,2)
 
+    $('#button_mask').click = ->
+      if count_down_time <= 0
+        alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持')
+      else
+        _hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);
+        window.location.href = draw_url
+
     interval = setInterval ->
       count_down_time-=1000
       if count_down_time > 0
@@ -57,6 +64,9 @@ Base =
         setTwoValue 5, 6, minutes
         seconds = Math.floor(count_down_time % (60*1000)/1000)
         setTwoValue 7, 8, seconds
+      else
+        clearInterval interval
+        alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持')
     , 1000
 
     #定位需知和规则
