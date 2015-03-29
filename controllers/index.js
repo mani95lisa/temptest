@@ -733,6 +733,8 @@
                 }, function(err, result) {
                   if (err) {
                     logger.error('UserSetMobileError:' + user._id + '-' + data.mobile + '-' + err);
+                  } else {
+                    req.session.user = result;
                   }
                   return res.redirect('/draw_lottery');
                 });

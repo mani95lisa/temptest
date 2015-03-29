@@ -473,6 +473,8 @@ module.exports = (router)->
               User.findByIdAndUpdate user._id, $set:mobile:data.mobile, (err, result)->
                 if err
                   logger.error 'UserSetMobileError:'+user._id+'-'+data.mobile+'-'+err
+                else
+                  req.session.user = result
                 res.redirect '/draw_lottery'
             else
               res.redirect '/draw_lottery'
