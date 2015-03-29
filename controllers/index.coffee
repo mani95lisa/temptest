@@ -110,7 +110,7 @@ menu =
 
 getConfig = (req, callback)->
   url = host + req.url
-  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -342,7 +342,7 @@ module.exports = (router)->
     if !id
       res.json status:false
     else
-      getConfig req, (config)->
+      getConfig req, (err, config)->
         Lottery.findById id, (err, result)->
           if err
             logger.error err

@@ -157,7 +157,7 @@
     var url;
     url = host + req.url;
     return api.getJsConfig({
-      debug: true,
+      debug: false,
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
       url: url
     }, function(err, result) {
@@ -499,7 +499,7 @@
           status: false
         });
       } else {
-        return getConfig(req, function(config) {
+        return getConfig(req, function(err, config) {
           return Lottery.findById(id, function(err, result) {
             var data, share_url;
             if (err) {
