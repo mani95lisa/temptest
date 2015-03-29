@@ -134,6 +134,7 @@ module.exports = (app)->
                   res.reply '未查询到中奖结果，请您关注并参与其它抽奖活动，感谢您的对润石创投的支持！'
             else
               wxsession = JSON.parse(user.wx_status) if user.wx_status
+              lid = wxsession.lid
               if content && wxsession.input_address
                 ep = new EventProxy()
                 saveInfo = (truename, address, mobile)->
@@ -170,7 +171,6 @@ module.exports = (app)->
                   else
                     res.reply '输入错误，请输入 Y 或者 N'
                 else
-                  lid = wxsession.lid
                   arr = content.split(' ')
                   mobile = arr[1]
                   if arr.length < 3 || mobile.length != 11
