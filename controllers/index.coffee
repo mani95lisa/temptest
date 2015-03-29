@@ -158,8 +158,8 @@ getRewardNumber = (lottery_id, user,openid, callback)->
         else
           callback null, num
 
-code_url = 'http://182.92.237.234:8080/finance/weixin/sendverifycode.action'
-regist_url = 'http://182.92.237.234:8080/finance/weixin/register.action'
+code_url = 'http://www.rsct.com/finance/weixin/sendverifycode.action'
+regist_url = 'http://www.rsct.com/finance/weixin/register.action'
 
 module.exports = (router)->
 

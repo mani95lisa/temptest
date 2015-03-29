@@ -230,9 +230,9 @@
     });
   };
 
-  code_url = 'http://182.92.237.234:8080/finance/weixin/sendverifycode.action';
+  code_url = 'http://www.rsct.com/finance/weixin/sendverifycode.action';
 
-  regist_url = 'http://182.92.237.234:8080/finance/weixin/register.action';
+  regist_url = 'http://www.rsct.com/finance/weixin/register.action';
 
   module.exports = function(router) {
     var init;

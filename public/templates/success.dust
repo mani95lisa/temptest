@@ -61,7 +61,7 @@
         {/nums}
     </div>
 
-    <img id="qrcode" src="imgs/qrcode.jpg">
+    {!<img id="qrcode" src="imgs/qrcode.jpg">!}
 
     <div id="share_pop">
         <img class="share_content" src="imgs/share_content.png">
