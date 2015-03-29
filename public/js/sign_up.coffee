@@ -47,6 +47,7 @@ Base =
 
     $('#submit_btn').css(width:520*this.scale,height:100*this.scale)
     registing = false
+
     $('#submit_btn').click ->
       if registing
         return
@@ -60,6 +61,8 @@ Base =
           if result.err
             registing = false
             alert(result.err)
+          else
+            window.location = '/draw_lottery'
 
 
   position : (item,width,height,x,y)->

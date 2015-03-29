@@ -476,9 +476,12 @@ module.exports = (router)->
                   logger.error 'UserSetMobileError:'+user._id+'-'+data.mobile+'-'+err
                 else
                   req.session.user = result
-                res.redirect '/draw_lottery'
+                res.json result:true
             else
-              res.redirect '/draw_lottery'
+              res.json result:true
+
+  router.post '/test', (req, res)->
+    res.redirect '/draw_lottery'
 
   router.post '/lottery_records/update', auth.isAuthenticated(), (req, res)->
     data = req.body

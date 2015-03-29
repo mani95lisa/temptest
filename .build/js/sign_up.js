@@ -94,6 +94,8 @@
             if (result.err) {
               registing = false;
               return alert(result.err);
+            } else {
+              return window.location = '/draw_lottery';
             }
           });
         }

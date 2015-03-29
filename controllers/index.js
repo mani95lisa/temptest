@@ -738,15 +738,22 @@
                   } else {
                     req.session.user = result;
                   }
-                  return res.redirect('/draw_lottery');
+                  return res.json({
+                    result: true
+                  });
                 });
               } else {
-                return res.redirect('/draw_lottery');
+                return res.json({
+                  result: true
+                });
               }
             }
           }
         });
       }
+    });
+    router.post('/test', function(req, res) {
+      return res.redirect('/draw_lottery');
     });
     router.post('/lottery_records/update', auth.isAuthenticated(), function(req, res) {
       var data;
