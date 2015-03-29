@@ -14,7 +14,7 @@
         $('.arrow').css({width:24*this.scale,height:14*this.scale});
 
     });
-
+var appId = '';
 {#config}
 var arr = "{config.jsApiList}";
 arr = arr.split(',');

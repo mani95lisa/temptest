@@ -13,18 +13,6 @@
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
     <script>
-        {#config}
-            var arr = "{config.jsApiList}";
-            arr = arr.split(',');
-            wx.config({
-                debug:false,
-                appId: "{config.appId}",
-                timestamp: "{config.timestamp}",
-                nonceStr: "{config.nonceStr}",
-                signature: "{config.signature}",
-                jsApiList: arr
-            });
-        {/config}
 
         var _hmt = _hmt || [];
         (function() {
