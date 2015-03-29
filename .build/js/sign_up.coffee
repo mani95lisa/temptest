@@ -61,6 +61,7 @@ Base =
             registing = false
             alert(result.err)
 
+
   position : (item,width,height,x,y)->
     item.css(position:'absolute',width:width*this.scale,height:height*this.scale,top:y*this.scale,left:x*this.scale)
 
