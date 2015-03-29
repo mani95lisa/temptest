@@ -37,7 +37,7 @@
             var wxData = {
                 "appId":appId,
                 "title" : '{name}',
-            "desc" : '{desc}',
+                "desc" : '{desc}',
                 "imgUrl" : '{img}',
                 "link" : $('#url').text(),
                 success:shared_success
@@ -80,4 +80,6 @@
             </a>
         </div>
     </div>
+
+    <div style="display: none" id="url">{share_url}</div>
 {/body}

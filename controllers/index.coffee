@@ -353,12 +353,15 @@ module.exports = (router)->
               config:config
               desc:result.description
               group_desc:result.group_desc
-              url:share_url
+              share_url:share_url
+              url:'http://rsct.swift.tf/pages'+req.url
               img:result.thumb
               name:result.name
             res.render 'pages', data
           else
             res.json status:false
+
+  router.get '/ttt', (req, res)->
 
   router.get '/success', (req, res)->
     res.render 'success'

@@ -513,7 +513,8 @@
                 config: config,
                 desc: result.description,
                 group_desc: result.group_desc,
-                url: share_url,
+                share_url: share_url,
+                url: 'http://rsct.swift.tf/pages' + req.url,
                 img: result.thumb,
                 name: result.name
               };
@@ -527,6 +528,7 @@
         });
       }
     });
+    router.get('/ttt', function(req, res) {});
     router.get('/success', function(req, res) {
       return res.render('success');
     });
