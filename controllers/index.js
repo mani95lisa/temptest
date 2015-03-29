@@ -492,6 +492,9 @@
         });
       });
     });
+    router.get('/tp', function(req, res) {
+      return res.render('pages');
+    });
     router.get('/pages', function(req, res) {
       var chanel, id;
       chanel = req.query.c ? req.query.c : 'weixin';

@@ -337,6 +337,9 @@ module.exports = (router)->
     Order.find {}, products:$elemMatch:name:req.query.name, (err, result)->
       res.json err:err, result:result
 
+  router.get '/tp', (req, res)->
+    res.render 'pages'
+
   router.get '/pages', (req, res)->
     chanel = if req.query.c then req.query.c else 'weixin'
     id = req.query.id
