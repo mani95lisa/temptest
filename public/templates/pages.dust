@@ -4,6 +4,54 @@
 <script type="text/javascript" src="components/fullpage.js/jquery.fullPage.min.js"></script>
 
 <script type="text/javascript">
+    var appId = '';
+    {#config}
+        var arr = "{config.jsApiList}";
+        arr = arr.split(',');
+        appId = "{config.appId}";
+        wx.config({
+            debug:"{config.debug}",
+            appId: "{config.appId}",
+            timestamp: "{config.timestamp}",
+            nonceStr: "{config.nonceStr}",
+            signature: "{config.signature}",
+            jsApiList: arr
+        });
+    {/config}
+
+    var shared_success = function(){
+        _hmt.push(['_trackEvent', '大白活动1', '拉页分享', '']);
+    };
+
+    wx.ready(function () {
+
+        alert('ready')
+        alert(appId)
+
+        var wxData = {
+            "appId":appId,
+            "title" : '{name}',
+            "desc" : '{desc}',
+            "imgUrl" : '{img}',
+            "link" : $('#url').text(),
+            success:shared_success
+        };
+
+        wx.onMenuShareAppMessage(wxData);
+        wx.onMenuShareQQ(wxData);
+        wx.onMenuShareWeibo(wxData);
+        wx.onMenuShareTimeline({
+            "appId":appId,
+            "title" : '{group_desc}',
+            "imgUrl" : '{img}',
+            "link" : $('#url').text(),
+            success:shared_success
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
     $(document).ready(function() {
         $('#fullpage').fullpage({
             verticalCentered: false
@@ -14,49 +62,6 @@
         $('.arrow').css({width:24*this.scale,height:14*this.scale});
 
     });
-var appId = '';
-{#config}
-var arr = "{config.jsApiList}";
-arr = arr.split(',');
-appId = "{config.appId}";
-        wx.config({
-    debug:"{config.debug}",
-appId: "{config.appId}",
-    timestamp: "{config.timestamp}",
-    nonceStr: "{config.nonceStr}",
-signature: "{config.signature}",
-    jsApiList: arr
-});
-{/config}
-
-var shared_success = function(){
-    _hmt.push(['_trackEvent', '大白活动1', '拉页分享', '']);
-};
-
-        wx.ready(function () {
-
-var wxData = {
-    "appId":appId,
-    "title" : '{name}',
-    "desc" : '{desc}',
-"imgUrl" : '{img}',
-    "link" : $('#url').text(),
-    success:shared_success
-};
-
-    wx.onMenuShareAppMessage(wxData);
-    wx.onMenuShareQQ(wxData);
-    wx.onMenuShareWeibo(wxData);
-    wx.onMenuShareTimeline({
-        "appId":appId,
-        "title" : '{group_desc}',
-        "imgUrl" : '{img}',
-        "link" : $('#url').text(),
-        success:shared_success
-    });
-
-});
-
 </script>
 
 {<body}
