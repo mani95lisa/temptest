@@ -116,7 +116,7 @@ module.exports = (app)->
                   s = '系统查询到您中了以下活动的奖品：\n'
                   result.forEach (r)->
                     s+= r.lottery.name+'\n'
-                  info = user.truename+' '+user.mobile+' '+user.address
+                  info = user.truename+' '+user.mobile2+' '+user.address
                   if user.address
                     s += '\n 系统查询到您曾使用过收货信息为：\n'+info+'\n 如果继续使用该地址请回复Y，重新输入请回复N'
                     wxsession.userinfo = info
@@ -152,11 +152,12 @@ module.exports = (app)->
                     res.reply '抱歉，系统出错，请稍候再试'
 
                   LotteryRecord.findByIdAndUpdate lid, $set:truename:truename,address:address,mobile:mobile, ep.done 'lr'
-                  User.findOneAndUpdate openid, $set:truename:truename,address:address, ep.done 'user'
+                  User.findOneAndUpdate openid, $set:truename:truename,address:address,mobile2:mobile, ep.done 'user'
 
                 if wxsession.hasAddress
                   if content == 'Y' || content == 'y'
                     arr = wxsession.userinfo.split(' ')
+                    console.log 'Yest:'+wxsession.userinfo
                     saveInfo arr[0], arr[2], arr[1]
                   else if content == 'N' || content == 'n'
                     user.wx_status = JSON.stringify(wxsession)

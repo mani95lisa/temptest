@@ -30,6 +30,7 @@
       type: String,
       index: true
     },
+    mobile2: String,
     verify_code: String,
     score: Number,
     order_times: {

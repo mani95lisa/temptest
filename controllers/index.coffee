@@ -443,6 +443,10 @@ module.exports = (router)->
     data = req.body
     user = req.session.user
     nickname = if user then user.nickname else 'test'
+    if req.session.doing
+      console.log 'doing'
+      return
+    req.session.doing = true
     if !data.mobile
       res.json err:'请输入手机号'
     else if !data.code
@@ -453,6 +457,7 @@ module.exports = (router)->
       formData = form:mobileNo:data.mobile,nickName:nickname,password:data.password,rePassword:data.password,verifyCode:data.code
       logger.trace 'DoSignUp:'+JSON.stringify(formData)
       request.post regist_url, formData, (err, result, body)->
+        req.session.doing = false
         if err
           res.json err:err
         else

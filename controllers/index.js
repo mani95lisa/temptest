@@ -678,6 +678,11 @@
       data = req.body;
       user = req.session.user;
       nickname = user ? user.nickname : 'test';
+      if (req.session.doing) {
+        console.log('doing');
+        return;
+      }
+      req.session.doing = true;
       if (!data.mobile) {
         return res.json({
           err: '请输入手机号'
@@ -702,6 +707,7 @@
         };
         logger.trace('DoSignUp:' + JSON.stringify(formData));
         return request.post(regist_url, formData, function(err, result, body) {
+          req.session.doing = false;
           if (err) {
             return res.json({
               err: err

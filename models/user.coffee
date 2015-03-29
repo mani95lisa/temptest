@@ -18,6 +18,7 @@ UserSchema = new Schema
   remark:String
   headimgurl:String
   mobile:type:String,index:true
+  mobile2:String
   verify_code:String #手机验证码
   score:Number #积分
   order_times:type:Number,default:0
