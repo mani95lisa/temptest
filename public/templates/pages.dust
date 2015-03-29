@@ -7,7 +7,6 @@
     $(document).ready(function() {
         $('#fullpage').fullpage({
             verticalCentered: false
-
         });
 
         this.windowWidth = $(window).width();
@@ -15,17 +14,17 @@
         $('.arrow').css({width:24*this.scale,height:14*this.scale});
 
         {#config}
-        var arr = "{config.jsApiList}";
-        arr = arr.split(',');
-        appId = "{config.appId}";
-            wx.config({
-                debug:"{config.debug}",
-            appId: "{config.appId}",
-                timestamp: "{config.timestamp}",
-                nonceStr: "{config.nonceStr}",
-            signature: "{config.signature}",
-                jsApiList: arr
-            });
+            var arr = "{config.jsApiList}";
+            arr = arr.split(',');
+            appId = "{config.appId}";
+                wx.config({
+                    debug:"{config.debug}",
+                appId: "{config.appId}",
+                    timestamp: "{config.timestamp}",
+                    nonceStr: "{config.nonceStr}",
+                signature: "{config.signature}",
+                    jsApiList: arr
+                });
         {/config}
 
         var shared_success = function(){

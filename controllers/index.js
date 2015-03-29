@@ -157,7 +157,7 @@
     var url;
     url = host + req.url;
     return api.getJsConfig({
-      debug: false,
+      debug: true,
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
       url: url
     }, function(err, result) {
