@@ -51,7 +51,7 @@ Base =
         alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持')
       else
         _hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);
-        window.location.href = draw_url
+        window.location = draw_url
 
     interval = setInterval ->
       count_down_time-=1000

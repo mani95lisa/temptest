@@ -69,7 +69,7 @@
           return alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持');
         } else {
           _hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);
-          return window.location.href = draw_url;
+          return window.location = draw_url;
         }
       };
       interval = setInterval(function() {
