@@ -491,12 +491,41 @@
       });
     });
     router.get('/pages', function(req, res) {
-      var chanel, url;
+      var chanel, id;
       chanel = req.query.c ? req.query.c : 'weixin';
-      url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___' + chanel + ';;p___lottery;;id___5516adc23348ddc57e8c0dcb&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
-      return res.render('pages', {
-        url: url
-      });
+      id = req.query.id;
+      if (!id) {
+        return res.json({
+          status: false
+        });
+      } else {
+        return getConfig(req, function(config) {
+          return Lottery.findById(id, function(err, result) {
+            var data, share_url;
+            if (err) {
+              logger.error(err);
+              return res.json({
+                status: false
+              });
+            } else if (result) {
+              share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + params.c + ';;p___' + params.p + ';;id___' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
+              data = {
+                config: config,
+                desc: result.description,
+                group_desc: result.group_desc,
+                url: share_url,
+                img: result.thumb,
+                name: result.name
+              };
+              return res.render('pages', data);
+            } else {
+              return res.json({
+                status: false
+              });
+            }
+          });
+        });
+      }
     });
     router.get('/success', function(req, res) {
       return res.render('success');
