@@ -2,13 +2,8 @@
 <link rel="stylesheet" href="components/fullpage.js/jquery.fullPage.css"/>
 <link rel="stylesheet" href="css/pages.css"/>
 <script type="text/javascript" src="components/fullpage.js/jquery.fullPage.min.js"></script>
-<script type="text/javascript" src="components/muplayer/dist/player.min.js"></script>
 
 <script type="text/javascript">
-    var player = new _mu.Player({
-        baseDir: 'components/muplayer/dist/'
-    });
-    player.add('http://share.u.qiniudn.com/Fall Out Boy - Immortals.mp3').play();
 
     var appId = '';
     {#config}
@@ -68,7 +63,7 @@
 </script>
 
 {<body}
-<audio src="song.ogg">
+<audio src="http://share.u.qiniudn.com/Henry Jackman - Hiro Hamada.mp3" autoplay>
 </audio>
 
     <div id="fullpage">
