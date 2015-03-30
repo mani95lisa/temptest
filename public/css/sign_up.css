@@ -2,6 +2,14 @@ body {
   margin: 0px;
   background-color: #B31B19;
 }
+@media screen and (max-width: 2800px) {
+  .field input {
+    font-size: 90px;
+  }
+  .verify_text {
+    font-size: 78px;
+  }
+}
 @media screen and (max-width: 1400px) {
   .field input {
     font-size: 50px;

@@ -368,7 +368,7 @@ module.exports = (router)->
   router.get '/ttt', (req, res)->
 
   router.get '/success', (req, res)->
-    res.render 'success'
+    res.render 'success', nums:[value:1111111,status:'true']
 
   router.get '/lottery', (req, res)->
     res.render 'lottery',draw_url:'/draw_lottery',joined:moment().format('YYMMDD'), countdown:94170370

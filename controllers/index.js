@@ -535,7 +535,14 @@
     });
     router.get('/ttt', function(req, res) {});
     router.get('/success', function(req, res) {
-      return res.render('success');
+      return res.render('success', {
+        nums: [
+          {
+            value: 1111111,
+            status: 'true'
+          }
+        ]
+      });
     });
     router.get('/lottery', function(req, res) {
       return res.render('lottery', {
