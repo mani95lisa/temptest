@@ -101,7 +101,7 @@
   };
 
   saveUserToken = function(openid, token, callback) {
-    console.log('SaveUserToken:' + openid + '-' + JSON.stingify(token));
+    console.log('SaveUserToken:' + openid + '-' + JSON.stringify(token));
     return User.findOne({
       openid: openid
     }, function(err, result) {

@@ -65,7 +65,7 @@ getUserToken = (openid, callback)->
       callback 'no user'
 
 saveUserToken = (openid, token, callback)->
-  console.log 'SaveUserToken:'+openid+'-'+JSON.stingify(token)
+  console.log 'SaveUserToken:'+openid+'-'+JSON.stringify(token)
   User.findOne openid:openid, (err, result)->
     if err
       logger.error 'FindUserTokenError:'+err
