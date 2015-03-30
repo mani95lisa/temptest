@@ -81,7 +81,8 @@ saveUserToken = (openid, token, callback)->
           logger.error 'SaveUserTokenError:'+err
           callback err
         else
-          callback null, result
+          logger.trace 'SaveUserTokenOK:'+JSON.stringify(token)
+          callback null, token
     else
       logger.error 'GetUserTokenError:No User'
       callback 'no user'

@@ -119,7 +119,8 @@
             logger.error('SaveUserTokenError:' + err);
             return callback(err);
           } else {
-            return callback(null, result);
+            logger.trace('SaveUserTokenOK:' + JSON.stringify(token));
+            return callback(null, token);
           }
         });
       } else {
