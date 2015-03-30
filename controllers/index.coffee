@@ -58,11 +58,8 @@ getUserToken = (openid, callback)->
       logger.error 'GetUserTokenError:'+err
       callback err
     else if result
-      if result.access_token
-        result.create_at = result.token_created_at
-        callback null, result
-      else
-        callback null, null
+      result.create_at = result.token_created_at
+      callback null, result
     else
       logger.error 'GetUserTokenError:No User'
       callback 'no user'
@@ -307,12 +304,14 @@ module.exports = (router)->
       return
 
     logger.trace 'Inited2:'+JSON.stringify(data)
-    client.getUserByCode data.code, (err, result)->
-      if err
-        logger.error 'AutoInitError:'+err
-        res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
-      else
-        init req, res, result
+    client.getAccessToken data.code, (err, result)->
+      console.log 'GotAT:'+JSON.stringify(result)
+      client.getUser result.openid, (err, result)->
+        if err
+          logger.error 'AutoInitError:'+err
+          res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
+        else
+          init req, res, result
 
   router.get '/init', (req, res)->
     data = req.query
