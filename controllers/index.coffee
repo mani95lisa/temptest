@@ -68,7 +68,7 @@ getUserToken = (openid, callback)->
         access_token:result.access_token
         refresh_token:result.refresh_token
         expires_in:result.expires_in
-        creat_at:result.ac_created_at
+        create_at:result.ac_created_at
         scope:result.scope
       }
       console.log 'R3:'+JSON.stringify(data2)
