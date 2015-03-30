@@ -129,7 +129,7 @@
     });
   };
 
-  client = new OAuth(appid, secret);
+  client = new OAuth(appid, secret, getUserToken, saveUserToken);
 
   get_js_sdk_ticket = function(type, cb) {
     console.log('get js ticket', type);

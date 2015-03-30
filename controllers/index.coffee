@@ -86,7 +86,7 @@ saveUserToken = (openid, token, callback)->
       logger.error 'GetUserTokenError:No User'
       callback 'no user'
 
-client = new OAuth(appid, secret)
+client = new OAuth(appid, secret, getUserToken, saveUserToken)
 
 get_js_sdk_ticket = (type, cb)->
   console.log 'get js ticket', type
