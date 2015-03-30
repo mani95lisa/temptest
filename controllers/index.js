@@ -101,6 +101,7 @@
   };
 
   saveUserToken = function(openid, token, callback) {
+    console.log('SaveUserToken:' + openid + '-' + JSON.stingify(token));
     return User.findOne({
       openid: openid
     }, function(err, result) {
@@ -433,15 +434,13 @@
       logger.trace('Inited2:' + JSON.stringify(data));
       return client.getAccessToken(data.code, function(err, result) {
         console.log('GotAT:' + JSON.stringify(result));
-        return saveUserToken(result.openid, result, function(err, result) {
-          return client.getUser(result.openid, function(err, result) {
-            if (err) {
-              logger.error('AutoInitError:' + err);
-              return res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init&response_type=code&scope=snsapi_userinfo&state=' + data.state + '&connect_redirect=1#wechat_redirect');
-            } else {
-              return init(req, res, result);
-            }
-          });
+        return client.getUser(result.openid, function(err, result) {
+          if (err) {
+            logger.error('AutoInitError:' + err);
+            return res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init&response_type=code&scope=snsapi_userinfo&state=' + data.state + '&connect_redirect=1#wechat_redirect');
+          } else {
+            return init(req, res, result);
+          }
         });
       });
     });
