@@ -17,6 +17,7 @@ request = require 'request'
 moment = require 'moment'
 utils = require '../lib/utils'
 UpdateObject = utils.updateObject
+OAuth = require 'wechat-oauth'
 
 getToken = (cb)->
   Token.findOne appid:appid, (err, result)->
@@ -50,6 +51,41 @@ saveToken = (token, cb)->
       token.save cb
 
 api = new API(appid, secret, getToken, saveToken)
+
+getUserToken = (openid, callback)->
+  User.findOne openid:openid, 'access_token refresh_token expires_in scope token_created_at', (err, result)->
+    if err
+      logger.error 'GetUserTokenError:'+err
+      callback err
+    else if result
+      result.create_at = result.token_created_at
+      callback null, result
+    else
+      logger.error 'GetUserTokenError:No User'
+      callback 'no user'
+
+saveUserToken = (openid, token, callback)->
+  User.findOne openid:openid, (err, result)->
+    if err
+      logger.error 'FindUserTokenError:'+err
+      callback err
+    else if result
+      result.access_token = token.access_token
+      result.token_created_at = token.create_at
+      result.refresh_token = token.refresh_token
+      result.expires_in = token.expires_in
+      result.scope = token.scope
+      result.save (err, result)->
+        if err
+          logger.error 'SaveUserTokenError:'+err
+          callback err
+        else
+          callback null, result
+    else
+      logger.error 'GetUserTokenError:No User'
+      callback 'no user'
+
+client = new OAuth(appid, secret, getUserToken, saveUserToken)
 
 get_js_sdk_ticket = (type, cb)->
   console.log 'get js ticket', type
@@ -168,77 +204,88 @@ module.exports = (router)->
   init = (req, res, result)->
     state = req.query.state
     params = getParams(state)
-    console.log 'State:'+state+'Page:'+params.p
+    logger.trace 'InitState:'+state
+    user = ''
+    ep = new EventProxy()
+    ep.on 'ok', (user)->
+      getConfig req, (err, config)->
+        if(err)
+          logger.error 'ConfigError:'+err
+        req.session.user = user
+        req.session.state = state
+        page = params.p
+        if page == 'lottery'
+          id = params.id
+          if !id
+            res.json status:false
+          else
+            Lottery.findById id, (err, result)->
+              if err
+                logger.error err
+              else if result
+                s = moment().format('YYMMDD')
+                result.joined += parseInt(s)
+                share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+                countdown = moment(result.end).valueOf() - moment().valueOf()
+                draw_url = '/draw_lottery'
+                req.session.shareInfo = name:result.name,group_desc:result.group_desc,desc:result.description,img:result.thumb,url:share_url
+                data =
+                  uid:user._id
+                  draw_url:draw_url
+                  joined:result.joined
+                  config:config
+                  desc:result.description
+                  group_desc:result.group_desc
+                  url:share_url
+                  img:result.thumb
+                  countdown:countdown
+                  name:result.name
+                res.render 'lottery', data
+        else
+          res.json status:false
+
     User.findOne openid:result.openid, (err, userResult)->
       if err
-        logger.error 'UserFindError:'+err
-        res.json err:err
+        logger.error 'InitUserFindError:'+err
+        res.json status:false
+      else if userResult
+        user = userResult
+        if params.c
+          user.channel = params.c
+          arr = if user.channels then user.channels else []
+          if arr.indexOf(params.c) == -1
+            arr.push params.c
+            user.channels = arr
+        user.last_login = new Date()
+        user.login_times++
+        user.nickname = result.nickname
+        user.sex = result.sex
+        user.province = result.province
+        user.city = result.city
+        user.country = result.country
+        user.headimgurl = result.headimgurl
+        user.save (err, result)->
+          logger.trace 'UserInitFindAndUpdated:'+JSON.stringify(result)
+          ep.emit 'ok', result
       else
-        ep = new EventProxy()
-        ep.on 'ok', ->
-          getConfig req, (err, config)->
-            if(err)
-              logger.error 'ConfigError:'+err
-            req.session.user = user
-            req.session.state = state
-            page = params.p
-            if page == 'lottery'
-              id = params.id
-              if !id
-                res.json status:false
-              else
-                Lottery.findById id, (err, result)->
-                  if err
-                    logger.error err
-                  else if result
-                    s = moment().format('YYMMDD')
-                    result.joined += parseInt(s)
-                    share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
-                    countdown = moment(result.end).valueOf() - moment().valueOf()
-                    console.log 'CD:'+countdown
-                    draw_url = '/draw_lottery'
-                    req.session.shareInfo = name:result.name,group_desc:result.group_desc,desc:result.description,img:result.thumb,url:share_url
-                    data =
-                      uid:user._id
-                      draw_url:draw_url
-                      joined:result.joined
-                      config:config
-                      desc:result.description
-                      group_desc:result.group_desc
-                      url:share_url
-                      img:result.thumb
-                      countdown:countdown
-                      name:result.name
-                    res.render 'lottery',data
-            else
-              res.json status:false
-
-        user = ''
-        if userResult
-          user = userResult
-          user.last_login = new Date()
-          user.login_times++
-          user.save (err, result)->
-            ep.emit 'ok'
-        else
-          user = new User(
-            openid:result.openid
-            last_login:new Date()
-            created_at:new Date()
-          )
-          user.nickname = result.nickname
-          user.sex = result.sex
-          user.province = result.province
-          user.city = result.city
-          user.country = result.country
-          user.headimgurl = result.headimgurl
-          user.save (err, result)->
-            if err
-              logger.error 'UserSaveError:'+err
-              res.json err:err
-            else
-              logger.trace 'UserSaved:'+JSON.stringify(result)
-              ep.emit 'ok'
+        user = new User(
+          openid:result.openid
+          last_login:new Date()
+          created_at:new Date()
+        )
+        user.nickname = result.nickname
+        user.sex = result.sex
+        user.province = result.province
+        user.city = result.city
+        user.country = result.country
+        user.headimgurl = result.headimgurl
+        user.save (err, result)->
+          if err
+            logger.error 'UserInitSaveError:'+err
+            res.json err:err
+          else
+            logger.trace 'UserInitSaved:'+JSON.stringify(result)
+            ep.emit 'ok', result
 
   router.get '/menu', (req, res)->
     api.createMenu menu, (err, result)->
@@ -253,46 +300,16 @@ module.exports = (router)->
     headers = req.headers
     data = req.query
     if !data.code
-      res.jsonp status:false
+      res.json status:false
       return
 
-    console.log 'Inited2:'+JSON.stringify(data)
-
-    request.get 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appid+'&secret='+secret+'&code='+data.code+'&grant_type=authorization_code', (err, result)->
+    logger.trace 'Inited2:'+JSON.stringify(data)
+    client.getUserByCode data.code, (err, result)->
       if err
-        logger.error 'UserCodeError2:'+err
-        res.json status:false
+        logger.error 'AutoInitError:'+err
+        res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
       else
-        result = JSON.parse result.body
-        console.log 'Inited2Result:'+JSON.stringify(result)
-        if result.errcode
-          logger.error 'UserCodeError2:'+result.errmsg
-          res.json status:false
-        else
-          access_token = result.access_token
-          refresh_token = result.refresh_token
-          openid = result.openid
-
-          if !access_token
-            logger.error 'UserAccessToeknError:'+JSON.stringify(result)
-            res.json status:false
-          else
-            request.get 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid+'&lang=zh_CN', (err, result)->
-
-              reinit = ->
-                res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
-
-              if err
-                logger.error 'UserCodeError3:'+err
-                reinit()
-              else
-                result = JSON.parse result.body
-                if result.errcode
-                  logger.error 'UserInfoError:'+result.errmsg
-                  reinit()
-                else
-                  logger.trace 'Init:'+JSON.stringify result
-                  init req, res, result
+        init req, res, result
 
   router.get '/init', (req, res)->
     data = req.query
@@ -300,35 +317,14 @@ module.exports = (router)->
       res.jsonp status:false
       return
 
-    request.get 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appid+'&secret='+secret+'&code='+data.code+'&grant_type=authorization_code', (err, result)->
-      if err
-        logger.error 'UserCodeError1:'+err
-        res.jsonp status:false
-      else
-        result = JSON.parse result.body
-        if result.errcode
-          logger.error 'UserCodeError2:'+result.errmsg
-          res.jsonp status:false
-        else
-          access_token = result.access_token
-          refresh_token = result.refresh_token
-          openid = result.openid
+    logger.trace 'Inited1:'+JSON.stringify(data)
 
-          if !access_token
-            logger.error 'UserAccessToeknError:'+JSON.stringify(result)
-            res.jsonp status:false
-          else
-            request.get 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid+'&lang=zh_CN', (err, result)->
-              if err
-                logger.error 'UserCodeError3:'+err
-                res.jsonp status:false
-              else
-                result = JSON.parse result.body
-                if result.errcode
-                  logger.error 'UserInfoError:'+result.errmsg
-                  res.jsonp status:false
-                else
-                  init req, res, result
+    client.getUserByCode data.code, (err, result)->
+      if err
+        logger.error 'InitError:'+err
+        res.json status:false
+      else
+        init req, res, result
 
   router.get '/', (req, res)->
     res.render 'login'

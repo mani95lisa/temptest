@@ -71,6 +71,16 @@ module.exports = (app)->
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(auth.injectUser())
+    app.use (req, res, next)->
+      ua = req.headers['user-agent']
+      url = req.url
+      if url && url!='/' && url.indexOf('admin') == -1
+        if (/mobile/i.test(ua))
+          next()
+        else
+          res.send '仅支持微信浏览'
+      else
+        next()
     passport.serializeUser(auth.serialize)
     passport.deserializeUser(auth.deserialize)
 
