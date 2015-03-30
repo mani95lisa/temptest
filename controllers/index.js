@@ -90,7 +90,7 @@
       if (err) {
         logger.error('GetUserTokenError:' + err);
         return callback(err);
-      } else if (result) {
+      } else if (result && result.access_token) {
         result.create_at = result.token_created_at;
         return callback(null, result);
       } else {
