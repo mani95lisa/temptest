@@ -30,7 +30,7 @@ UserSchema = new Schema
   refresh_token:String
   expires_in:Number
   scope:String
-  token_created_at:Date
+  ac_created_at:Number
   wx_status:String
   last_login:Date
   created_at:Date

@@ -87,8 +87,8 @@
     console.log('GotoGetToken:' + openid);
     return User.findOne({
       openid: openid
-    }, function(err, result) {
-      var data;
+    }, 'openid access_token refresh_token expires_in ac_created_at scope', function(err, result) {
+      var data, data2;
       if (err) {
         logger.error('GetUserTokenError:' + err);
         return callback(err);
@@ -96,13 +96,16 @@
         console.log('GetUserTokenResult:' + JSON.stringify(result));
         data = client.store[openid];
         console.log('R2:' + JSON.stringify(data));
-        return callback(null, {
+        data2 = {
+          openid: result.openid,
           access_token: result.access_token,
           refresh_token: result.refresh_token,
           expires_in: result.expires_in,
-          scope: result.scope,
-          creat_at: result.token_created_at.getTime()
-        });
+          creat_at: result.ac_created_at,
+          scope: result.scope
+        };
+        console.log('R3:' + JSON.stringify(data2));
+        return callback(null, data2);
       } else {
         logger.error('GetUserTokenError:No User');
         return callback(null, client.store[openid]);
@@ -120,7 +123,7 @@
         return callback(err);
       } else if (result) {
         result.access_token = token.access_token;
-        result.token_created_at = token.create_at;
+        result.ac_created_at = token.create_at;
         result.refresh_token = token.refresh_token;
         result.expires_in = token.expires_in;
         result.scope = token.scope;
