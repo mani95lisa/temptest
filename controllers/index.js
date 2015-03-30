@@ -120,7 +120,7 @@
             return callback(err);
           } else {
             logger.trace('SaveUserTokenOK:' + JSON.stringify(token));
-            return callback(null, token);
+            return callback(null);
           }
         });
       } else {
