@@ -88,14 +88,12 @@
     return User.findOne({
       openid: openid
     }, 'openid access_token refresh_token expires_in ac_created_at scope', function(err, result) {
-      var data, data2;
+      var data2;
       if (err) {
         logger.error('GetUserTokenError:' + err);
         return callback(err);
       } else if (result) {
         console.log('GetUserTokenResult:' + JSON.stringify(result));
-        data = client.store[openid];
-        console.log('R2:' + JSON.stringify(data));
         data2 = {
           openid: result.openid,
           access_token: result.access_token,
@@ -107,7 +105,7 @@
         console.log('R3:' + JSON.stringify(data2));
         return callback(null, data2);
       } else {
-        logger.error('GetUserTokenError:No User');
+        logger.warn('GetUserTokenError:No User');
         return callback(null, client.store[openid]);
       }
     });
@@ -133,12 +131,11 @@
             return callback(err);
           } else {
             logger.trace('SaveUserTokenOK:' + JSON.stringify(token));
-            client.store[openid] = token;
             return callback(null);
           }
         });
       } else {
-        logger.error('SaveUserTokenError:No User By Openid');
+        logger.warn('SaveUserTokenError:No User By Openid');
         client.store[openid] = token;
         return callback(null);
       }

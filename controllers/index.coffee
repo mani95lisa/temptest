@@ -60,9 +60,6 @@ getUserToken = (openid, callback)->
       callback err
     else if result
       console.log 'GetUserTokenResult:'+JSON.stringify(result)
-#      result.create_at = result.token_created_at
-      data = client.store[openid]
-      console.log 'R2:'+JSON.stringify(data)
       data2 = {
         openid:result.openid
         access_token:result.access_token
@@ -74,7 +71,7 @@ getUserToken = (openid, callback)->
       console.log 'R3:'+JSON.stringify(data2)
       callback null, data2
     else
-      logger.error 'GetUserTokenError:No User'
+      logger.warn 'GetUserTokenError:No User'
       callback null, client.store[openid]
 
 saveUserToken = (openid, token, callback)->
@@ -95,10 +92,9 @@ saveUserToken = (openid, token, callback)->
           callback err
         else
           logger.trace 'SaveUserTokenOK:'+JSON.stringify(token)
-          client.store[openid] = token
           callback null
     else
-      logger.error 'SaveUserTokenError:No User By Openid'
+      logger.warn 'SaveUserTokenError:No User By Openid'
       client.store[openid] = token
       callback null
 
