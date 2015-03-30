@@ -84,6 +84,7 @@
   api = new API(appid, secret, getToken, saveToken);
 
   getUserToken = function(openid, callback) {
+    console.log('GotoGetToken:' + openid);
     return User.findOne({
       openid: openid
     }, 'access_token refresh_token expires_in scope token_created_at', function(err, result) {
@@ -91,8 +92,14 @@
         logger.error('GetUserTokenError:' + err);
         return callback(err);
       } else if (result) {
-        result.create_at = result.token_created_at;
-        return callback(null, result);
+        console.log('GetUserTokenResult:' + JSON.stringify(result));
+        return callback(null, {
+          access_token: result.access_token,
+          refresh_token: result.refresh_token,
+          expires_in: result.expires_in,
+          scope: result.scope,
+          creat_at: result.token_created_at.getTime()
+        });
       } else {
         logger.error('GetUserTokenError:No User');
         return callback(null, client.store[openid]);

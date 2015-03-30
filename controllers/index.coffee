@@ -53,13 +53,21 @@ saveToken = (token, cb)->
 api = new API(appid, secret, getToken, saveToken)
 
 getUserToken = (openid, callback)->
+  console.log 'GotoGetToken:'+openid
   User.findOne openid:openid, 'access_token refresh_token expires_in scope token_created_at', (err, result)->
     if err
       logger.error 'GetUserTokenError:'+err
       callback err
     else if result
-      result.create_at = result.token_created_at
-      callback null, result
+      console.log 'GetUserTokenResult:'+JSON.stringify(result)
+#      result.create_at = result.token_created_at
+      callback null, {
+        access_token:result.access_token
+        refresh_token:result.refresh_token
+        expires_in:result.expires_in
+        scope:result.scope
+        creat_at:result.token_created_at.getTime()
+      }
     else
       logger.error 'GetUserTokenError:No User'
       callback null, client.store[openid]
