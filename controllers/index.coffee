@@ -62,7 +62,7 @@ getUserToken = (openid, callback)->
       callback null, result
     else
       logger.error 'GetUserTokenError:No User'
-      callback 'no user'
+      callback null, client.store[openid]
 
 saveUserToken = (openid, token, callback)->
   console.log 'SaveUserToken:'+openid+'-'+JSON.stringify(token)
@@ -84,8 +84,9 @@ saveUserToken = (openid, token, callback)->
           logger.trace 'SaveUserTokenOK:'+JSON.stringify(token)
           callback null, token
     else
-      logger.error 'GetUserTokenError:No User'
-      callback 'no user'
+      logger.error 'SaveUserTokenError:No User By Openid'
+      client.store[openid] = token
+      callback null
 
 client = new OAuth(appid, secret, getUserToken, saveUserToken)
 

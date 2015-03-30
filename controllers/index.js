@@ -95,7 +95,7 @@
         return callback(null, result);
       } else {
         logger.error('GetUserTokenError:No User');
-        return callback('no user');
+        return callback(null, client.store[openid]);
       }
     });
   };
@@ -124,8 +124,9 @@
           }
         });
       } else {
-        logger.error('GetUserTokenError:No User');
-        return callback('no user');
+        logger.error('SaveUserTokenError:No User By Openid');
+        client.store[openid] = token;
+        return callback(null);
       }
     });
   };
