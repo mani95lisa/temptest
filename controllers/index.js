@@ -85,13 +85,61 @@
 
   getUserToken = function(openid, callback) {
     console.log('GotoGetToken:' + openid);
-    return callback(null, client.store[openid]);
+    return User.findOne({
+      openid: openid
+    }, function(err, result) {
+      var data;
+      if (err) {
+        logger.error('GetUserTokenError:' + err);
+        return callback(err);
+      } else if (result) {
+        console.log('GetUserTokenResult:' + JSON.stringify(result));
+        data = client.store[openid];
+        console.log('R2:' + JSON.stringify(data));
+        return callback(null, {
+          access_token: result.access_token,
+          refresh_token: result.refresh_token,
+          expires_in: result.expires_in,
+          scope: result.scope,
+          creat_at: result.token_created_at.getTime()
+        });
+      } else {
+        logger.error('GetUserTokenError:No User');
+        return callback(null, client.store[openid]);
+      }
+    });
   };
 
   saveUserToken = function(openid, token, callback) {
     console.log('SaveUserToken:' + openid + '-' + JSON.stringify(token));
-    client.store[openid] = token;
-    return callback(null);
+    return User.findOne({
+      openid: openid
+    }, function(err, result) {
+      if (err) {
+        logger.error('FindUserTokenError:' + err);
+        return callback(err);
+      } else if (result) {
+        result.access_token = token.access_token;
+        result.token_created_at = token.create_at;
+        result.refresh_token = token.refresh_token;
+        result.expires_in = token.expires_in;
+        result.scope = token.scope;
+        return result.save(function(err, result) {
+          if (err) {
+            logger.error('SaveUserTokenError:' + err);
+            return callback(err);
+          } else {
+            logger.trace('SaveUserTokenOK:' + JSON.stringify(token));
+            client.store[openid] = token;
+            return callback(null);
+          }
+        });
+      } else {
+        logger.error('SaveUserTokenError:No User By Openid');
+        client.store[openid] = token;
+        return callback(null);
+      }
+    });
   };
 
   client = new OAuth(appid, secret, getUserToken, saveUserToken);

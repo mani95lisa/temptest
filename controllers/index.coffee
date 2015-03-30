@@ -54,47 +54,50 @@ api = new API(appid, secret, getToken, saveToken)
 
 getUserToken = (openid, callback)->
   console.log 'GotoGetToken:'+openid
-#  User.findOne openid:openid, 'access_token refresh_token expires_in scope token_created_at', (err, result)->
-#    if err
-#      logger.error 'GetUserTokenError:'+err
-#      callback err
-#    else if result
-#      console.log 'GetUserTokenResult:'+JSON.stringify(result)
-##      result.create_at = result.token_created_at
-#      callback null, {
-#        access_token:result.access_token
-#        refresh_token:result.refresh_token
-#        expires_in:result.expires_in
-#        scope:result.scope
-#        creat_at:result.token_created_at.getTime()
-#      }
-#    else
-#      logger.error 'GetUserTokenError:No User'
-  callback null, client.store[openid]
+  User.findOne openid:openid, (err, result)->
+    if err
+      logger.error 'GetUserTokenError:'+err
+      callback err
+    else if result
+      console.log 'GetUserTokenResult:'+JSON.stringify(result)
+#      result.create_at = result.token_created_at
+      data = client.store[openid]
+      console.log 'R2:'+JSON.stringify(data)
+      callback null, {
+        access_token:result.access_token
+        refresh_token:result.refresh_token
+        expires_in:result.expires_in
+        scope:result.scope
+        creat_at:result.token_created_at.getTime()
+      }
+    else
+      logger.error 'GetUserTokenError:No User'
+      callback null, client.store[openid]
 
 saveUserToken = (openid, token, callback)->
   console.log 'SaveUserToken:'+openid+'-'+JSON.stringify(token)
-#  User.findOne openid:openid, (err, result)->
-#    if err
-#      logger.error 'FindUserTokenError:'+err
-#      callback err
-#    else if result
-#      result.access_token = token.access_token
-#      result.token_created_at = token.create_at
-#      result.refresh_token = token.refresh_token
-#      result.expires_in = token.expires_in
-#      result.scope = token.scope
-#      result.save (err, result)->
-#        if err
-#          logger.error 'SaveUserTokenError:'+err
-#          callback err
-#        else
-#          logger.trace 'SaveUserTokenOK:'+JSON.stringify(token)
-#          callback null
-#    else
-#      logger.error 'SaveUserTokenError:No User By Openid'
-  client.store[openid] = token
-  callback null
+  User.findOne openid:openid, (err, result)->
+    if err
+      logger.error 'FindUserTokenError:'+err
+      callback err
+    else if result
+      result.access_token = token.access_token
+      result.token_created_at = token.create_at
+      result.refresh_token = token.refresh_token
+      result.expires_in = token.expires_in
+      result.scope = token.scope
+      result.save (err, result)->
+        if err
+          logger.error 'SaveUserTokenError:'+err
+          callback err
+        else
+          logger.trace 'SaveUserTokenOK:'+JSON.stringify(token)
+          client.store[openid] = token
+          callback null
+    else
+      logger.error 'SaveUserTokenError:No User By Openid'
+      client.store[openid] = token
+      callback null
 
 client = new OAuth(appid, secret, getUserToken, saveUserToken)
 
