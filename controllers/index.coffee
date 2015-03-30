@@ -86,7 +86,7 @@ saveUserToken = (openid, token, callback)->
       logger.error 'GetUserTokenError:No User'
       callback 'no user'
 
-client = new OAuth(appid, secret, getUserToken, saveUserToken)
+client = new OAuth(appid, secret)
 
 get_js_sdk_ticket = (type, cb)->
   console.log 'get js ticket', type
@@ -305,14 +305,13 @@ module.exports = (router)->
       return
 
     logger.trace 'Inited2:'+JSON.stringify(data)
-    client.getAccessToken data.code, (err, result)->
+    client.getUserByCode data.code, (err, result)->
       console.log 'GotAT:'+JSON.stringify(result)
-      client.getUser result.openid, (err, result)->
-        if err
-          logger.error 'AutoInitError:'+err
-          res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
-        else
-          init req, res, result
+      if err
+        logger.error 'AutoInitError:'+err
+        res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
+      else
+        init req, res, result
 
   router.get '/init', (req, res)->
     data = req.query

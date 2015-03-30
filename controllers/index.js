@@ -129,7 +129,7 @@
     });
   };
 
-  client = new OAuth(appid, secret, getUserToken, saveUserToken);
+  client = new OAuth(appid, secret);
 
   get_js_sdk_ticket = function(type, cb) {
     console.log('get js ticket', type);
@@ -432,16 +432,14 @@
         return;
       }
       logger.trace('Inited2:' + JSON.stringify(data));
-      return client.getAccessToken(data.code, function(err, result) {
+      return client.getUserByCode(data.code, function(err, result) {
         console.log('GotAT:' + JSON.stringify(result));
-        return client.getUser(result.openid, function(err, result) {
-          if (err) {
-            logger.error('AutoInitError:' + err);
-            return res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init&response_type=code&scope=snsapi_userinfo&state=' + data.state + '&connect_redirect=1#wechat_redirect');
-          } else {
-            return init(req, res, result);
-          }
-        });
+        if (err) {
+          logger.error('AutoInitError:' + err);
+          return res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init&response_type=code&scope=snsapi_userinfo&state=' + data.state + '&connect_redirect=1#wechat_redirect');
+        } else {
+          return init(req, res, result);
+        }
       });
     });
     router.get('/init', function(req, res) {
