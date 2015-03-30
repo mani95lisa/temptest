@@ -57,9 +57,12 @@ getUserToken = (openid, callback)->
     if err
       logger.error 'GetUserTokenError:'+err
       callback err
-    else if result && result.access_token
-      result.create_at = result.token_created_at
-      callback null, result
+    else if result
+      if result.access_token
+        result.create_at = result.token_created_at
+        callback null, result
+      else
+        callback null, null
     else
       logger.error 'GetUserTokenError:No User'
       callback 'no user'

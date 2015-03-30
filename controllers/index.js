@@ -90,9 +90,13 @@
       if (err) {
         logger.error('GetUserTokenError:' + err);
         return callback(err);
-      } else if (result && result.access_token) {
-        result.create_at = result.token_created_at;
-        return callback(null, result);
+      } else if (result) {
+        if (result.access_token) {
+          result.create_at = result.token_created_at;
+          return callback(null, result);
+        } else {
+          return callback(null, null);
+        }
       } else {
         logger.error('GetUserTokenError:No User');
         return callback('no user');
