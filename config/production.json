@@ -49,7 +49,7 @@
         },
         "session": {
             "module": {
-                "name": "path:./lib/redis-session",
+                "name": "path:./lib/mongo-session",
                 "arguments": [
                     {
                         "key": "KWfCeYrNS26buo",
