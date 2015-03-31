@@ -73,8 +73,9 @@ module.exports = (app)->
     app.use(auth.injectUser())
     app.use (req, res, next)->
       ua = req.headers['user-agent']
-      url = req.url
-      if url && url!='/' && url.indexOf('admin') == -1
+      path = req.path
+      onlyMobile = ['/auto_init', '/init', '/draw_lottery', '/share_lottery']
+      if onlyMobile.indexOf(path) != -1
         if (/mobile/i.test(ua))
           next()
         else

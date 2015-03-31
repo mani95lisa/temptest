@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-        <script>
-            if(alert('{error}')){
-                window.close();
-            }
+        <script type="text/javascript">
+            {#error}
+                var err = '{error}';
+                if(err){
+                    err = err+'\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解';
+                    if(alert(err)){
+                        window.location = '{url}';
+                    }
+                }
+            {/error}
         </script>
 
+        <style>
+            body{
+                background-image: url(../imgs/sign_up_bg.jpg);
+                background-size: cover;
+            }
+        </style>
+
     </head>
+
+    <body>
+    </body>
 </html>

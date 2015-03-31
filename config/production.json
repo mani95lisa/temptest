@@ -46,9 +46,36 @@
             "module": {
                 "arguments": [{ "directory": "path:./controllers" }]
             }
+        },
+        "session": {
+            "module": {
+                "name": "path:./lib/redis-session",
+                "arguments": [
+                    {
+                        "key": "KWfCeYrNS26buo",
+                        "secret": "8zfgHmHzVFTmdaRwngKSd5UGiGpFjUouu",
+                        "cookie": {
+                            "path": "/",
+                            "httpOnly": true,
+                            "maxAge": null
+                        },
+                        "proxy": null
+                    },
+                    {
+                        "host": "svrid7ozj08wa2j.mongodb.duapp.com",
+                        "port": 10317,
+                        "db": "svrid7ozj08wa2j",
+                        "username":"bae",
+                        "password":"Z2w4s6ujmMcA5Wp9wj7SdyoO5g2E2ZOV"
+                    }
+                ]
+            },
+            "config": {
+                "ttl": 3600
+            },
+            "secret": "KWfCeYrNS26buo"
         }
 
-        
         ,"expressView": {
             "priority": 100,
             "enabled": true,

@@ -79,12 +79,14 @@ Base =
         data.forEach (d)->
           o[d.name] = d.value
         url = if sign_up then '/do_sign_up' else '/do_sign_in'
-        $.post url, o, (result)->
+        $.post(url, o, (result)->
           if result.err
             registing = false
             alert(result.err)
           else
             window.location = '/draw_lottery'
+        ).fail ->
+          registing = false
 
 
   position : (item,width,height,x,y)->

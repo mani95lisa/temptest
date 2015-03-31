@@ -26,6 +26,38 @@
 
     "middleware": {
 
+        "session": {
+            "module": {
+                "name": "path:./lib/mongo-session",
+                "arguments": [
+                    {
+                        "key": "KWfCeYrNS26buo",
+                        "secret": "8zfgHmHzVFTmdaRwngKSd5UGiGpFjUouu",
+                        "cookie": {
+                            "path": "/",
+                            "httpOnly": true,
+                            "maxAge": null
+                        },
+                        "proxy": null,
+                        "resave":false,
+                        "saveUninitialized":false
+                    },
+                    {
+                        "host": "localhost",
+                        "port": 27017,
+                        "db": "rsct",
+                        "autoReconnect": true,
+                        "w": 1,
+                        "ssl": false
+                    }
+                ]
+            },
+            "config": {
+                "ttl": 3600
+            },
+            "secret": "KWfCeYrNS26buo"
+        },
+
         "devtools": {
             "enabled": true,
             "priority": 35,

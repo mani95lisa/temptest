@@ -123,6 +123,8 @@
             } else {
               return window.location = '/draw_lottery';
             }
+          }).fail(function() {
+            return registing = false;
           });
         }
       });

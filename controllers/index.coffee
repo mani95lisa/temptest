@@ -212,6 +212,18 @@ code_url = 'http://www.rsct.com/finance/weixin/sendverifycode.action'
 regist_url = 'http://www.rsct.com/finance/weixin/register.action'
 sign_in_url = 'http://www.rsct.com/finance/weixin/login.action'
 
+errorHandler = (res, error, redirect_url)->
+  error = '抱歉，系统出错，请稍候再试' unless error
+  error+='\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解'
+  if !redirect_url
+    redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___5516adc23348ddc57e8c0dcb&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+  res.render 'error', error:error, url:redirect_url
+
+LINK_ERROR = '抱歉，链接错误，请重新再试'
+SYSTEM_ERROR = '抱歉，系统出错，请稍候再试'
+WEIXIN_AUTH_ERROR = '抱歉，微信授权错误，请重新再试'
+TIME_OUT_ERROR = '抱歉，页面打开时间过长或连接丢失，请重新再试'
+
 module.exports = (router)->
 
   init = (req, res, result)->
@@ -230,7 +242,7 @@ module.exports = (router)->
         if page == 'lottery'
           id = params.id
           if !id
-            res.json status:false
+            errorHandler res, LINK_ERROR
           else
             Lottery.findById id, (err, result)->
               if err
@@ -255,12 +267,12 @@ module.exports = (router)->
                   name:result.name
                 res.render 'lottery', data
         else
-          res.json status:false
+          errorHandler res, LINK_ERROR
 
     User.findOne openid:result.openid, (err, userResult)->
       if err
         logger.error 'InitUserFindError:'+err
-        res.json status:false
+        errorHandler res, SYSTEM_ERROR
       else if userResult
         user = userResult
         if params.c
@@ -295,7 +307,7 @@ module.exports = (router)->
         user.save (err, result)->
           if err
             logger.error 'UserInitSaveError:'+err
-            res.json err:err
+            errorHandler res, SYSTEM_ERROR
           else
             logger.trace 'UserInitSaved:'+JSON.stringify(result)
             ep.emit 'ok', result
@@ -304,6 +316,7 @@ module.exports = (router)->
     api.createMenu menu, (err, result)->
       if err
         logger.error err
+        res.json err:err
       else
         logger.trace 'menu setted:',result
         api.getMenu (err, result)->
@@ -313,14 +326,14 @@ module.exports = (router)->
     headers = req.headers
     data = req.query
     if !data.code
-      res.json status:false
+      logger.error 'InitAuto微信授权错误'
+      errorHandler res, WEIXIN_AUTH_ERROR
       return
 
     logger.trace 'Inited2:'+JSON.stringify(data)
     client.getUserByCode data.code, (err, result)->
-      console.log 'GotAT:'+JSON.stringify(result)
       if err
-        logger.error 'AutoInitError:'+err
+        logger.warn 'AutoInitError:'+err
         res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init&response_type=code&scope=snsapi_userinfo&state='+data.state+'&connect_redirect=1#wechat_redirect'
       else
         init req, res, result
@@ -328,7 +341,8 @@ module.exports = (router)->
   router.get '/init', (req, res)->
     data = req.query
     if !data.code
-      res.jsonp status:false
+      logger.error 'Init微信授权错误'
+      errorHandler res, WEIXIN_AUTH_ERROR
       return
 
     logger.trace 'Inited1:'+JSON.stringify(data)
@@ -336,7 +350,7 @@ module.exports = (router)->
     client.getUserByCode data.code, (err, result)->
       if err
         logger.error 'InitError:'+err
-        res.json status:false
+        errorHandler res, WEIXIN_AUTH_ERROR
       else
         init req, res, result
 
@@ -354,13 +368,13 @@ module.exports = (router)->
     chanel = if req.query.c then req.query.c else 'weixin'
     id = req.query.id
     if !id
-      res.json status:false
+      errorHandler res, LINK_ERROR
     else
       getConfig req, (err, config)->
         Lottery.findById id, (err, result)->
           if err
             logger.error err
-            res.json status:false
+            errorHandler res, SYSTEM_ERROR
           else if result
             share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+chanel+';;p___lottery;;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
             data =
@@ -373,7 +387,7 @@ module.exports = (router)->
               name:result.name
             res.render 'pages', data
           else
-            res.json status:false
+            errorHandler res, LINK_ERROR
 
   router.get '/ttt', (req, res)->
 
@@ -389,7 +403,7 @@ module.exports = (router)->
     state = session.state
     shareInfo = req.session.shareInfo
     if !user || !state
-      res.json status:false
+      errorHandler res, TIME_OUT_ERROR
     else if user.mobile
       params = getParams(state)
       getConfig req, (err, config)->
@@ -406,7 +420,7 @@ module.exports = (router)->
           else
             getRewardNumber params.id, user._id, user.openid, (err, result)->
               if err
-                res.josn status:false
+                errorHandler res, SYSTEM_ERROR
               else
                 arr = [value:result,status:'未开奖']
                 shareInfo.nums = arr
@@ -426,7 +440,7 @@ module.exports = (router)->
     state = session.state
     shareInfo = req.session.shareInfo
     if !user || !state
-      res.json status:false
+      errorHandler res, TIME_OUT_ERROR
     else if !user.registered
       params = getParams(state)
       getConfig req, (err, config)->
@@ -452,7 +466,7 @@ module.exports = (router)->
 
             ep.fail (err)->
               logger.error err
-              res.json status:false
+              errorHandler res, SYSTEM_ERROR
 
             getRewardNumber params.id, user._id, user.openid, ep.done 'n1'
             getRewardNumber params.id, user._id, user.openid, ep.done 'n2'
@@ -482,9 +496,10 @@ module.exports = (router)->
   router.post '/do_sign_in', (req, res)->
     data = req.body
     user = req.session.user
-    if req.session.doing
+    if !user
+      errorHandler res, TIME_OUT_ERROR
       return
-    req.session.doing = true
+    logger.trace 'DoSignInSessionUser:'+JSON.stringify(user)
     if !data.mobile
       res.json err:'请输入手机号'
     else if !data.password
@@ -493,7 +508,6 @@ module.exports = (router)->
       formData = form:nickName:data.mobile,password:data.password
       logger.trace 'DoSignSignIn:'+JSON.stringify(formData)
       request.post sign_in_url, formData, (err, result, body)->
-        req.session.doing = false
         if err
           res.json err:err
         else
@@ -516,14 +530,14 @@ module.exports = (router)->
   router.post '/do_sign_up', (req, res)->
     data = req.body
     user = req.session.user
+    if !user
+      errorHandler res, TIME_OUT_ERROR
+      return
+    logger.trace 'DoSignUpSessionUser:'+JSON.stringify(user)
     if data.nickname
       nickname = data.nickname
     else if user
       nickname = user.nickname
-    if req.session.doing
-      console.log 'doing'
-      return
-    req.session.doing = true
     if !data.mobile
       res.json err:'请输入手机号'
     else if !data.code
@@ -585,6 +599,9 @@ module.exports = (router)->
                   res.json result:result
             else
               res.json result:result
+
+  router.get '/error', (req, res)->
+    res.render 'error', error:'test'
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [
