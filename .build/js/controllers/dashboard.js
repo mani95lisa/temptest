@@ -9,7 +9,6 @@
         if (result.err) {
           return humane.log(result.err);
         } else {
-          result.size = bytesToSize(result.size);
           return $scope.count = result;
         }
       }).error(function(err) {

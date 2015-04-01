@@ -10,7 +10,6 @@ define ['console', 'humane'], (console, humane)->
       if result.err
         humane.log result.err
       else
-        result.size = bytesToSize result.size
         $scope.count = result
     ).error (err)->
       console.err err
