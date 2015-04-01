@@ -44,11 +44,12 @@
     return router.get('/count', auth.isAuthenticated(), function(req, res) {
       var ep, now;
       ep = new EventProxy();
-      ep.all('user', 'user1', 'user2', 'lottery', 'record', 'got', 'dispatched', function(c1, nu, nru, c2, c3, c4, c5) {
+      ep.all('user', 'user1', 'user2', 'user3', 'lottery', 'record', 'got', 'dispatched', function(c1, nu, nru, user3, c2, c3, c4, c5) {
         return res.json({
           user: c1,
           user1: nu,
           user2: nru,
+          user3: user3,
           lottery: c2,
           record: c3,
           got: c4,
@@ -76,6 +77,11 @@
           $exists: true
         }
       }, ep.done('user2'));
+      User.count({
+        mobile: {
+          $exists: true
+        }
+      }, ep.done('user3'));
       Lottery.count({}, ep.done('lottery'));
       LotteryRecord.count({}, ep.done('record'));
       LotteryRecord.count({
