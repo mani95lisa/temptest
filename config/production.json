@@ -59,7 +59,9 @@
                             "httpOnly": true,
                             "maxAge": null
                         },
-                        "proxy": null
+                        "proxy": null,
+                        "resave":false,
+                        "saveUninitialized":false
                     },
                     {
                         "host": "svrid7ozj08wa2j.mongodb.duapp.com",
