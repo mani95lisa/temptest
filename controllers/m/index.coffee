@@ -45,7 +45,10 @@ module.exports = (router)->
     now = moment(moment().format('YYYY-MM-DD')).toDate()
     User.count {}, ep.done 'user'
     User.count {created_at:$gte:now}, ep.done 'user1'
-    User.count {mobile:$exists:true,created_at:$gte:now}, ep.done 'user2'
+    User.count {
+      created_at:$gte:now
+      mobile:$exists:true
+    }, ep.done 'user2'
     Lottery.count {}, ep.done 'lottery'
     LotteryRecord.count {}, ep.done 'record'
     LotteryRecord.count {status:true}, ep.done 'got'

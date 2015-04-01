@@ -17,7 +17,7 @@ UserSchema = new Schema
   subscribe_time:String
   remark:String
   headimgurl:String
-  mobile:type:String,index:true
+  mobile:type:String,index:sparse:true
   mobile2:String
   verify_code:String #手机验证码
   score:Number #积分
@@ -34,6 +34,5 @@ UserSchema = new Schema
   wx_status:String
   last_login:Date
   created_at:Date
-  inited_at:Date
 
 Mongoose.model 'User', UserSchema

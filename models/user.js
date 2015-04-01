@@ -28,7 +28,9 @@
     headimgurl: String,
     mobile: {
       type: String,
-      index: true
+      index: {
+        sparse: true
+      }
     },
     mobile2: String,
     verify_code: String,
@@ -54,8 +56,7 @@
     ac_created_at: Number,
     wx_status: String,
     last_login: Date,
-    created_at: Date,
-    inited_at: Date
+    created_at: Date
   });
 
   Mongoose.model('User', UserSchema);

@@ -69,11 +69,11 @@
         }
       }, ep.done('user1'));
       User.count({
+        created_at: {
+          $gte: now
+        },
         mobile: {
-          $exists: true,
-          created_at: {
-            $gte: now
-          }
+          $exists: true
         }
       }, ep.done('user2'));
       Lottery.count({}, ep.done('lottery'));
