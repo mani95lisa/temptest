@@ -29,7 +29,7 @@ module.exports = (router)->
   router.get '/count',auth.isAuthenticated() , (req, res)->
     ep = new EventProxy()
     ep.all 'user', 'user1', 'user2', 'lottery', 'record', 'got', 'dispatched', (c1,nu,nru, c2, c3,c4,c5)->
-      res.json user:c1,user1:nu,user2,nru,lottery:c2,record:c3,got:c4,dispatched:c5
+      res.json user:c1,user1:nu,user2:nru,lottery:c2,record:c3,got:c4,dispatched:c5
 
 #    ep.all 'author', 'collection', 'content','size', 'sms', (c1, c2, c3, c4, c5)->
 #      console.log c4
@@ -40,13 +40,12 @@ module.exports = (router)->
 
     ep.fail (err)->
       logger.error err
-      res.json err:JONS.stringify(err)
+      res.json err:JSON.stringify(err)
 
-    d = moment(moment().format('YYYY-MM-DD')).toDate()
-    console.log typeof d
+    now = moment(moment().format('YYYY-MM-DD')).toDate()
     User.count {}, ep.done 'user'
-    User.count {created_at:$gte:new Date()}, ep.done 'user1'
-    User.count {mobile:$exists:true,created_at:$gte:new Date()}, ep.done 'user2'
+    User.count {created_at:$gte:now}, ep.done 'user1'
+    User.count {mobile:$exists:true,created_at:$gte:now}, ep.done 'user2'
     Lottery.count {}, ep.done 'lottery'
     LotteryRecord.count {}, ep.done 'record'
     LotteryRecord.count {status:true}, ep.done 'got'

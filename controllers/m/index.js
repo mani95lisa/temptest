@@ -42,13 +42,13 @@
       });
     });
     return router.get('/count', auth.isAuthenticated(), function(req, res) {
-      var d, ep;
+      var ep, now;
       ep = new EventProxy();
       ep.all('user', 'user1', 'user2', 'lottery', 'record', 'got', 'dispatched', function(c1, nu, nru, c2, c3, c4, c5) {
         return res.json({
           user: c1,
-          user1: nu
-        }, user2, nru, {
+          user1: nu,
+          user2: nru,
           lottery: c2,
           record: c3,
           got: c4,
@@ -58,22 +58,21 @@
       ep.fail(function(err) {
         logger.error(err);
         return res.json({
-          err: JONS.stringify(err)
+          err: JSON.stringify(err)
         });
       });
-      d = moment(moment().format('YYYY-MM-DD')).toDate();
-      console.log(typeof d);
+      now = moment(moment().format('YYYY-MM-DD')).toDate();
       User.count({}, ep.done('user'));
       User.count({
         created_at: {
-          $gte: new Date()
+          $gte: now
         }
       }, ep.done('user1'));
       User.count({
         mobile: {
           $exists: true,
           created_at: {
-            $gte: new Date()
+            $gte: now
           }
         }
       }, ep.done('user2'));

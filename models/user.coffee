@@ -34,5 +34,6 @@ UserSchema = new Schema
   wx_status:String
   last_login:Date
   created_at:Date
+  inited_at:Date
 
 Mongoose.model 'User', UserSchema
