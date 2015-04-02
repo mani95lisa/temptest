@@ -87,7 +87,7 @@
             enableSorting: false
           }, {
             name: '用户手机号',
-            field: 'lottery.mobile',
+            field: 'user.mobile',
             width: 100,
             enableSorting: false
           }, {

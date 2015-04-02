@@ -78,7 +78,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
       enableSorting: false
       columnDefs:[
         {name:'活动名称', field:'lottery.name', enableSorting: false}
-        {name:'用户手机号', field:'lottery.mobile', width:100, enableSorting: false}
+        {name:'用户手机号', field:'user.mobile', width:100, enableSorting: false}
         {name:'用户昵称', field:'user.nickname', width:100, enableSorting: false}
         {name:'抽奖号', field:'number', width:100, enableSorting: false}
         {name: '是否中奖',field: 'status',width: 100, enableSorting: false}

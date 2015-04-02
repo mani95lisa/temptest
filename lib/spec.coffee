@@ -192,7 +192,7 @@ module.exports = (app)->
                     address = content.replace truename+' '+mobile+' ', ''
                     saveInfo truename, address, mobile
               else
-                reply1 res
+                res.reply type:'transfer_customer_service'
           else
             logger.error 'no user:'+wxmessage
             res.reply '系统出错，请稍候再试'
