@@ -2,6 +2,8 @@
 
 models = require('../../models')
 LotteryRecord = models.LotteryRecord
+User = models.User
+Lottery = models.Lottery
 UpdateObject = require('../../lib/utils').updateObject
 auth = require('../../lib/auth')
 EventProxy = require 'eventproxy'
@@ -28,14 +30,16 @@ module.exports = (router)->
       options.skip = (data.page-1)*data.pageSize
       options.limit = data.pageSize
     query = {}
-    if data.keywords
-      switch parseInt(data.keywords).toString().length
-        when 11
-          query['user.mobile'] = data.keywords
-        when 7
-          query['number'] = data.keywords
-        else
-          query['lottery.name'] = new RegExp(data.keywords, 'i')
+
+    ep2 = new EventProxy()
+    ep2.on 'ok', ->
+      console.log('LRQuerry:'+JSON.stringify(query))
+
+      LotteryRecord.find(query, null, options)
+      .populate('lottery', 'name')
+      .populate('user', 'mobile nickname')
+      .exec ep.done 'result'
+      LotteryRecord.count query, ep.done 'count'
 
     filter = data.filter
     switch filter
@@ -46,10 +50,24 @@ module.exports = (router)->
       when '3'
         query['dispatched'] = true
 
-    console.log('LRQuerry:'+JSON.stringify(query))
-
-    LotteryRecord.find(query, null, options)
-    .populate('lottery', 'name')
-    .populate('user', 'mobile nickname')
-    .exec ep.done 'result'
-    LotteryRecord.count query, ep.done 'count'
+    if data.keywords
+      switch parseInt(data.keywords).toString().length
+        when 11
+          User.findOne mobile:data.keywords, '_id', (err, result)->
+            if err
+              res.json err:err
+              logger.error 'FindU:'+err
+            else
+              query['user'] = result._id if result
+              ep2.emit 'ok'
+        when 7
+          query['number'] = data.keywords
+          ep2.emit 'ok'
+        else
+          Lottery.findOne name:new RegExp(data.keywords, 'i'), '_id', (err, result)->
+            if err
+              res.json err:err
+              logger.error 'FindL:'+err
+            else
+              query['lottery'] = result._id if result
+              ep2.emit 'ok'
