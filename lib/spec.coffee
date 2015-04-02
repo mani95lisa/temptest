@@ -149,22 +149,28 @@ module.exports = (app)->
               if content && wxsession.input_address
                 ep = new EventProxy()
                 saveInfo = (truename, address, mobile)->
-                  ep.all 'lr', 'user', ->
-                    wxsession.input_address = false
-                    user.wx_status = JSON.stringify(wxsession)
-                    user.save (err, result)->
-                      if err
-                        logger.error 'SavewxStatusE1:'+err
-                        res.reply '抱歉，系统出错，请稍候再试'
-                      else
-                        res.reply '信息已经提交成功，我们会尽快为您派发奖品，请耐心等待'
+                  truename = '' unless truename
+                  address = '' unless address
+                  mobile = '' unless mobile
+                  if !truename || !address || !mobile
+                    res.reply '收件人姓名、地址或手机号不能为空'
+                  else
+                    ep.all 'lr', 'user', ->
+                      wxsession.input_address = false
+                      user.wx_status = JSON.stringify(wxsession)
+                      user.save (err, result)->
+                        if err
+                          logger.error 'SavewxStatusE1:'+err
+                          res.reply '抱歉，系统出错，请稍候再试'
+                        else
+                          res.reply '信息已经提交成功，我们会尽快为您派发奖品，请耐心等待'
 
-                  ep.fail (err)->
-                    logger.error 'SaveAddressError:'+err
-                    res.reply '抱歉，系统出错，请稍候再试'
+                    ep.fail (err)->
+                      logger.error 'SaveAddressError:'+err
+                      res.reply '抱歉，系统出错，请稍候再试'
 
-                  LotteryRecord.findByIdAndUpdate lid, $set:truename:truename,address:address,mobile:mobile, ep.done 'lr'
-                  User.findOneAndUpdate openid, $set:truename:truename,address:address,mobile2:mobile, ep.done 'user'
+                    LotteryRecord.findByIdAndUpdate lid, $set:truename:truename,address:address,mobile:mobile, ep.done 'lr'
+                    User.findOneAndUpdate openid, $set:truename:truename,address:address,mobile2:mobile, ep.done 'user'
 
                 if wxsession.hasAddress
                   if content == 'Y' || content == 'y'
