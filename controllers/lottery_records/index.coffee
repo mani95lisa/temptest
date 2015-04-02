@@ -71,3 +71,5 @@ module.exports = (router)->
             else
               query['lottery'] = result._id if result
               ep2.emit 'ok'
+    else
+      ep2.emit 'ok'

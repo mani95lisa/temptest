@@ -107,6 +107,8 @@
               }
             });
         }
+      } else {
+        return ep2.emit('ok');
       }
     });
   };

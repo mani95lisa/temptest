@@ -178,6 +178,7 @@ module.exports = (app)->
                     console.log 'Yest:'+wxsession.userinfo
                     saveInfo arr[0], arr[2], arr[1]
                   else if content == 'N' || content == 'n'
+                    wxsession.hasAddress = false
                     user.wx_status = JSON.stringify(wxsession)
                     user.save (err, result)->
                       if err
@@ -198,7 +199,12 @@ module.exports = (app)->
                     address = content.replace truename+' '+mobile+' ', ''
                     saveInfo truename, address, mobile
               else
-                res.reply type:'transfer_customer_service'
+                res.reply {
+                  type:'transfer_customer_service'
+                  ToUserName:message.FromUserName
+                  FromUserName:message.ToUserName
+                  CreateTime:new Date().getTime()
+                }
           else
             logger.error 'no user:'+wxmessage
             res.reply '系统出错，请稍候再试'
