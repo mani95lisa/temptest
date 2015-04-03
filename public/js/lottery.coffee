@@ -8,10 +8,10 @@ Base =
     Base.position($('#button_mask'),242,251,199,592)
     $('#button_mask').click ->
       if count_down_time <= 0
-        alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持')
+        _hmt.push(['_trackEvent', '大白活动1', '查看抽奖']);
+        window.location = draw_url
       else
-        _hmt.push(['_trackEvent', '大白活动1', '直接抽奖', '{uid}']);
-        console.log draw_url
+        _hmt.push(['_trackEvent', '大白活动1', '直接抽奖']);
         window.location = draw_url
 
     #定位参与人数
@@ -64,6 +64,7 @@ Base =
         setTwoValue 7, 8, seconds
       else
         clearInterval interval
+        $('#button_mask').css('background','url(../imgs/lottery_btn.png) no-repeat')
         alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持')
     , 1000
 

@@ -409,15 +409,19 @@ module.exports = (router)->
       getConfig req, (err, config)->
         shareInfo.config = config
         LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
+          countdown = moment(result.end).valueOf() - moment().valueOf()
           if result && result.length
             arr = []
             result.forEach (r)->
-              status = if r.status then '已中奖' else '未开奖'
+              if r.status
+                status = '已中奖'
+              else
+                status = if countdown > 0 then '未开奖' else '未中奖'
               arr.push value:r.number,status:status
             shareInfo.nums = arr
             shareInfo.uid = user._id
             res.render 'success', shareInfo
-          else
+          else if countdown > 0
             getRewardNumber params.id, user._id, user.openid, (err, result)->
               if err
                 errorHandler res, SYSTEM_ERROR
@@ -431,6 +435,8 @@ module.exports = (router)->
                   else
                     logger.warn 'LotteryJoinedRecord:'+params.id+'-'+arr[0].value+'-'+user._id
                 res.render 'success', shareInfo
+          else
+            errorHandler res, '您没有参与此次活动，请关注润石创投公众号，获取最新活动动态'
     else
       res.render 'sign_up'
 

@@ -574,12 +574,17 @@
             lottery: params.id,
             user: user._id
           }, function(err, result) {
-            var arr;
+            var arr, countdown;
+            countdown = moment(result.end).valueOf() - moment().valueOf();
             if (result && result.length) {
               arr = [];
               result.forEach(function(r) {
                 var status;
-                status = r.status ? '已中奖' : '未开奖';
+                if (r.status) {
+                  status = '已中奖';
+                } else {
+                  status = countdown > 0 ? '未开奖' : '未中奖';
+                }
                 return arr.push({
                   value: r.number,
                   status: status
@@ -588,7 +593,7 @@
               shareInfo.nums = arr;
               shareInfo.uid = user._id;
               return res.render('success', shareInfo);
-            } else {
+            } else if (countdown > 0) {
               return getRewardNumber(params.id, user._id, user.openid, function(err, result) {
                 if (err) {
                   return errorHandler(res, SYSTEM_ERROR);
@@ -615,6 +620,8 @@
                   return res.render('success', shareInfo);
                 }
               });
+            } else {
+              return errorHandler(res, '您没有参与此次活动，请关注润石创投公众号，获取最新活动动态');
             }
           });
         });
