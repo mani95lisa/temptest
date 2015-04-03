@@ -92,7 +92,7 @@
               $gte: parseInt(data.keywords)
             };
             options.sort = {
-              number: -1
+              number: 1
             };
             return ep2.emit('ok');
           default:
