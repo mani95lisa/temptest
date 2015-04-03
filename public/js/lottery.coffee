@@ -6,6 +6,8 @@ Base =
 
     #定位按钮遮罩
     Base.position($('#button_mask'),242,251,199,592)
+    if count_down_time <= 0
+      $('#button_mask').css('background','url(../imgs/lottery_btn.png) no-repeat')
     $('#button_mask').click ->
       if count_down_time <= 0
         _hmt.push(['_trackEvent', '大白活动1', '查看抽奖']);
@@ -64,7 +66,6 @@ Base =
         setTwoValue 7, 8, seconds
       else
         clearInterval interval
-        $('#button_mask').css('background','url(../imgs/lottery_btn.png) no-repeat')
         alert('活动已结束，请关注润石创投服务号参与下次活动，感谢您的支持')
     , 1000
 

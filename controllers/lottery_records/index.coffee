@@ -38,7 +38,7 @@ module.exports = (router)->
       LotteryRecord.find(query, null, options)
       .populate('lottery', 'name')
       .populate('user', 'mobile nickname')
-      .sort('number',1)
+      .sort(number:1)
       .exec ep.done 'result'
       LotteryRecord.count query, ep.done 'count'
 
