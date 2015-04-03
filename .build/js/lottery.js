@@ -10,9 +10,9 @@
       this.scale = this.windowWidth / 640;
       Base.position($('#button_mask'), 242, 251, 199, 592);
       if (count_down_time <= 0) {
-        $('#button_mask').css('background-image', 'url(../imgs/lottery_btn.png) no-repeat');
+        $('#button_mask').css('background', 'url(../imgs/lottery_btn.png)');
       } else {
-        $('#button_mask').css('background-image', 'url(../imgs/check_btn.png) no-repeat');
+        $('#button_mask').css('background', 'url(../imgs/check_btn.png)');
       }
       $('#button_mask').click(function() {
         if (count_down_time <= 0) {

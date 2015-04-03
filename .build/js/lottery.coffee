@@ -7,9 +7,9 @@ Base =
     #定位按钮遮罩
     Base.position($('#button_mask'),242,251,199,592)
     if count_down_time <= 0
-      $('#button_mask').css('background-image','url(../imgs/lottery_btn.png) no-repeat')
+      $('#button_mask').css('background','url(../imgs/lottery_btn.png)')
     else
-      $('#button_mask').css('background-image','url(../imgs/check_btn.png) no-repeat')
+      $('#button_mask').css('background','url(../imgs/check_btn.png)')
     $('#button_mask').click ->
       if count_down_time <= 0
         _hmt.push(['_trackEvent', '大白活动1', '查看抽奖']);
