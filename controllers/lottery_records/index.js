@@ -55,9 +55,7 @@
       ep2 = new EventProxy();
       ep2.on('ok', function() {
         console.log('LRQuerry:' + JSON.stringify(query));
-        LotteryRecord.find(query, null, options).populate('lottery', 'name').populate('user', 'mobile nickname').sort({
-          number: -1
-        }).exec(ep.done('result'));
+        LotteryRecord.find(query, null, options).populate('lottery', 'name').populate('user', 'mobile nickname').exec(ep.done('result'));
         return LotteryRecord.count(query, ep.done('count'));
       });
       filter = data.filter;
@@ -92,6 +90,9 @@
           case 7:
             query['number'] = {
               $gte: parseInt(data.keywords)
+            };
+            query['sort'] = {
+              number: -1
             };
             return ep2.emit('ok');
           default:

@@ -38,7 +38,6 @@ module.exports = (router)->
       LotteryRecord.find(query, null, options)
       .populate('lottery', 'name')
       .populate('user', 'mobile nickname')
-      .sort(number:-1)
       .exec ep.done 'result'
       LotteryRecord.count query, ep.done 'count'
 
@@ -63,6 +62,7 @@ module.exports = (router)->
               ep2.emit 'ok'
         when 7
           query['number'] = $gte:parseInt(data.keywords)
+          query['sort'] = number:-1
           ep2.emit 'ok'
         else
           Lottery.findOne name:new RegExp(data.keywords, 'i'), '_id', (err, result)->
