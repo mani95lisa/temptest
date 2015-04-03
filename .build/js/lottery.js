@@ -9,11 +9,12 @@
       this.windowHeight = $(window).height();
       this.scale = this.windowWidth / 640;
       Base.position($('#button_mask'), 242, 251, 199, 592);
-      if (count_down_time <= 0) {
-        $('#button_mask').css('background', 'url(../imgs/lottery_btn.png)');
+      if (count_down_time > 0) {
+        $('#button_mask').css('background', 'url(../imgs/lottery_btn.png) no-repeat');
       } else {
-        $('#button_mask').css('background', 'url(../imgs/check_btn.png)');
+        $('#button_mask').css('background', 'url(../imgs/check_btn.png) no-repeat');
       }
+      $('#button_mask').css('background-size', 'contain');
       $('#button_mask').click(function() {
         if (count_down_time <= 0) {
           _hmt.push(['_trackEvent', '大白活动1', '查看抽奖']);

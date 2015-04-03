@@ -1,6 +1,5 @@
 {>"layouts/weixin_master" /}
 <link rel="stylesheet" href="css/lottery.css"/>
-<script type="text/javascript" src="js/lottery.js"></script>
 
 <script type="text/javascript">
 
@@ -75,3 +74,5 @@
     <img id="rule_detail" src="imgs/rule_detail.jpg">
     <div style="display: none" id="url">{url}</div>
 {/body}
+
+<script type="text/javascript" src="js/lottery.js"></script>

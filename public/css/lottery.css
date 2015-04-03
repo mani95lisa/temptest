@@ -52,6 +52,7 @@ body {
   width: 100%;
 }
 #button_mask {
+  background: url(../imgs/lottery_btn.png) no-repeat;
   border: none;
   background-size: contain;
 }
