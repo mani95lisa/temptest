@@ -91,7 +91,7 @@
             query['number'] = {
               $gte: parseInt(data.keywords)
             };
-            query['sort'] = {
+            options.sort = {
               number: -1
             };
             return ep2.emit('ok');

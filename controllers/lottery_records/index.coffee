@@ -62,7 +62,7 @@ module.exports = (router)->
               ep2.emit 'ok'
         when 7
           query['number'] = $gte:parseInt(data.keywords)
-          query['sort'] = number:-1
+          options.sort = number:-1
           ep2.emit 'ok'
         else
           Lottery.findOne name:new RegExp(data.keywords, 'i'), '_id', (err, result)->
