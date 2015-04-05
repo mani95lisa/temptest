@@ -7,9 +7,11 @@ require './manager'
 require './log'
 require './lottery'
 require './lottery_record'
+require './sms'
 Mongoose = require 'mongoose'
 
 module.exports =
+  SMS : Mongoose.model 'SMS'
   Log : Mongoose.model 'Log'
   Manager : Mongoose.model 'Manager'
   Dict : Mongoose.model 'Dict'

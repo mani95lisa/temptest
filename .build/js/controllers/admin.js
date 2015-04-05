@@ -48,6 +48,12 @@
           '$modalInstance': $modalInstance
         });
       });
+    }).controller('SMS', function($scope, $injector) {
+      return require(['controllers/sms'], function(controller) {
+        return $injector.invoke(controller, this, {
+          '$scope': $scope
+        });
+      });
     }).controller('EditUser', function($scope, $injector, data, $modalInstance) {
       return require(['controllers/edit_user'], function(controller) {
         return $injector.invoke(controller, this, {

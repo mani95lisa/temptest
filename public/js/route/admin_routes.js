@@ -24,6 +24,10 @@
           templateUrl: 'partials/setting.html',
           controller: 'Setting'
         });
+        $routeProvider.when('/sms', {
+          templateUrl: 'partials/sms.html',
+          controller: 'SMS'
+        });
         return $routeProvider.otherwise({
           redirectTo: '/dashboard'
         });

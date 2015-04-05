@@ -6,6 +6,14 @@
         "views": "path:./.build/templates"
     },
 
+    "sms":{
+        "uid":"1001@500883280001",
+        "password":"30250B31F881FA5D7F376485D11E6534",
+        "cgid":750,
+        "sendURL":"http://smsapi.c123.cn/OpenPlatform/OpenApi",
+        "checkURL":"http://smsapi.c123.cn/OpenPlatform/OpenApi?action=getBalance&ac=1001@500883280001&authkey=30250B31F881FA5D7F376485D11E6534"
+    },
+
     "mongo": "mongodb://bae:Z2w4s6ujmMcA5Wp9wj7SdyoO5g2E2ZOV@svrid7ozj08wa2j.mongodb.duapp.com:10317/svrid7ozj08wa2j",
 
     "view engines": {

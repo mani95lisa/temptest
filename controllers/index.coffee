@@ -17,6 +17,7 @@ request = require 'request'
 moment = require 'moment'
 utils = require '../lib/utils'
 UpdateObject = utils.updateObject
+SMS = require '../lib/sms'
 OAuth = require 'wechat-oauth'
 
 getToken = (cb)->
@@ -581,7 +582,7 @@ module.exports = (router)->
     data = req.body
     logger.trace 'LotteryRecordUpdate:'+JSON.stringify(data)
     LotteryRecord.findById(data._id)
-    .populate('user', 'openid')
+    .populate('user', 'openid mobile')
     .populate('lottery', 'name')
     .exec (err, result) ->
       if err
@@ -590,19 +591,45 @@ module.exports = (router)->
       else
         diff = UpdateObject result, data, ['created_at','lottery','user','updated_at']
         lname = result.lottery.name
+        openid = result.user.openid
+        mobile = result.user.mobile
         result.save (err, result) ->
           if err
             logger.error 'LRUpdated:'+err
             res.json err:err
           else
             logger.warn 'LRUpdated:'+diff
-            if result.status && result.notify
-              api.sendText result.user.openid, '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify+'\n\n（请在输入框输入【领奖】两字进入领奖流程）', (err, result)->
-                if err
-                  logger.error 'notify error:'+err
-                  res.json err:'发送通知失败，请再试一次，有可能是用户尚未关注服务号所致'
+            if result.status
+              textok = false
+              smsok = false
+              ep = new EventProxy()
+              ep.all 'text', 'sms', ->
+                if !textok && !smsok
+                  res.json err:'微信和短信通知均发送失败，请再试'
+                else if !textok
+                  res.json err:'发送微信通知失败，有可能是用户尚未关注服务号所致，但已发送短信通知'
+                else if !smsok
+                  res.json err:'发送短信通知失败，但已发送微信通知'
                 else
                   res.json result:result
+              msg = ''
+              if result.notify
+                msg = '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify+'\n\n（请在润石创投服务号里发送【领奖】两字完成领奖流程）'
+              else
+                msg = '恭喜您于活动【'+lname+'】中奖\n（请在润石创投服务号里发送【领奖】两字完成领奖流程）'
+              api.sendText openid, msg, (err, text)->
+                if err
+                  logger.error 'SendGotNotifyError:'+err
+                else
+                  textok = true
+                ep.emit 'text'
+              msg = '恭喜您于活动【'+lname+'】中奖，（请在润石创投服务号里发送【领奖】两字完成领奖流程）'
+              SMS.send mobile, msg, (err, result)->
+                if err
+                  logger.error 'SendGotSMSError:'+err
+                else
+                  smsok = true
+                ep.emit 'sms'
             else
               res.json result:result
 
@@ -615,6 +642,7 @@ module.exports = (router)->
       {path:'lottery',name:'抽奖管理',icon:'fa fa-list'}
       {path:'joined',name:'得奖管理',icon:'fa fa-gift'}
       {path:'user',name:'用户管理',icon:'fa fa-users'}
+      {path:'sms',name:'短信记录',icon:'fa fa-envelope'}
       {path:'setting', name:'系统设置', icon:'fa fa-cogs'}
     ]
     res.render 'admin', nav:nav

@@ -24,6 +24,9 @@ define ['angular', 'console'], (angular, console)->
   ).controller('EditJoined', ($scope, $injector, data, $modalInstance)->
     require ['controllers/edit_joined'], (controller)->
       $injector.invoke controller, this, {'$scope':$scope,'data':data,'$modalInstance':$modalInstance}
+  ).controller('SMS', ($scope, $injector)->
+    require ['controllers/sms'], (controller)->
+      $injector.invoke controller, this, '$scope':$scope
   ).controller('EditUser', ($scope, $injector, data, $modalInstance)->
     require ['controllers/edit_user'], (controller)->
       $injector.invoke controller, this, {'$scope':$scope,'data':data,'$modalInstance':$modalInstance}

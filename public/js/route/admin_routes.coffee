@@ -9,6 +9,7 @@ define ['angular', 'admin_define'], (angular, app)->
     $routeProvider.when '/lottery', templateUrl:'partials/lottery.html',controller:'Lottery'
     $routeProvider.when '/joined', templateUrl:'partials/joined.html',controller:'Joined'
     $routeProvider.when '/setting', templateUrl:'partials/setting.html',controller:'Setting'
+    $routeProvider.when '/sms', templateUrl:'partials/sms.html',controller:'SMS'
 
     $routeProvider.otherwise redirectTo:'/dashboard'
   ]

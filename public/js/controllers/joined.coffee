@@ -16,6 +16,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.footer = 'partials/grid/grid_footer.html'
     $scope.header = 'partials/grid/grid_header.html'
     $scope.filters = ['所有','未中奖', '已中奖', '已派奖']
+    $scope.searchTip = '请输入7位抽奖号或11位用户手机号或抽奖活动标题'
 
     $scope.filter = {value:'所有'}
     $scope.$watch 'filter.value', (n)->

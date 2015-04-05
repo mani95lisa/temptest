@@ -12,6 +12,7 @@ User = require('../models').User
 LotteryRecord = require('../models').LotteryRecord
 logger = require('log4js').getDefaultLogger()
 EventProxy = require 'eventproxy'
+sms = require '../lib/sms'
 
 getToken = (cb)->
   Token.findOne appid:appid, (err, result)->
@@ -213,6 +214,7 @@ module.exports = (app)->
 
   onconfig: (config, next) ->
     mongo.config(config.get('mongo'))
+    sms.config(config.get('sms'))
     Manager = require('../models/index').Manager
     Manager.findOne username: 'admin', (err, result)->
       if !result

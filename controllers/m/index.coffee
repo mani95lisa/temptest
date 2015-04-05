@@ -10,6 +10,7 @@ LotteryRecord = models.LotteryRecord
 moment = require 'moment'
 logger = require('log4js').getDefaultLogger()
 passport = require 'passport'
+sms = require('../../lib/sms')
 
 module.exports = (router)->
 
@@ -28,8 +29,8 @@ module.exports = (router)->
 
   router.get '/count',auth.isAuthenticated() , (req, res)->
     ep = new EventProxy()
-    ep.all 'user', 'user1', 'user2', 'user3', 'lottery', 'record', 'got', 'dispatched', (c1,nu,nru,user3, c2, c3,c4,c5)->
-      res.json user:c1,user1:nu,user2:nru,user3:user3,lottery:c2,record:c3,got:c4,dispatched:c5
+    ep.all 'user', 'user1', 'user2', 'user3', 'lottery', 'record', 'got', 'dispatched', 'sms', (c1,nu,nru,user3, c2, c3,c4,c5, sms)->
+      res.json user:c1,user1:nu,user2:nru,user3:user3,lottery:c2,record:c3,got:c4,dispatched:c5,sms:sms
 
 #    ep.all 'author', 'collection', 'content','size', 'sms', (c1, c2, c3, c4, c5)->
 #      console.log c4
@@ -56,6 +57,7 @@ module.exports = (router)->
     LotteryRecord.count {}, ep.done 'record'
     LotteryRecord.count {status:true}, ep.done 'got'
     LotteryRecord.count {dispatched:true}, ep.done 'dispatched'
+    sms.left ep.done 'sms'
 #
 #    SMS.left ep.done 'sms'
 #    Author.count {}, ep.done 'author'
