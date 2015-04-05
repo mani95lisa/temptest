@@ -24,6 +24,8 @@
       "default": 0
     },
     link_url: String,
+    detail_url: String,
+    plus: Number,
     enabled: {
       type: Boolean,
       "default": false

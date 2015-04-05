@@ -70,7 +70,7 @@
     <img id="need_know" src="imgs/need_know.png">
     <img id="rule" src="imgs/rule.png">
     <img id="red_line" src="imgs/red_line.png">
-    <img id="need_know_detail" src="imgs/need_know_detail.jpg">
+    <img id="need_know_detail" src="{detail_url}">
     <img id="rule_detail" src="imgs/rule_detail.jpg">
     <div style="display: none" id="url">{url}</div>
 {/body}
