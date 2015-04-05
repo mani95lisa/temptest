@@ -938,7 +938,7 @@
                   }
                   return ep.emit('text');
                 });
-                msg = '恭喜您于活动【' + lname + '】得到大白一只，（请在润石创投服务号里发送【领取】两字完成领取流程）';
+                msg = '感谢您参与活动【' + lname + '】并获得大白一只，（请在润石创投服务号里发送【领取】两字填写收货信息）';
                 return SMS.send(mobile, msg, function(err, result) {
                   if (err) {
                     console.log('SMSSentErr:' + JSON.stringify(err));

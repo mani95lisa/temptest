@@ -55,8 +55,8 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.gridOptions =
       enableSorting: false
       columnDefs:[
-        {name:'注册手机号', field:'mobile', width:100, enableSorting: false}
-        {name:'收货手机号', field:'mobile2', width:100, enableSorting: false}
+        {name:'注册号', field:'mobile', width:100, enableSorting: false}
+        {name:'收货号', field:'mobile2', width:100, enableSorting: false}
         {name:'姓名', field:'truename', width:100, enableSorting: false}
         {name:'昵称', field:'nickname', width:100, enableSorting: false}
         {name: '收货地址',field: 'address', enableSorting: false}

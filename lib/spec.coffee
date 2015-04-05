@@ -202,7 +202,6 @@ module.exports = (app)->
                     truename = arr[0]
                     mobile = arr[1]
                     address = content.replace truename+' '+mobile+' ', ''
-                    console.log address, content
                     saveInfo truename, address, mobile
               else
                 res.reply {

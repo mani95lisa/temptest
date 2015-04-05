@@ -56,12 +56,12 @@
         enableSorting: false,
         columnDefs: [
           {
-            name: '注册手机号',
+            name: '注册号',
             field: 'mobile',
             width: 100,
             enableSorting: false
           }, {
-            name: '收货手机号',
+            name: '收货号',
             field: 'mobile2',
             width: 100,
             enableSorting: false
