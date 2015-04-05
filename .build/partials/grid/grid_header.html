@@ -4,6 +4,7 @@
         <form class="input-group" ng-submit="search()">
             <input type="text" class="form-control" ng-model="$parent.keywords"
                    tooltip="$parent.searchTip"
+                   tooltip-placement="bottom"
                    placeholder="请输入关键词进行检索">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button" ng-click="search()">搜索</button>

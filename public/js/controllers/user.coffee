@@ -55,11 +55,12 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.gridOptions =
       enableSorting: false
       columnDefs:[
-        {name:'手机号', field:'mobile', width:100, enableSorting: false}
+        {name:'注册手机号', field:'mobile', width:100, enableSorting: false}
+        {name:'收货手机号', field:'mobile', width:100, enableSorting: false}
         {name:'姓名', field:'truename', width:100, enableSorting: false}
         {name:'昵称', field:'nickname', width:100, enableSorting: false}
-        {name:'最近登录', field:'last_login', width:200, enableSorting: false}
-        {name: '创建时间',field: 'created_at',width: 200, enableSorting: false}
+        {name: '收货地址',field: 'address', enableSorting: false}
+        {name: '创建时间',field: 'created_at',width: 150, enableSorting: false}
         {name: '操作',field: 'created_at',width: 120, enableSorting: false, cellTemplate:handler}
       ]
 
@@ -78,8 +79,8 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
           $scope.count = result.count
           if result.result
             result.result.forEach (r)->
-              r.last_login = moment(r.last_login).format('YYYY-MM-DD HH:mm:ss')
-              r.created_at = moment(r.created_at).format('YYYY-MM-DD HH:mm:ss')
+              r.last_login = moment(r.last_login).format('YY-MM-DD HH:mm:ss')
+              r.created_at = moment(r.created_at).format('YY-MM-DD HH:mm:ss')
           $scope.gridOptions.data = result.result
       ).error (err)->
         $scope.requesting = false

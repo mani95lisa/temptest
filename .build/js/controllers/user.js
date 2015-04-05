@@ -56,7 +56,12 @@
         enableSorting: false,
         columnDefs: [
           {
-            name: '手机号',
+            name: '注册手机号',
+            field: 'mobile',
+            width: 100,
+            enableSorting: false
+          }, {
+            name: '收货手机号',
             field: 'mobile',
             width: 100,
             enableSorting: false
@@ -71,14 +76,13 @@
             width: 100,
             enableSorting: false
           }, {
-            name: '最近登录',
-            field: 'last_login',
-            width: 200,
+            name: '收货地址',
+            field: 'address',
             enableSorting: false
           }, {
             name: '创建时间',
             field: 'created_at',
-            width: 200,
+            width: 150,
             enableSorting: false
           }, {
             name: '操作',
@@ -111,8 +115,8 @@
             $scope.count = result.count;
             if (result.result) {
               result.result.forEach(function(r) {
-                r.last_login = moment(r.last_login).format('YYYY-MM-DD HH:mm:ss');
-                return r.created_at = moment(r.created_at).format('YYYY-MM-DD HH:mm:ss');
+                r.last_login = moment(r.last_login).format('YY-MM-DD HH:mm:ss');
+                return r.created_at = moment(r.created_at).format('YY-MM-DD HH:mm:ss');
               });
             }
             return $scope.gridOptions.data = result.result;

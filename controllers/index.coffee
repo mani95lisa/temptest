@@ -604,6 +604,7 @@ module.exports = (router)->
               smsok = false
               ep = new EventProxy()
               ep.all 'text', 'sms', ->
+                console.log 'update', smsok, textok
                 if !textok && !smsok
                   res.json err:'微信和短信通知均发送失败，请再试'
                 else if !textok
@@ -626,8 +627,10 @@ module.exports = (router)->
               msg = '恭喜您于活动【'+lname+'】中奖，（请在润石创投服务号里发送【领奖】两字完成领奖流程）'
               SMS.send mobile, msg, (err, result)->
                 if err
+                  console.log 'SMSSentErr:'+JSON.stringify(err)
                   logger.error 'SendGotSMSError:'+err
                 else
+                  console.log 'SMSSentErr:'+JSON.stringify(result)
                   smsok = true
                 ep.emit 'sms'
             else
