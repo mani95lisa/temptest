@@ -214,6 +214,7 @@ regist_url = 'http://www.rsct.com/finance/weixin/register.action'
 sign_in_url = 'http://www.rsct.com/finance/weixin/login.action'
 
 errorHandler = (res, error, redirect_url)->
+  console.log 'Error:'+error
   error = '抱歉，系统出错，请稍候再试' unless error
   error+='\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解'
   if !redirect_url
@@ -409,6 +410,7 @@ module.exports = (router)->
     state = session.state
     shareInfo = req.session.shareInfo
     if !user || !state
+      console.log 'Error1:'
       errorHandler res, TIME_OUT_ERROR
     else if user.mobile
       params = getParams(state)
@@ -430,6 +432,7 @@ module.exports = (router)->
           else if countdown > 0
             getRewardNumber params.id, user._id, user.openid, (err, result)->
               if err
+                console.log 'Error2:'
                 errorHandler res, SYSTEM_ERROR
               else
                 arr = [value:result,status:'未开奖']

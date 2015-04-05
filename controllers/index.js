@@ -303,6 +303,7 @@
   sign_in_url = 'http://www.rsct.com/finance/weixin/login.action';
 
   errorHandler = function(res, error, redirect_url) {
+    console.log('Error:' + error);
     if (!error) {
       error = '抱歉，系统出错，请稍候再试';
     }
@@ -575,6 +576,7 @@
       state = session.state;
       shareInfo = req.session.shareInfo;
       if (!user || !state) {
+        console.log('Error1:');
         return errorHandler(res, TIME_OUT_ERROR);
       } else if (user.mobile) {
         params = getParams(state);
@@ -606,6 +608,7 @@
             } else if (countdown > 0) {
               return getRewardNumber(params.id, user._id, user.openid, function(err, result) {
                 if (err) {
+                  console.log('Error2:');
                   return errorHandler(res, SYSTEM_ERROR);
                 } else {
                   arr = [
