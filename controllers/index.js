@@ -303,19 +303,16 @@
   sign_in_url = 'http://www.rsct.com/finance/weixin/login.action';
 
   errorHandler = function(res, errorString, redirect_url) {
+    var es;
     console.log('Error:' + errorString);
-    if (!errorString) {
-      errorString = '抱歉，系统出错，请稍候再试';
-    }
-    errorString += '\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解';
+    es = errorString ? errorString : '抱歉，系统出错，请稍候再试';
+    es += '\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解';
     if (!redirect_url) {
       redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
     }
-    console.log({
-      'Error': +errorString
-    });
+    console.log('Error:' + es);
     return res.render('error', {
-      error: errorString,
+      error: es,
       url: redirect_url
     });
   };
@@ -352,7 +349,7 @@
               return errorHandler(res, LINK_ERROR);
             } else {
               return Lottery.findById(id, function(err, result) {
-                var countdown, data, detail_url, draw_url, plus, share_url;
+                var begin, countdown, data, detail_url, draw_url, plus, share_url;
                 if (err) {
                   return logger.error(err);
                 } else if (result) {
@@ -363,8 +360,11 @@
                   result.joined += plus;
                   share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + host + '/init_auto&state=c___' + params.c + ';;p___' + params.p + ';;id___' + id + '&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
                   countdown = moment(result.end).valueOf() - moment().valueOf();
+                  begin = moment().valueOf() - moment(result.begin).valueOf();
                   draw_url = '/draw_lottery';
                   req.session.shareInfo = {
+                    begin: result.begin,
+                    end: result.end,
                     name: result.name,
                     group_desc: result.group_desc,
                     desc: result.description,
@@ -373,6 +373,7 @@
                   };
                   detail_url = result.detail_url ? result.detail_url : 'imgs/need_know_detail.jpg';
                   data = {
+                    begin: begin,
                     uid: user._id,
                     draw_url: draw_url,
                     detail_url: detail_url,
@@ -581,64 +582,69 @@
       } else if (user.mobile) {
         params = getParams(state);
         return getConfig(req, function(err, config) {
+          var begin, countdown;
           shareInfo.config = config;
-          return LotteryRecord.find({
-            lottery: params.id,
-            user: user._id
-          }, function(err, result) {
-            var arr, begin, countdown;
-            countdown = moment(result.end).valueOf() - moment().valueOf();
-            begin = moment().valueOf() - moment(result.begin).valueOf();
-            console.log('CD:' + countdown + ' B:' + begin);
-            if (result && result.length) {
-              arr = [];
-              result.forEach(function(r) {
-                var status;
-                if (r.status) {
-                  status = '已中奖';
-                } else {
-                  status = countdown > 0 ? '未开奖' : '未中奖';
-                }
-                return arr.push({
-                  value: r.number,
-                  status: status
-                });
-              });
-              shareInfo.nums = arr;
-              shareInfo.uid = user._id;
-              return res.render('success', shareInfo);
-            } else if (countdown > 0) {
-              return getRewardNumber(params.id, user._id, user.openid, function(err, result) {
-                if (err) {
-                  console.log('Error2:');
-                  return errorHandler(res, SYSTEM_ERROR);
-                } else {
-                  arr = [
-                    {
-                      value: result,
-                      status: '未开奖'
-                    }
-                  ];
-                  shareInfo.nums = arr;
-                  shareInfo.uid = user._id;
-                  Lottery.findByIdAndUpdate(params.id, {
-                    $inc: {
-                      joined: 1
-                    }
-                  }, function(err, result) {
-                    if (err) {
-                      return logger.error('RecordLotterJoinErr:' + err);
-                    } else {
-                      return logger.warn('LotteryJoinedRecord:' + params.id + '-' + arr[0].value + '-' + user._id);
-                    }
+          countdown = moment(shareInfo.end).valueOf() - moment().valueOf();
+          begin = moment().valueOf() - moment(shareInfo.begin).valueOf();
+          if (begin < 0) {
+            return errorHandler(res, '活动尚未开始，请稍候再试');
+          } else {
+            return LotteryRecord.find({
+              lottery: params.id,
+              user: user._id
+            }, function(err, result) {
+              var arr;
+              console.log('CD:' + countdown + ' B:' + begin);
+              if (result && result.length) {
+                arr = [];
+                result.forEach(function(r) {
+                  var status;
+                  if (r.status) {
+                    status = '已中奖';
+                  } else {
+                    status = countdown > 0 ? '未开奖' : '未中奖';
+                  }
+                  return arr.push({
+                    value: r.number,
+                    status: status
                   });
-                  return res.render('success', shareInfo);
-                }
-              });
-            } else {
-              return errorHandler(res, '您没有参与此次活动，请关注润石创投公众号，获取最新活动动态');
-            }
-          });
+                });
+                shareInfo.nums = arr;
+                shareInfo.uid = user._id;
+                return res.render('success', shareInfo);
+              } else if (countdown > 0) {
+                return getRewardNumber(params.id, user._id, user.openid, function(err, result) {
+                  if (err) {
+                    console.log('Error2:');
+                    return errorHandler(res, SYSTEM_ERROR);
+                  } else {
+                    arr = [
+                      {
+                        value: result,
+                        status: '未开奖'
+                      }
+                    ];
+                    shareInfo.nums = arr;
+                    shareInfo.uid = user._id;
+                    Lottery.findByIdAndUpdate(params.id, {
+                      $inc: {
+                        joined: 1
+                      }
+                    }, function(err, result) {
+                      if (err) {
+                        return logger.error('RecordLotterJoinErr:' + err);
+                      } else {
+                        return logger.warn('LotteryJoinedRecord:' + params.id + '-' + arr[0].value + '-' + user._id);
+                      }
+                    });
+                    return res.render('success', shareInfo);
+                  }
+                });
+              } else {
+                return errorHandler(res, '您没有参与此次活动，请关注润石创投公众号，获取最新活动动态');
+              }
+            });
+          }
         });
       } else {
         return res.render('sign_up');

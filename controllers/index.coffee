@@ -215,12 +215,12 @@ sign_in_url = 'http://www.rsct.com/finance/weixin/login.action'
 
 errorHandler = (res, errorString, redirect_url)->
   console.log 'Error:'+errorString
-  errorString = '抱歉，系统出错，请稍候再试' unless errorString
-  errorString+='\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解'
+  es = if errorString then errorString else '抱歉，系统出错，请稍候再试'
+  es+='\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解'
   if !redirect_url
     redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
-  console.log 'Error':+errorString
-  res.render 'error', error:errorString, url:redirect_url
+  console.log 'Error:'+es
+  res.render 'error', error:es, url:redirect_url
 
 LINK_ERROR = '抱歉，链接错误，请重新再试'
 SYSTEM_ERROR = '抱歉，系统出错，请稍候再试'
@@ -257,10 +257,12 @@ module.exports = (router)->
                 result.joined += plus
                 share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
                 countdown = moment(result.end).valueOf() - moment().valueOf()
+                begin = moment().valueOf() - moment(result.begin).valueOf()
                 draw_url = '/draw_lottery'
-                req.session.shareInfo = name:result.name,group_desc:result.group_desc,desc:result.description,img:result.thumb,url:share_url
+                req.session.shareInfo = begin:result.begin,end:result.end,name:result.name,group_desc:result.group_desc,desc:result.description,img:result.thumb,url:share_url
                 detail_url = if result.detail_url then result.detail_url else 'imgs/need_know_detail.jpg'
                 data =
+                  begin:begin
                   uid:user._id
                   draw_url:draw_url
                   detail_url:detail_url
@@ -416,38 +418,43 @@ module.exports = (router)->
       params = getParams(state)
       getConfig req, (err, config)->
         shareInfo.config = config
-        LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
-          countdown = moment(result.end).valueOf() - moment().valueOf()
-          begin = moment().valueOf() - moment(result.begin).valueOf()
-          console.log 'CD:'+countdown+' B:'+begin
-          if result && result.length
-            arr = []
-            result.forEach (r)->
-              if r.status
-                status = '已中奖'
-              else
-                status = if countdown > 0 then '未开奖' else '未中奖'
-              arr.push value:r.number,status:status
-            shareInfo.nums = arr
-            shareInfo.uid = user._id
-            res.render 'success', shareInfo
-          else if countdown > 0
-            getRewardNumber params.id, user._id, user.openid, (err, result)->
-              if err
-                console.log 'Error2:'
-                errorHandler res, SYSTEM_ERROR
-              else
-                arr = [value:result,status:'未开奖']
-                shareInfo.nums = arr
-                shareInfo.uid = user._id
-                Lottery.findByIdAndUpdate params.id, $inc:joined:1, (err, result)->
-                  if err
-                    logger.error 'RecordLotterJoinErr:'+err
-                  else
-                    logger.warn 'LotteryJoinedRecord:'+params.id+'-'+arr[0].value+'-'+user._id
-                res.render 'success', shareInfo
-          else
-            errorHandler res, '您没有参与此次活动，请关注润石创投公众号，获取最新活动动态'
+
+        countdown = moment(shareInfo.end).valueOf() - moment().valueOf()
+        begin = moment().valueOf() - moment(shareInfo.begin).valueOf()
+
+        if begin < 0
+          errorHandler res, '活动尚未开始，请稍候再试'
+        else
+          LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
+            console.log 'CD:'+countdown+' B:'+begin
+            if result && result.length
+              arr = []
+              result.forEach (r)->
+                if r.status
+                  status = '已中奖'
+                else
+                  status = if countdown > 0 then '未开奖' else '未中奖'
+                arr.push value:r.number,status:status
+              shareInfo.nums = arr
+              shareInfo.uid = user._id
+              res.render 'success', shareInfo
+            else if countdown > 0
+              getRewardNumber params.id, user._id, user.openid, (err, result)->
+                if err
+                  console.log 'Error2:'
+                  errorHandler res, SYSTEM_ERROR
+                else
+                  arr = [value:result,status:'未开奖']
+                  shareInfo.nums = arr
+                  shareInfo.uid = user._id
+                  Lottery.findByIdAndUpdate params.id, $inc:joined:1, (err, result)->
+                    if err
+                      logger.error 'RecordLotterJoinErr:'+err
+                    else
+                      logger.warn 'LotteryJoinedRecord:'+params.id+'-'+arr[0].value+'-'+user._id
+                  res.render 'success', shareInfo
+            else
+              errorHandler res, '您没有参与此次活动，请关注润石创投公众号，获取最新活动动态'
     else
       res.render 'sign_up'
 
