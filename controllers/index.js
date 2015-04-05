@@ -944,7 +944,6 @@
                     console.log('SMSSentErr:' + JSON.stringify(err));
                     logger.error('SendGotSMSError:' + err);
                   } else {
-                    console.log('SMSSentOK:' + JSON.stringify(result));
                     smsok = true;
                   }
                   return ep.emit('sms');

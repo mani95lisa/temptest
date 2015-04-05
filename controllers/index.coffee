@@ -630,7 +630,6 @@ module.exports = (router)->
                   console.log 'SMSSentErr:'+JSON.stringify(err)
                   logger.error 'SendGotSMSError:'+err
                 else
-                  console.log 'SMSSentOK:'+JSON.stringify(result)
                   smsok = true
                 ep.emit 'sms'
             else
