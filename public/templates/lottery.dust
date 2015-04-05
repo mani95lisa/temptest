@@ -50,6 +50,10 @@
     });
 </script>
 
+{<title}
+    {name}
+{/title}
+
 {<body}
     <img class="bg" src="imgs/lottery_bg.jpg">
     <button id="button_mask"></button>

@@ -218,6 +218,7 @@ errorHandler = (res, error, redirect_url)->
   error+='\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解'
   if !redirect_url
     redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+  console.log 'Error':+error
   res.render 'error', error:error, url:redirect_url
 
 LINK_ERROR = '抱歉，链接错误，请重新再试'

@@ -310,6 +310,9 @@
     if (!redirect_url) {
       redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
     }
+    console.log({
+      'Error': +error
+    });
     return res.render('error', {
       error: error,
       url: redirect_url

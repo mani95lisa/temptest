@@ -50,6 +50,10 @@
     });
 </script>
 
+{<title}
+    {name}
+{/title}
+
 {<body}
     <img class="bg" src="imgs/success_bg.jpg">
     <img id="share" src="imgs/share.png"/>
