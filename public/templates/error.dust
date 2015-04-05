@@ -19,13 +19,6 @@
             {/error}
         </script>
 
-        <style>
-            body{
-                background-image: url(../imgs/sign_up_bg.jpg);
-                background-size: cover;
-            }
-        </style>
-
     </head>
 
     <body>
