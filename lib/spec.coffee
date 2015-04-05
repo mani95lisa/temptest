@@ -106,6 +106,13 @@ module.exports = (app)->
       if message.Event == 'subscribe'
         initUser message.FromUserName, (err, result)->
           reply1 res
+      else if message.EventKey == 'call_kf'
+        res.reply {
+          type:'transfer_customer_service'
+          ToUserName:message.FromUserName
+          FromUserName:message.ToUserName
+          CreateTime:new Date().getTime()
+        }
       else
         openid = message.FromUserName
         wxsession = {}

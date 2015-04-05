@@ -203,17 +203,35 @@
   menu = {
     'button': [
       {
-        name: '我的账户',
+        name: '幸运石',
         type: 'view',
-        url: 'http://www.rsct.com/finance/website/to_login.action'
+        url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
       }, {
         name: '帮你赚钱',
-        type: 'view',
-        url: 'http://www.rsct.com/finance/website/index.action'
+        sub_button: [
+          {
+            type: 'view',
+            name: '我的账户',
+            url: 'http://www.rsct.com/finance/website/to_login.action'
+          }, {
+            name: '快速投资',
+            type: 'view',
+            url: 'http://www.rsct.com/finance/website/index.action'
+          }
+        ]
       }, {
         name: '关于润石',
-        type: 'view',
-        url: 'http://www.rsct.com/finance/website/dima.action'
+        sub_button: [
+          {
+            type: 'view',
+            name: '关于润石',
+            url: 'http://www.rsct.com/finance/website/dima.action'
+          }, {
+            name: '呼叫小石头',
+            type: 'click',
+            key: 'call_kf'
+          }
+        ]
       }
     ]
   };
@@ -304,12 +322,7 @@
 
   errorHandler = function(res, errorString, redirect_url) {
     var es;
-    console.log('Error:' + errorString);
     es = errorString ? errorString : '抱歉，系统出错，请稍候再试';
-    if (!redirect_url) {
-      redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
-    }
-    console.log('Error:' + es);
     return res.render('error', {
       error: es,
       url: redirect_url
