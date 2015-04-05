@@ -306,7 +306,6 @@
     var es;
     console.log('Error:' + errorString);
     es = errorString ? errorString : '抱歉，系统出错，请稍候再试';
-    es += '\n如有疑问请关注【润石创投】服务号进行反馈，我们会第一时间答复\n感谢您的支持和理解';
     if (!redirect_url) {
       redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect';
     }
