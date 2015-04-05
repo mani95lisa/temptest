@@ -39,7 +39,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
           data._csrf = csrf
           $http.post('/user/update',data).success (result)->
             if result.err
-              humane.error result.err
+              humane.log result.err
             else
               humane.log '更新成功'
               console.log result
