@@ -116,7 +116,7 @@ module.exports = (app)->
             res.reply '系统出错，请稍候再试'
           else if result
             user = result
-            if content == '领奖'
+            if content == '领取'
               q = openid:openid,status:true,dispatched:false
               LotteryRecord.find(q).populate('lottery', 'name').exec (err, result)->
                 if err
@@ -156,14 +156,18 @@ module.exports = (app)->
                   if !truename || !address || !mobile
                     res.reply '收件人姓名、地址或手机号不能为空'
                   else
-                    ep.all 'lr', 'user', ->
+                    ep.on 'lr', ->
                       wxsession.input_address = false
                       user.wx_status = JSON.stringify(wxsession)
+                      user.truename = truename
+                      user.address = address
+                      user.mobile2 = mobile
                       user.save (err, result)->
                         if err
                           logger.error 'SavewxStatusE1:'+err
                           res.reply '抱歉，系统出错，请稍候再试'
                         else
+                          console.log JSON.stringify(result)
                           res.reply '信息已经提交成功，我们会尽快为您派发奖品，请耐心等待'
 
                     ep.fail (err)->
@@ -171,7 +175,7 @@ module.exports = (app)->
                       res.reply '抱歉，系统出错，请稍候再试'
 
                     LotteryRecord.findByIdAndUpdate lid, $set:truename:truename,address:address,mobile:mobile, ep.done 'lr'
-                    User.findOneAndUpdate openid, $set:truename:truename,address:address,mobile2:mobile, ep.done 'user'
+#                    User.findOneAndUpdate openid, $set:truename:truename,address:address,mobile2:mobile, ep.done 'user'
 
                 if wxsession.hasAddress
                   if content == 'Y' || content == 'y'
@@ -193,7 +197,7 @@ module.exports = (app)->
                   arr = content.split(' ')
                   mobile = arr[1]
                   if arr.length < 3 || mobile.length != 11
-                    res.reply '格式不正确，请注意在收件人和手机号码后面添加空格及手机号码是否正确'
+                    res.reply '格式不正确，请注意在收件人和手机号码后面添加空格及手机号码是否正确，请重新输入（以空格隔开，如：收件人 手机号码 收货地址）'
                   else
                     truename = arr[0]
                     mobile = arr[1]
