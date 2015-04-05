@@ -62,7 +62,7 @@
             enableSorting: false
           }, {
             name: '收货手机号',
-            field: 'mobile',
+            field: 'mobile2',
             width: 100,
             enableSorting: false
           }, {

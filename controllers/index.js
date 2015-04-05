@@ -926,9 +926,9 @@
                 });
                 msg = '';
                 if (result.notify) {
-                  msg = '恭喜您于活动【' + lname + '】中奖\n\n' + result.notify + '\n\n（请在润石创投服务号里发送【领奖】两字完成领奖流程）';
+                  msg = '恭喜您于活动【' + lname + '】得到大白一只\n\n' + result.notify + '\n\n（请在润石创投服务号里发送【领取】两字完成领取流程）';
                 } else {
-                  msg = '恭喜您于活动【' + lname + '】中奖\n（请在润石创投服务号里发送【领奖】两字完成领奖流程）';
+                  msg = '恭喜您于活动【' + lname + '】得到大白一只\n（请在润石创投服务号里发送【领取】两字完成领取流程）';
                 }
                 api.sendText(openid, msg, function(err, text) {
                   if (err) {
@@ -938,13 +938,13 @@
                   }
                   return ep.emit('text');
                 });
-                msg = '恭喜您于活动【' + lname + '】中奖，（请在润石创投服务号里发送【领奖】两字完成领奖流程）';
+                msg = '恭喜您于活动【' + lname + '】得到大白一只，（请在润石创投服务号里发送【领取】两字完成领取流程）';
                 return SMS.send(mobile, msg, function(err, result) {
                   if (err) {
                     console.log('SMSSentErr:' + JSON.stringify(err));
                     logger.error('SendGotSMSError:' + err);
                   } else {
-                    console.log('SMSSentErr:' + JSON.stringify(result));
+                    console.log('SMSSentOK:' + JSON.stringify(result));
                     smsok = true;
                   }
                   return ep.emit('sms');
