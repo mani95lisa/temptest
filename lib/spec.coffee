@@ -131,7 +131,7 @@ module.exports = (app)->
                     s+= r.lottery.name+'\n'
                   info = user.truename+' '+user.mobile2+' '+user.address
                   if user.address
-                    s += '\n 系统查询到您曾使用过收货信息为：\n'+info+'\n 如果继续使用该地址请回复Y，重新输入请回复N'
+                    s += '\n 系统查询到您曾使用过收货信息为：\n\n'+info+'\n\n 如果继续使用该地址请回复Y，重新输入请回复N'
                     wxsession.userinfo = info
                     wxsession.hasAddress = true
                   else

@@ -46,7 +46,7 @@
           data._csrf = csrf;
           return $http.post('/lottery_records/update', data).success(function(result) {
             if (result.err) {
-              return humane.error(result.err);
+              return humane.log(result.err);
             } else {
               humane.log('更新成功');
               console.log(result);
