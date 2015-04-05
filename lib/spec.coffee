@@ -107,12 +107,7 @@ module.exports = (app)->
         initUser message.FromUserName, (err, result)->
           reply1 res
       else if message.EventKey == 'call_kf'
-        res.reply {
-          type:'transfer_customer_service'
-          ToUserName:message.FromUserName
-          FromUserName:message.ToUserName
-          CreateTime:new Date().getTime()
-        }
+        res.reply '小石头在此！请输入您想咨询的问题，小石头会尽快回复您，么么哒~'
       else
         openid = message.FromUserName
         wxsession = {}
