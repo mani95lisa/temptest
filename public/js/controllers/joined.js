@@ -120,13 +120,18 @@
             width: 100,
             enableSorting: false
           }, {
-            name: '是否中奖',
+            name: '已中奖',
             field: 'status',
-            width: 100,
+            width: 80,
             enableSorting: false
           }, {
-            name: '是否派奖',
+            name: '已派奖',
             field: 'dispatched',
+            width: 80,
+            enableSorting: false
+          }, {
+            name: '日期',
+            field: 'created_at',
             width: 100,
             enableSorting: false
           }, {
@@ -168,7 +173,7 @@
             $scope.count = result.count;
             if (result.result) {
               result.result.forEach(function(r) {
-                return r.created_at = moment(r.created_at).format('YYYY-MM-DD HH:mm:ss');
+                return r.created_at = moment(r.created_at).format('MM-DD HH:mm:ss');
               });
             }
             return $scope.gridOptions.data = result.result;

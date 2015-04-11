@@ -25,7 +25,9 @@
     return router.get('/list', auth.isAuthenticated(), function(req, res) {
       var ca, data, ep, ep2, filter, options, query;
       data = req.query;
-      ca = data.category;
+      if (data.category) {
+        ca = JSON.parse(data.category);
+      }
       ep = new EventProxy();
       ep.all('count', 'result', function(count, result) {
         return res.json({

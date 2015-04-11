@@ -15,7 +15,7 @@ module.exports = (router)->
   router.get '/list', auth.isAuthenticated(), (req, res)->
     data = req.query
 
-    ca = data.category
+    ca = JSON.parse(data.category) if data.category
 
     ep = new EventProxy()
     ep.all 'count', 'result', (count, result)->
