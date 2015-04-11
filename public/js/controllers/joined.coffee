@@ -17,6 +17,14 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.header = 'partials/grid/grid_header.html'
     $scope.filters = ['所有','未中奖', '已中奖', '已派奖']
     $scope.searchTip = '请输入7位抽奖号或11位用户手机号或抽奖活动标题'
+    $http.get('/lottery/name_list').success (result)->
+      if result.err
+        humane.log result.err
+      else
+        defaut = name:'显示所有'
+        result.result.unshift(defaut)
+        $scope.category = value:defaut
+        $scope.categories = result.result
 
     $scope.filter = {value:'所有'}
     $scope.$watch 'filter.value', (n)->
@@ -26,6 +34,9 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
       $scope.getData()
 
     $scope.$watch 'page', (n)->
+      $scope.getData()
+
+    $scope.$watch 'category.value', (n)->
       $scope.getData()
 
     caching = []
@@ -91,9 +102,10 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
       if $scope.requesting
         return
       $scope.requesting = true
-      console.log $scope.filter
+      console.log $scope.filter, $scope.category
       filter = $scope.filters.indexOf $scope.filter.value
-      $http.get('/lottery_records/list',params:filter:filter,page:$scope.page,pageSize:$scope.pageSize,keywords:$scope.keywords).success((result)->
+      ca = $scope.category.value if $scope.category
+      $http.get('/lottery_records/list',params:category:ca,filter:filter,page:$scope.page,pageSize:$scope.pageSize,keywords:$scope.keywords).success((result)->
         console.group 'lottery_records'
         console.log 'GotLotteryRecords', result
         console.groupEnd()

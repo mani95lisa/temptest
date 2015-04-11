@@ -55,7 +55,7 @@
 {/title}
 
 {<body}
-    <img class="bg" src="imgs/success_bg.jpg">
+    <img class="bg" src="{success_bg_url}">
     <img id="share" src="imgs/share.png"/>
 
     <div id="numbers">

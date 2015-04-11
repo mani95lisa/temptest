@@ -338,7 +338,7 @@
   TIME_OUT_ERROR = '抱歉，页面打开时间过长或连接丢失，请重新再试';
 
   module.exports = function(router) {
-    var init;
+    var getHFUrl, init;
     init = function(req, res, result) {
       var ep, params, state, user;
       state = req.query.state;
@@ -361,7 +361,7 @@
               return errorHandler(res, LINK_ERROR);
             } else {
               return Lottery.findById(id, function(err, result) {
-                var begin, countdown, data, detail_url, draw_url, plus, share_url;
+                var begin, bg_url, countdown, data, detail_url, draw_url, plus, share_url, success_bg_url;
                 if (err) {
                   return logger.error(err);
                 } else if (result) {
@@ -374,7 +374,9 @@
                   countdown = moment(result.end).valueOf() - moment().valueOf();
                   begin = moment().valueOf() - moment(result.begin).valueOf();
                   draw_url = '/draw_lottery';
+                  success_bg_url = result.success_bg_url ? result.success_bg_url : 'imgs/success_bg.jpg';
                   req.session.shareInfo = {
+                    success_bg_url: success_bg_url,
                     begin: result.begin,
                     end: result.end,
                     name: result.name,
@@ -384,11 +386,13 @@
                     url: share_url
                   };
                   detail_url = result.detail_url ? result.detail_url : 'imgs/need_know_detail.jpg';
+                  bg_url = result.bg_url ? result.bg_url : 'imgs/lottery_bg.jpg';
                   data = {
                     begin: begin,
                     uid: user._id,
                     draw_url: draw_url,
                     detail_url: detail_url,
+                    bg_url: bg_url,
                     joined: result.joined,
                     config: config,
                     desc: result.description,
@@ -993,6 +997,22 @@
       return res.render('error', {
         error: 'test'
       });
+    });
+    getHFUrl = function(url, params) {
+      return url = 'http://mertest.chinapnr.com/muser/publicRequests';
+    };
+    router.get('/hf', function(req, res) {
+      var params;
+      params = {
+        BgRetUrl: 'http://182.92.237.234:8080/test/register',
+        RetUrl: 'http://182.92.237.234:8080/test/register',
+        ChkValue: 'AE42CFCF6F1ADF276EDEB52E1890F337E7F30B29DFE772CDA1E3B60E60601BFCC33CA2FAA83AF73A6A76D6A2DEE503C23C110FC68AC89A63E584C90400DA9D0D4AC0A019EBADE4CCD40A521B9E07152A1522BE5E9F4BD6A67B04569A6331B411BA54464BB2C2C2DFBEA29644BE4D19FECAEAC69897EB2C1E2D06B1A2CC60278B',
+        MerCustId: '6000060000996258',
+        MerPriv: 'MQ==',
+        Version: 10,
+        CmdId: 'UserRegister'
+      };
+      return getHFUrl;
     });
     return router.get('/admin', auth.isAuthenticated(), function(req, res) {
       var nav;

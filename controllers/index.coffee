@@ -274,13 +274,24 @@ module.exports = (router)->
                 countdown = moment(result.end).valueOf() - moment().valueOf()
                 begin = moment().valueOf() - moment(result.begin).valueOf()
                 draw_url = '/draw_lottery'
-                req.session.shareInfo = begin:result.begin,end:result.end,name:result.name,group_desc:result.group_desc,desc:result.description,img:result.thumb,url:share_url
+                success_bg_url = if result.success_bg_url then result.success_bg_url else 'imgs/success_bg.jpg'
+                req.session.shareInfo =
+                  success_bg_url:success_bg_url
+                  begin:result.begin
+                  end:result.end
+                  name:result.name
+                  group_desc:result.group_desc
+                  desc:result.description
+                  img:result.thumb
+                  url:share_url
                 detail_url = if result.detail_url then result.detail_url else 'imgs/need_know_detail.jpg'
+                bg_url = if result.bg_url then result.bg_url else 'imgs/lottery_bg.jpg'
                 data =
                   begin:begin
                   uid:user._id
                   draw_url:draw_url
                   detail_url:detail_url
+                  bg_url:bg_url
                   joined:result.joined
                   config:config
                   desc:result.description
@@ -669,6 +680,22 @@ module.exports = (router)->
 
   router.get '/error', (req, res)->
     res.render 'error', error:'test'
+
+  getHFUrl = (url, params)->
+    url = 'http://mertest.chinapnr.com/muser/publicRequests'
+
+  router.get '/hf', (req, res)->
+    params = {
+      BgRetUrl:'http://182.92.237.234:8080/test/register'
+      RetUrl:'http://182.92.237.234:8080/test/register'
+      ChkValue:'AE42CFCF6F1ADF276EDEB52E1890F337E7F30B29DFE772CDA1E3B60E60601BFCC33CA2FAA83AF73A6A76D6A2DEE503C23C110FC68AC89A63E584C90400DA9D0D4AC0A019EBADE4CCD40A521B9E07152A1522BE5E9F4BD6A67B04569A6331B411BA54464BB2C2C2DFBEA29644BE4D19FECAEAC69897EB2C1E2D06B1A2CC60278B'
+      MerCustId:'6000060000996258'
+      MerPriv:'MQ=='
+      Version:10
+      CmdId:'UserRegister'
+    }
+    getHFUrl
+
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [

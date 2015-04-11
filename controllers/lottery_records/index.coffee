@@ -15,6 +15,8 @@ module.exports = (router)->
   router.get '/list', auth.isAuthenticated(), (req, res)->
     data = req.query
 
+    ca = data.category
+
     ep = new EventProxy()
     ep.all 'count', 'result', (count, result)->
       res.json count:count, result:result, pageSize:data.pageSize
@@ -49,6 +51,8 @@ module.exports = (router)->
         query['status'] = true
       when '3'
         query['dispatched'] = true
+    if ca && ca._id
+      query.lottery = ca._id
 
     if data.keywords
       switch parseInt(data.keywords).toString().length

@@ -69,6 +69,21 @@
         }
       });
     });
+    router.get('/name_list', auth.isAuthenticated(), function(req, res) {
+      return Lottery.find({
+        enabled: true
+      }, 'name', function(err, result) {
+        if (err) {
+          return res.json({
+            err: err
+          });
+        } else {
+          return res.json({
+            result: result
+          });
+        }
+      });
+    });
     return router.get('/list', auth.isAuthenticated(), function(req, res) {
       var data, ep, options, query;
       data = req.query;

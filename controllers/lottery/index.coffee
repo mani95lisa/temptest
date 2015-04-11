@@ -40,6 +40,14 @@ module.exports = (router)->
             Log.record req, req.originalUrl, diff
             res.json result:result
 
+  router.get '/name_list', auth.isAuthenticated(),(req, res)->
+
+    Lottery.find enabled:true, 'name', (err, result)->
+      if err
+        res.json err:err
+      else
+        res.json result:result
+
   router.get '/list', auth.isAuthenticated(), (req, res)->
     data = req.query
 

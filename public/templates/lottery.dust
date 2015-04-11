@@ -55,7 +55,7 @@
 {/title}
 
 {<body}
-    <img class="bg" src="imgs/lottery_bg.jpg">
+    <img class="bg" src="{bg_url}">
     <button id="button_mask"></button>
     <div id="joined"><span class="joined_value">{joined}</span><span class="joined_label">人已参与</span></div>
     <div id="count_down">

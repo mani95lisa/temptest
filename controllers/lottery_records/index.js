@@ -23,8 +23,9 @@
 
   module.exports = function(router) {
     return router.get('/list', auth.isAuthenticated(), function(req, res) {
-      var data, ep, ep2, filter, options, query;
+      var ca, data, ep, ep2, filter, options, query;
       data = req.query;
+      ca = data.category;
       ep = new EventProxy();
       ep.all('count', 'result', function(count, result) {
         return res.json({
@@ -68,6 +69,9 @@
           break;
         case '3':
           query['dispatched'] = true;
+      }
+      if (ca && ca._id) {
+        query.lottery = ca._id;
       }
       if (data.keywords) {
         switch (parseInt(data.keywords).toString().length) {

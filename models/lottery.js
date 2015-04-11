@@ -25,6 +25,8 @@
     },
     link_url: String,
     detail_url: String,
+    bg_url: String,
+    success_bg_url: String,
     plus: Number,
     enabled: {
       type: Boolean,

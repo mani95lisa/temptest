@@ -12,6 +12,8 @@ LotterySchema = new Schema
   joined:type:Number,default:0
   link_url:String
   detail_url:String
+  bg_url:String
+  success_bg_url:String
   plus:Number
   enabled:type:Boolean,default:false
   group_desc:String
