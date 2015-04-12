@@ -1,5 +1,5 @@
 {>"layouts/weixin_master" /}
-<link rel="stylesheet" href="css/lottery.css"/>
+<link rel="stylesheet" href="http://f1.rsct.com/css/lottery.css"/>
 
 <script type="text/javascript">
 
@@ -59,24 +59,24 @@
     <button id="button_mask"></button>
     <div id="joined"><span class="joined_value">{joined}</span><span class="joined_label">人已参与</span></div>
     <div id="count_down">
-        <img id="time_bg" src="imgs/time_bg.png">
-        <img id="num1" src="imgs/0.png"/>
-        <img id="num2" src="imgs/0.png"/>
-        <img id="num3" src="imgs/0.png"/>
-        <img id="num4" src="imgs/0.png"/>
-        <img id="num5" src="imgs/0.png"/>
-        <img id="num6" src="imgs/0.png"/>
-        <img id="num7" src="imgs/0.png"/>
-        <img id="num8" src="imgs/0.png"/>
-        <img id="time_lines" src="imgs/lines.png">
+        <img id="time_bg" src="http://f1.rsct.com/imgs/time_bg.png">
+        <img id="num1" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="num2" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="num3" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="num4" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="num5" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="num6" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="num7" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="num8" src="http://f1.rsct.com/imgs/0.png"/>
+        <img id="time_lines" src="http://f1.rsct.com/imgs/lines.png">
     </div>
 
-    <img id="need_know" src="imgs/need_know.png">
-    <img id="rule" src="imgs/rule.png">
-    <img id="red_line" src="imgs/red_line.png">
+    <img id="need_know" src="http://f1.rsct.com/imgs/need_know.png">
+    <img id="rule" src="http://f1.rsct.com/imgs/rule.png">
+    <img id="red_line" src="http://f1.rsct.com/imgs/red_line.png">
     <img id="need_know_detail" src="{detail_url}">
-    <img id="rule_detail" src="imgs/rule_detail.jpg">
+    <img id="rule_detail" src="http://f1.rsct.com/imgs/rule_detail.jpg">
     <div style="display: none" id="url">{url}</div>
 {/body}
 
-<script type="text/javascript" src="js/lottery.js"></script>
+<script type="text/javascript" src="http://f1.rsct.com/js/lottery.js"></script>

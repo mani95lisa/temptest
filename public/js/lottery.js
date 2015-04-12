@@ -10,9 +10,9 @@
       this.scale = this.windowWidth / 640;
       Base.position($('#button_mask'), 242, 251, 199, 592);
       if (count_down_time > 0) {
-        $('#button_mask').css('background', 'url(../imgs/lottery_btn.png) no-repeat');
+        $('#button_mask').css('background', 'url(http://f1.rsct.com/imgs/lottery_btn.png) no-repeat');
       } else {
-        $('#button_mask').css('background', 'url(../imgs/check_btn.png) no-repeat');
+        $('#button_mask').css('background', 'url(http://f1.rsct.com/imgs/check_btn.png) no-repeat');
       }
       $('#button_mask').css('background-size', 'contain');
       $('#button_mask').click(function() {
@@ -64,7 +64,7 @@
         });
       }
       setNumValue = function(index, value) {
-        return $('#num' + index).attr('src', 'imgs/' + value + '.png');
+        return $('#num' + index).attr('src', 'http://f1.rsct.com/imgs/' + value + '.png');
       };
       setTwoValue = function(i1, i2, value) {
         if (value < 10) {

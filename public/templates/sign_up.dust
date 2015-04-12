@@ -1,6 +1,6 @@
 {>"layouts/weixin_master" /}
-<link rel="stylesheet" href="css/sign_up.css"/>
-<script type="text/javascript" src="js/sign_up.js"></script>
+<link rel="stylesheet" href="http://f1.rsct.com/css/sign_up.css"/>
+<script type="text/javascript" src="http://f1.rsct.com/js/sign_up.js"></script>
 
 <script type="text/javascript">
 
@@ -30,7 +30,7 @@
 {/title}
 
 {<body}
-    <img class="bg" src="imgs/sign_up_bg.jpg">
+    <img class="bg" src="http://f1.rsct.com/imgs/sign_up_bg.jpg">
     <form id="form">
         <div class="field">
             <input id="mobileNum" type="text" name="mobile" placeholder="请输入手机号">
@@ -44,8 +44,8 @@
         <div class="field" id="nickname">
             <input type="text" name="nickname" placeholder="昵称，为空则默认微信昵称">
         </div>
-        <img id="submit_btn" src="imgs/sign_up_and_lottery.png">
-        <img id="switch_btn" src="imgs/sign_in.png">
+        <img id="submit_btn" src="http://f1.rsct.com/imgs/sign_up_and_lottery.png">
+        <img id="switch_btn" src="http://f1.rsct.com/imgs/sign_in.png">
         <input type="hidden" id="csrf" name="_csrf" value="{_csrf}"/>
     </form>
 

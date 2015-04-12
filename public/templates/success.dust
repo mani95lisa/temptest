@@ -1,6 +1,6 @@
 {>"layouts/weixin_master" /}
-<link rel="stylesheet" href="css/success.css"/>
-<script type="text/javascript" src="js/success.js"></script>
+<link rel="stylesheet" href="http://f1.rsct.com/css/success.css"/>
+<script type="text/javascript" src="http://f1.rsct.com/js/success.js"></script>
 
 <script type="text/javascript">
 
@@ -56,7 +56,7 @@
 
 {<body}
     <img class="bg" src="{success_bg_url}">
-    <img id="share" src="imgs/share.png"/>
+    <img id="share" src="http://f1.rsct.com/imgs/share.png"/>
 
     <div id="numbers">
         {#nums}
@@ -65,11 +65,11 @@
         {/nums}
     </div>
 
-    {!<img id="qrcode" src="imgs/qrcode.jpg">!}
+    {!<img id="qrcode" src="http://f1.rsct.com/imgs/qrcode.jpg">!}
 
     <div id="share_pop">
-        <img class="share_content" src="imgs/share_content.png">
-        <img id="share_close" src="imgs/share_close.png">
+        <img class="share_content" src="http://f1.rsct.com/imgs/share_content.png">
+        <img id="share_close" src="http://f1.rsct.com/imgs/share_close.png">
     </div>
 
     <div style="display: none" id="url">{url}</div>

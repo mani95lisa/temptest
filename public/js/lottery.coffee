@@ -6,9 +6,9 @@ Base =
     Base.position($('#button_mask'),242,251,199,592)
     #定位按钮遮罩
     if count_down_time > 0
-      $('#button_mask').css('background','url(../imgs/lottery_btn.png) no-repeat')
+      $('#button_mask').css('background','url(http://f1.rsct.com/imgs/lottery_btn.png) no-repeat')
     else
-      $('#button_mask').css('background','url(../imgs/check_btn.png) no-repeat')
+      $('#button_mask').css('background','url(http://f1.rsct.com/imgs/check_btn.png) no-repeat')
     $('#button_mask').css('background-size','contain')
     $('#button_mask').click ->
       if count_down_time <= 0
@@ -44,7 +44,7 @@ Base =
       $('#num'+i).css(position:'absolute',width:num_w,left:left,top:top)
 
     setNumValue = (index, value)->
-      $('#num'+index).attr('src', 'imgs/'+value+'.png')
+      $('#num'+index).attr('src', 'http://f1.rsct.com/imgs/'+value+'.png')
 
     setTwoValue = (i1, i2, value)->
       if value < 10
