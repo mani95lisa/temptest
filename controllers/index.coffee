@@ -133,7 +133,7 @@ save_js_sdk_ticket = (type, ticket, cb)->
 
 api.registerTicketHandle get_js_sdk_ticket, save_js_sdk_ticket
 
-host = 'http://rsct.swift.tf'
+host = 'http://lottery.rsct.com'
 home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
 getUrl = (channel, page)->
@@ -144,7 +144,7 @@ menu =
     {
       name:'幸运石'
       type:'view'
-      url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://rsct.swift.tf/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+      url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://lottery.rsct.com/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
     }
     {
       name:'帮你赚钱'
@@ -417,7 +417,7 @@ module.exports = (router)->
               desc:result.description
               group_desc:result.group_desc
               url:share_url
-              share_url:'http://rsct.swift.tf'+req.url
+              share_url:'http://lottery.rsct.com'+req.url
               img:result.thumb
               name:result.name
             res.render 'pages', data
