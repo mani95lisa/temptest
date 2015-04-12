@@ -144,7 +144,7 @@ menu =
     {
       name:'幸运石'
       type:'view'
-      url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://lottery.rsct.com/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+      url:'http://lottery.rsct.com/lucky'
     }
     {
       name:'帮你赚钱'
@@ -430,7 +430,9 @@ module.exports = (router)->
     res.render 'success', nums:[value:1111111,status:'true']
 
   router.get '/lottery', (req, res)->
-    res.render 'lottery',draw_url:'/draw_lottery',joined:moment().format('YYMMDD'), countdown:94170370
+    detail_url = 'imgs/need_know_detail_3.jpg'
+    bg_url = 'imgs/lottery_bg.jpg'
+    res.render 'lottery',bg_url:bg_url,detail_url:detail_url,draw_url:'/draw_lottery',joined:moment().format('YYMMDD'), countdown:94170370
 
   router.get '/draw_lottery', (req, res)->
     session = req.session
@@ -680,6 +682,9 @@ module.exports = (router)->
 
   router.get '/error', (req, res)->
     res.render 'error', error:'test'
+
+  router.get '/lucky', (req, res)->
+    res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://lottery.rsct.com/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
   router.get '/baecheck', (req, res)->
     res.json status:true

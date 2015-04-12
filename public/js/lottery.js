@@ -114,7 +114,7 @@
         });
         $('#need_know_detail').show();
         $('#rule_detail').hide();
-        return Base.position($('#need_know_detail'), 640, 650, 0, 939);
+        return Base.position($('#need_know_detail'), 640, 0, 0, 939);
       } else {
         $('#need_know').css({
           opacity: .5
@@ -129,10 +129,12 @@
       }
     },
     position: function(item, width, height, x, y) {
+      var h;
+      h = height ? height * this.scale : 'auto';
       return item.css({
         position: 'absolute',
         width: width * this.scale,
-        height: height * this.scale,
+        height: h,
         top: y * this.scale,
         left: x * this.scale
       });

@@ -87,7 +87,7 @@ Base =
       $('#rule').css(opacity:.5)
       $('#need_know_detail').show()
       $('#rule_detail').hide()
-      Base.position($('#need_know_detail'),640,650,0,939)
+      Base.position($('#need_know_detail'),640,0,0,939)
     else
       $('#need_know').css(opacity:.5)
       $('#rule').css(opacity:1)
@@ -97,6 +97,7 @@ Base =
       Base.position($('#rule_detail'),640,900,0,939)
 
   position : (item,width,height,x,y)->
-    item.css(position:'absolute',width:width*this.scale,height:height*this.scale,top:y*this.scale,left:x*this.scale)
+    h = if height then height*this.scale else 'auto'
+    item.css(position:'absolute',width:width*this.scale,height:h,top:y*this.scale,left:x*this.scale)
 
 Base.init()
