@@ -684,7 +684,7 @@ module.exports = (router)->
     res.render 'error', error:'test'
 
   router.get '/lucky', (req, res)->
-    res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://lottery.rsct.com/init_auto&state=c___weixin;;p___lottery;;id___55212f6694bb4ca34251f8c1&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+    res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://lottery.rsct.com/init_auto&state=c___weixin;;p___lottery;;id___552926d8ac27913d92bf7515&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
   router.get '/baecheck', (req, res)->
     res.json status:true
