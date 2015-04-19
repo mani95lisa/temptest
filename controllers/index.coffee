@@ -660,23 +660,23 @@ module.exports = (router)->
                   res.json result:result
               msg = ''
               if result.notify
-                msg = '恭喜您于活动【'+lname+'】得到大白一只\n\n'+result.notify+'\n\n（请在润石创投服务号里发送【领取】两字完成领取流程）'
+                msg = '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify
               else
-                msg = '恭喜您于活动【'+lname+'】得到大白一只\n（请在润石创投服务号里发送【领取】两字完成领取流程）'
+                msg = '恭喜您于活动【'+lname+'】中奖'
               api.sendText openid, msg, (err, text)->
                 if err
                   logger.error 'SendGotNotifyError:'+err
                 else
                   textok = true
                 ep.emit 'text'
-              msg = '感谢您参与活动【'+lname+'】并获得大白一只，（请在润石创投服务号里发送【领取】两字填写收货信息）'
-              SMS.send mobile, msg, (err, result)->
-                if err
-                  console.log 'SMSSentErr:'+JSON.stringify(err)
-                  logger.error 'SendGotSMSError:'+err
-                else
-                  smsok = true
-                ep.emit 'sms'
+#              msg = '感谢您参与活动【'+lname+'】中奖，（请在润石创投服务号里发送【领取】两字填写收货信息）'
+#              SMS.send mobile, msg, (err, result)->
+#                if err
+#                  console.log 'SMSSentErr:'+JSON.stringify(err)
+#                  logger.error 'SendGotSMSError:'+err
+#                else
+              smsok = true
+              ep.emit 'sms'
             else
               res.json result:result
 

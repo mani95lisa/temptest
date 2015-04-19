@@ -52,7 +52,7 @@
             err: err
           });
         } else {
-          diff = UpdateObject(result, data, ['created_at']);
+          diff = UpdateObject(result, data, ['created_at', 'joined']);
           return result.save(function(err, result) {
             if (err) {
               logger.error('PUpdate:' + err);

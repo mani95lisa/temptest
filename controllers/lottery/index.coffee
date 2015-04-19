@@ -31,7 +31,7 @@ module.exports = (router)->
         logger.error 'PFind:'+err
         res.json err:err
       else
-        diff = UpdateObject result, data, ['created_at']
+        diff = UpdateObject result, data, ['created_at','joined']
         result.save (err, result) ->
           if err
             logger.error 'PUpdate:'+err

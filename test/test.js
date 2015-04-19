@@ -2,11 +2,13 @@
 (function() {
   var n1, r1, sms;
 
-  n1 = 602450608161503;
+  n1 = 633280408010513;
 
-  r1 = n1 % 50614;
+  r1 = n1 % 50514;
 
   console.log(r1);
+
+  4804700 + 418;
 
   sms = require('../lib/sms');
 
