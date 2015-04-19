@@ -659,16 +659,29 @@ module.exports = (router)->
                 else
                   res.json result:result
               msg = ''
-              if result.notify
-                msg = '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify
-              else
-                msg = '恭喜您于活动【'+lname+'】中奖'
-              api.sendText openid, msg, (err, text)->
+              template =
+                template_id:'9en1WJmo6ylyBBXpCRlE6FWyjN5SJrKMvl-xThKqAM0'
+                topcolor: '#913623'
+                data:
+                  first:value:'恭喜您获得电话充值卡一张'
+                  first:value:100,color:'#E5B457'
+              template.data.remark = '我们将会尽快为您充值，如有问题请通过服务号随时联系我们：）'
+              api.sendTemplate openid, template.template_id, template.url, template.topcolor,template.data, (err, result)->
                 if err
-                  logger.error 'SendGotNotifyError:'+err
+                  logger.error 'SEND LOTTERY NOTIFY:'+err
                 else
                   textok = true
                 ep.emit 'text'
+#              if result.notify
+#                msg = '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify
+#              else
+#                msg = '恭喜您于活动【'+lname+'】中奖'
+#              api.sendText openid, msg, (err, text)->
+#                if err
+#                  logger.error 'SendGotNotifyError:'+err
+#                else
+#                  textok = true
+#                ep.emit 'text'
 #              msg = '感谢您参与活动【'+lname+'】中奖，（请在润石创投服务号里发送【领取】两字填写收货信息）'
 #              SMS.send mobile, msg, (err, result)->
 #                if err
