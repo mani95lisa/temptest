@@ -658,13 +658,12 @@ module.exports = (router)->
                   res.json err:'发送短信通知失败，但已发送微信通知'
                 else
                   res.json result:result
-              msg = ''
               template =
                 template_id:'9en1WJmo6ylyBBXpCRlE6FWyjN5SJrKMvl-xThKqAM0'
                 topcolor: '#913623'
                 data:
                   first:value:'恭喜您获得电话充值卡一张'
-                  first:value:100,color:'#E5B457'
+                  num:value:100,color:'#E5B457'
               template.data.remark = '我们将会尽快为您充值，如有问题请通过服务号随时联系我们：）'
               api.sendTemplate openid, template.template_id, template.url, template.topcolor,template.data, (err, result)->
                 if err
@@ -672,22 +671,6 @@ module.exports = (router)->
                 else
                   textok = true
                 ep.emit 'text'
-#              if result.notify
-#                msg = '恭喜您于活动【'+lname+'】中奖\n\n'+result.notify
-#              else
-#                msg = '恭喜您于活动【'+lname+'】中奖'
-#              api.sendText openid, msg, (err, text)->
-#                if err
-#                  logger.error 'SendGotNotifyError:'+err
-#                else
-#                  textok = true
-#                ep.emit 'text'
-#              msg = '感谢您参与活动【'+lname+'】中奖，（请在润石创投服务号里发送【领取】两字填写收货信息）'
-#              SMS.send mobile, msg, (err, result)->
-#                if err
-#                  console.log 'SMSSentErr:'+JSON.stringify(err)
-#                  logger.error 'SendGotSMSError:'+err
-#                else
               smsok = true
               ep.emit 'sms'
             else
@@ -697,7 +680,11 @@ module.exports = (router)->
     res.render 'error', error:'test'
 
   router.get '/lucky', (req, res)->
-    res.redirect 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://lottery.rsct.com/init_auto&state=c___weixin;;p___lottery;;id___552926d8ac27913d92bf7515&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+    Dict.findOne key:'CurrentActivity','value',(err, result) ->
+      if result && result.value
+        res.redirect result.value
+      else
+        errorHandler res
 
   router.get '/baecheck', (req, res)->
     res.json status:true

@@ -49,6 +49,21 @@
           }
         });
       };
+      $scope.updateURL = function() {
+        var data;
+        data = {};
+        data.key = 'CurrentActivity';
+        data.value = $scope.CurrentActivity.value;
+        data._csrf = csrf;
+        $http.post('/dict/update/list', data).success(function(result) {
+          $scope.handling = false;
+          if (!result.err) {
+            return humane.log('更新成功');
+          } else {
+            return humane.log(result.err);
+          }
+        });
+      };
       updateResult = function(result) {
         if (result.err) {
           return humane.log(result.err);
@@ -60,8 +75,7 @@
       $scope.tagRemoved = function(key) {
         return updateTags(key, $scope[key], updateResult);
       };
-      getTags('Building');
-      getTags('Category');
+      getTags('CurrentActivity');
       $scope.Pros = {};
       $scope.proRemoved = function(key) {
         return updateTags(key, $scope.Pros[key], updateResult, true);

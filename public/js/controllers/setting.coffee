@@ -39,6 +39,20 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
           humane.log result.err
       return
 
+    $scope.updateURL = ->
+      data = {}
+      data.key = 'CurrentActivity'
+      data.value = $scope.CurrentActivity.value
+      data._csrf = csrf
+      $http.post '/dict/update/list', data
+      .success (result) ->
+        $scope.handling = false
+        if !result.err
+          humane.log '更新成功'
+        else
+          humane.log result.err
+      return
+
     updateResult = (result) ->
       humane.log result.err if result.err
 
@@ -47,8 +61,7 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.tagRemoved = (key) ->
       updateTags key, $scope[key], updateResult
 
-    getTags 'Building'
-    getTags 'Category'
+    getTags 'CurrentActivity'
 
     $scope.Pros = {}
     $scope.proRemoved = (key) ->

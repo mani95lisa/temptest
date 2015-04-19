@@ -13,58 +13,17 @@
         管理外送产品可选分类
     </h5>
 </div>
-<tags-input ng-model="Category.list"
-            ng-disabled="handling"
-            placeholder="新增"
-            min-length="1"
-            on-tag-removed="tagRemoved('Category')"
-            on-tag-added="tagAdded('Category')"
-        ></tags-input>
+<div>
+    <form class="input-group" ng-submit="search()">
+        <input type="text" class="form-control" ng-model="CurrentActivity.value"
+               tooltip="输入最新一起活动链接"
+               tooltip-placement="bottom"
+               placeholder="">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="updateURL()">更新</button>
+                  </span>
+    </form>
+</div>
 
-<div class="row">
-    <h4 class="col-md-4">配送建筑</h4>
-    <h5 style="position: relative;float: right;color: #cccccc; padding-right: 10px">
-        管理外卖可配送的建筑楼宇名称
-    </h5>
-</div>
-<tags-input ng-model="Building.list"
-            ng-disabled="handling"
-            placeholder="新增"
-            min-length="1"
-            on-tag-removed="tagRemoved('Building')"
-            on-tag-added="tagAdded('Building')"
-        ></tags-input>
-
-<div class="row">
-    <h4 class="col-md-4">配送区域</h4>
-    <h5 style="position: relative;float: right;color: #cccccc; padding-right: 10px">
-        每个区域对应一系列建筑
-    </h5>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <tags-input ng-model="Areas.list"
-                    ng-disabled="handling"
-                    placeholder="新增区域"
-                    min-length="1"
-                    on-tag-removed="tagRemoved('Areas')"
-                    on-tag-added="tagAdded('Areas')"
-                ></tags-input>
-    </div>
-    <div class="col-md-4" ng-repeat="pro in Areas.list">
-        <tags-input ng-model="Pros[pro.text]"
-                    ng-disabled="handling"
-                    placeholder="新增区域 {{ pro.text }} 的建筑楼宇"
-                    min-length="1"
-                    add-from-autocomplete-only="true"
-                    on-tag-removed="proRemoved(pro.text, Pros)"
-                    on-tag-added="proAdded(pro.text, Pros)"
-                >
-            <auto-complete source="loadTags($query)"
-                           min-length="1"
-                    ></auto-complete>
-        </tags-input>
-    </div>
-</div>
 <br>
 <br>

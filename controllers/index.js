@@ -932,7 +932,7 @@
           openid = result.user.openid;
           mobile = result.user.mobile;
           return result.save(function(err, result) {
-            var ep, msg, smsok, template, textok;
+            var ep, smsok, template, textok;
             if (err) {
               logger.error('LRUpdated:' + err);
               return res.json({
@@ -964,7 +964,6 @@
                     });
                   }
                 });
-                msg = '';
                 template = {
                   template_id: '9en1WJmo6ylyBBXpCRlE6FWyjN5SJrKMvl-xThKqAM0',
                   topcolor: '#913623',
@@ -972,7 +971,7 @@
                     first: {
                       value: '恭喜您获得电话充值卡一张'
                     },
-                    first: {
+                    num: {
                       value: 100,
                       color: '#E5B457'
                     }
@@ -1005,7 +1004,15 @@
       });
     });
     router.get('/lucky', function(req, res) {
-      return res.redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1f9fe13fd3655a8d&redirect_uri=http://lottery.rsct.com/init_auto&state=c___weixin;;p___lottery;;id___552926d8ac27913d92bf7515&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect');
+      return Dict.findOne({
+        key: 'CurrentActivity'
+      }, 'value', function(err, result) {
+        if (result && result.value) {
+          return res.redirect(result.value);
+        } else {
+          return errorHandler(res);
+        }
+      });
     });
     router.get('/baecheck', function(req, res) {
       return res.json({
