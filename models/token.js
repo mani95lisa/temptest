@@ -16,6 +16,6 @@
     js_ticket_expireTime: Date
   });
 
-  Mongoose.model('Token', TokenSchema);
+  Mongoose.model('ProyaToken', TokenSchema);
 
 }).call(this);

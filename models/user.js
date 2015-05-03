@@ -59,6 +59,6 @@
     created_at: Date
   });
 
-  Mongoose.model('User', UserSchema);
+  Mongoose.model('ProyaUser', UserSchema);
 
 }).call(this);

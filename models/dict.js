@@ -26,6 +26,6 @@
     lastUpdated: "updated_at"
   });
 
-  Mongoose.model('Dict', DictSchema);
+  Mongoose.model('ProyaDict', DictSchema);
 
 }).call(this);

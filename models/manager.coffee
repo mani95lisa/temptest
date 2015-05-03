@@ -101,4 +101,4 @@ ManagerSchema.statics =
               return callback err
             callback '密码错误'
 
-Mongoose.model 'Manager', ManagerSchema
+Mongoose.model 'ProyaManager', ManagerSchema

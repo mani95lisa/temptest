@@ -32,6 +32,6 @@
     created_at: Date
   });
 
-  Mongoose.model('Analysis', AnalysisSchema);
+  Mongoose.model('ProyaAnalysis', AnalysisSchema);
 
 }).call(this);

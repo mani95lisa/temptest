@@ -35,4 +35,4 @@ UserSchema = new Schema
   last_login:Date
   created_at:Date
 
-Mongoose.model 'User', UserSchema
+Mongoose.model 'ProyaUser', UserSchema

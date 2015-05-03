@@ -196,6 +196,6 @@
     }
   };
 
-  Mongoose.model('Manager', ManagerSchema);
+  Mongoose.model('ProyaManager', ManagerSchema);
 
 }).call(this);

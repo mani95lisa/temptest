@@ -10,4 +10,4 @@ DictSchema = new Schema
 Timestamps = require('mongoose-times')
 DictSchema.plugin Timestamps, created:"created_at", lastUpdated:"updated_at"
 
-Mongoose.model 'Dict', DictSchema
+Mongoose.model 'ProyaDict', DictSchema

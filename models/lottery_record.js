@@ -12,11 +12,6 @@
       type: String,
       index: true
     },
-    lottery: {
-      type: Schema.Types.ObjectId,
-      ref: 'Lottery',
-      index: true
-    },
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
@@ -48,6 +43,6 @@
     lastUpdated: "updated_at"
   });
 
-  Mongoose.model('LotteryRecord', LotteryRecordSchema);
+  Mongoose.model('ProyaLotteryRecord', LotteryRecordSchema);
 
 }).call(this);

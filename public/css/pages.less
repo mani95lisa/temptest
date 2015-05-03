@@ -1,27 +1,12 @@
-#section0,#section1,#section2,#section3,#section4,#section5 {
-  background-size: cover;
-}
-#section0 {
-  background-image: url(../imgs/pages/p1.jpg);
-}
-#section2 {
-  background-image: url(../imgs/pages/p2.jpg);
-}
-#section3 {
-  background-image: url(../imgs/pages/p3.jpg);
-}
-#section4 {
-  background-image: url(../imgs/pages/p4.jpg);
-}
-#section5 {
-  background-image: url(../imgs/pages/p5.jpg);
+canvas {
+  width: 100%;
+  height: 100%;
 }
 
 .arrow {
   position: absolute;
   bottom: 10px;
   left: 50%;
-  margin-left: -10px;
 }
 .active {
   .arrow {
@@ -61,10 +46,24 @@
   }
 }
 
-.goto_lottery {
-  width: 80%;
-  left: 10%;
+#loading-img {
   position: absolute;
-  bottom: 30px;
+  width: 63%;
+  left: 18.5%;
 }
 
+#loading-label {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5em;
+  color: #ff6e00;
+}
+
+#love-label {
+  position: absolute;
+  text-align: center;
+  z-index: 5;
+  font-size: 1em;
+  color: #ff6e00;
+}

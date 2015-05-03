@@ -5,7 +5,6 @@ Schema = Mongoose.Schema
 
 LotteryRecordSchema = new Schema
   openid:type:String,index:true
-  lottery:type:Schema.Types.ObjectId,ref:'Lottery',index:true
   user:type:Schema.Types.ObjectId,ref:'User',index:true
   number:type:Number,required:true,index:true
   notify:String
@@ -18,4 +17,4 @@ LotteryRecordSchema = new Schema
 Timestamps = require('mongoose-times')
 LotteryRecordSchema.plugin Timestamps, created:"created_at", lastUpdated:"updated_at"
 
-Mongoose.model 'LotteryRecord', LotteryRecordSchema
+Mongoose.model 'ProyaLotteryRecord', LotteryRecordSchema

@@ -704,6 +704,9 @@ module.exports = (router)->
 #    }
 #    getHFUrl
 
+  router.get '/proya', (req, res)->
+    res.render 'proya'
+
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [

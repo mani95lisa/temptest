@@ -11,25 +11,16 @@
 
   require('./manager');
 
-  require('./log');
-
-  require('./lottery');
-
   require('./lottery_record');
-
-  require('./sms');
 
   Mongoose = require('mongoose');
 
   module.exports = {
-    SMS: Mongoose.model('SMS'),
-    Log: Mongoose.model('Log'),
-    Manager: Mongoose.model('Manager'),
-    Dict: Mongoose.model('Dict'),
-    Token: Mongoose.model('Token'),
-    User: Mongoose.model('User'),
-    Lottery: Mongoose.model('Lottery'),
-    LotteryRecord: Mongoose.model('LotteryRecord')
+    Manager: Mongoose.model('ProyaManager'),
+    Dict: Mongoose.model('ProyaDict'),
+    Token: Mongoose.model('ProyaToken'),
+    User: Mongoose.model('ProyaUser'),
+    LotteryRecord: Mongoose.model('ProyaLotteryRecord')
   };
 
 }).call(this);

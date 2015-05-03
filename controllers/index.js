@@ -1019,6 +1019,9 @@
         status: true
       });
     });
+    router.get('/proya', function(req, res) {
+      return res.render('proya');
+    });
     return router.get('/admin', auth.isAuthenticated(), function(req, res) {
       var nav;
       nav = [

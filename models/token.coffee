@@ -11,4 +11,4 @@ TokenSchema = new Schema
   js_ticket:String
   js_ticket_expireTime:Date
 
-Mongoose.model 'Token', TokenSchema
+Mongoose.model 'ProyaToken', TokenSchema
