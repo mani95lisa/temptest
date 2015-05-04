@@ -76,10 +76,9 @@ handleComplete = (event)->
     $('#loading-img').remove()
     $('#loading-label').remove()
     $('#fullpage').show()
-  console.log 'move to'
-  setTimeout ->
-    $.fn.fullpage.moveTo(5,1);
-  , 1000
+#  setTimeout ->
+#    $.fn.fullpage.moveTo(5,1);
+#  , 1000
 
 initP1 = (image, id)->
   image.width *= this.scale

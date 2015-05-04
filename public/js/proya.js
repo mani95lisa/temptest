@@ -160,17 +160,13 @@
     $('#loading-img').animate({
       opacity: 0
     }, 800);
-    $('#loading-label').animate({
+    return $('#loading-label').animate({
       opacity: 0
     }, 800, function() {
       $('#loading-img').remove();
       $('#loading-label').remove();
       return $('#fullpage').show();
     });
-    console.log('move to');
-    return setTimeout(function() {
-      return $.fn.fullpage.moveTo(5, 1);
-    }, 1000);
   };
 
   initP1 = function(image, id) {
