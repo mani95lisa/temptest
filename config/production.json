@@ -39,8 +39,6 @@
         "contentPath": "path:./locales",
         "fallback": "en-US"
     },
-    
-    
 
     "middleware": {
 

@@ -53,10 +53,17 @@ canvas {
   font-size: 1.5em;
   color: #ff6e00;
 }
+#p5-label {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 1em;
+  color: #ff6e00;
+}
 #love-label {
   position: absolute;
   text-align: center;
-  z-index: 5;
+  z-index: 100;
   font-size: 1em;
   color: #ff6e00;
 }
