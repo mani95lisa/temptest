@@ -14,7 +14,7 @@
         "checkURL":"http://smsapi.c123.cn/OpenPlatform/OpenApi?action=getBalance&ac=1001@500883280001&authkey=30250B31F881FA5D7F376485D11E6534"
     },
 
-    "mongo": "mongodb://bae:4B8nVczNQODVRznYab2I5QOlSvLPbBmn@svridisw7c5g89b.mongodb.duapp.com:10357/svridisw7c5g89b",
+    "mongo": "mongodb://MA5B61a5MWmitY05c4bEVdOo:4B8nVczNQODVRznYab2I5QOlSvLPbBmn@svridisw7c5g89b.mongodb.duapp.com:10357/svridisw7c5g89b",
 
     "view engines": {
         "js": {
