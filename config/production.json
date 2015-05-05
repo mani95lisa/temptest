@@ -70,11 +70,11 @@
                         "saveUninitialized":false
                     },
                     {
-                        "host": "svrid7ozj08wa2j.mongodb.duapp.com",
-                        "port": 10317,
-                        "db": "svrid7ozj08wa2j",
-                        "username":"bae",
-                        "password":"Z2w4s6ujmMcA5Wp9wj7SdyoO5g2E2ZOV"
+                        "host": "svridisw7c5g89b.mongodb.duapp.com",
+                        "port": 10357,
+                        "db": "svridisw7c5g89b",
+                        "username":"MA5B61a5MWmitY05c4bEVdOo",
+                        "password":"4B8nVczNQODVRznYab2I5QOlSvLPbBmn"
                     }
                 ]
             },

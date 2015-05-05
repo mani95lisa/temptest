@@ -679,6 +679,9 @@ module.exports = (router)->
   router.get '/error', (req, res)->
     res.render 'error', error:'test'
 
+  router.get '/get_lottery', (req, res)->
+
+
   router.get '/lucky', (req, res)->
     Dict.findOne key:'CurrentActivity','value',(err, result) ->
       if result && result.value
@@ -688,21 +691,6 @@ module.exports = (router)->
 
   router.get '/baecheck', (req, res)->
     res.json status:true
-
-#  getHFUrl = (url, params)->
-#    url = 'http://mertest.chinapnr.com/muser/publicRequests'
-#
-#  router.get '/hf', (req, res)->
-#    params = {
-#      BgRetUrl:'http://182.92.237.234:8080/test/register'
-#      RetUrl:'http://182.92.237.234:8080/test/register'
-#      ChkValue:'AE42CFCF6F1ADF276EDEB52E1890F337E7F30B29DFE772CDA1E3B60E60601BFCC33CA2FAA83AF73A6A76D6A2DEE503C23C110FC68AC89A63E584C90400DA9D0D4AC0A019EBADE4CCD40A521B9E07152A1522BE5E9F4BD6A67B04569A6331B411BA54464BB2C2C2DFBEA29644BE4D19FECAEAC69897EB2C1E2D06B1A2CC60278B'
-#      MerCustId:'6000060000996258'
-#      MerPriv:'MQ=='
-#      Version:10
-#      CmdId:'UserRegister'
-#    }
-#    getHFUrl
 
   router.get '/proya', (req, res)->
     res.render 'proya'
