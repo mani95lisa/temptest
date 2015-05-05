@@ -9,7 +9,6 @@ models = require '../models/index'
 User = models.User
 Token = models.Token
 Dict = models.Dict
-Lottery = models.Lottery
 LotteryRecord = models.LotteryRecord
 EventProxy = require 'eventproxy'
 logger = require('log4js').getDefaultLogger()
@@ -679,8 +678,104 @@ module.exports = (router)->
   router.get '/error', (req, res)->
     res.render 'error', error:'test'
 
-  router.get '/get_lottery', (req, res)->
+  router.post '/like', (req, res)->
+    session = req.session
+    data = req.body
+    if !session.user
+      res.json result:false
+      return
 
+    Dict.findOneAndUpdate
+      key: "likes"
+      data
+      upsert: true
+      (err, result) ->
+        if err
+          res.json err:err
+        else
+          res.json result: true
+
+  router.get '/likes', (req, res)->
+    session = req.session
+    data = req.query
+    if !session.user || !data.id
+      res.json result:false
+      return
+
+    Dict.findOne key:'likes', (err, result)->
+      if err
+        res.json result:false
+      else
+        res.json result:result.value
+
+  router.post '/record_lottery', (req, res)->
+    session = req.session
+    id = session.id
+    if !session.user || !id
+      res.render 'error', error:'您太长时间没操作了，请重新再试'
+      return
+
+    data = req.body
+    err = ''
+    if !data.mobile || (data.mobile && data.mobile.length != 11)
+      err = '手机号码格式不对'
+    else if !data.truename
+      err = '收件人不能为空'
+    else if !data.address
+      err = '收货地址不能为空'
+    if err
+      res.render 'error', error:err
+      return
+    else
+      LotteryRecord.findById id, (err, result)->
+        if err
+          res.render 'error', error:'系统出问题了，请稍后再试'
+        else
+          result.truename = data.truename
+          result.mobile = data.mobile
+          result.address = data.address
+          result.save (err, result)->
+            if err
+              res.render 'error', error:'系统出问题了，请稍后再试'
+            else
+              res.json status:true
+
+
+  router.get '/get_lottery', (req, res)->
+    session = req.session
+    if !session.user
+      res.json status:false
+      return
+
+    ep = new EventProxy()
+    ep.all 'limit', 'ratio', 'count', (limit, ratio, count)->
+      limit = limit.value
+      ratio = ratio.value
+      if count >= limit
+        res.json status:false,reason:'f'
+      else
+        value = Math.random()
+        if value > ratio
+          lr = new LotteryRecord(
+            user:session.user._id
+            openid:session.user.openid
+            day:moment().format('YYYY-MM-DD')
+          )
+          lr.save (err, result)->
+            if err
+              res.json status:false, err:err
+            else
+              session.id = result._id
+              res.json status:true
+        else
+          res.json status:false, reason:'n'
+
+    ep.fail (err)->
+      res.json status:false, err:err
+
+    Dict.findOne key:'LotteryLimit', ep.done 'limit'
+    Dict.findOne key:'LotteryRatio', ep.done 'ratio'
+    LotteryRecord.count day:moment().format('YYYY-MM-DD'), ep.done 'count'
 
   router.get '/lucky', (req, res)->
     Dict.findOne key:'CurrentActivity','value',(err, result) ->

@@ -115,6 +115,13 @@ initP1 = (image, id)->
   s1.find(image).css position:'absolute',left:x,top:y,opacity:0,deg:180,'transform-origin': '50% 0% 0px',transform: 'rotateX(180deg)'
   home_arr.push w:w,h:h,x:x,y:y
 
+slideChange = (pi, si)->
+  this.pi = pi
+  this.si = si
+
+loveItem = ->
+  console.log this.pi, this.si
+
 initP3 = (image, id)->
 
   s2 = $('#section2')
@@ -135,6 +142,7 @@ initP3 = (image, id)->
   else if id == 'p3-love'
     ltop = top3+722*this.scale-10 - 38*this.scale
     s2.find(image).css width:43*this.scale,left:23*this.scale,top:ltop, position: 'absolute','z-index': 100
+    s2.find(image).click loveItem
   else if id == 'p3-share'
     stop = top3+722*this.scale-10-76*this.scale
     s2.find(image).css width:54*this.scale,right:23*this.scale,top:stop, position: 'absolute','z-index': 100

@@ -6,13 +6,10 @@ Schema = Mongoose.Schema
 LotteryRecordSchema = new Schema
   openid:type:String,index:true
   user:type:Schema.Types.ObjectId,ref:'ProyaUser',index:true
-  number:type:Number,required:true,index:true
-  notify:String
-  status:type:Boolean,default:false
+  day:type:String,index:true
   truename:String
   address:String
   mobile:Number
-  dispatched:type:Boolean,default:false
 
 Timestamps = require('mongoose-times')
 LotteryRecordSchema.plugin Timestamps, created:"created_at", lastUpdated:"updated_at"

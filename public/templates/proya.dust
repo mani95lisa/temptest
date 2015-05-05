@@ -23,7 +23,6 @@
         {/config}
 
     var shared_success = function(){
-        _hmt.push(['_trackEvent', '大白活动1', '拉页分享', '']);
     };
 
     wx.ready(function () {
@@ -52,12 +51,16 @@
 </script>
 
 <script type="text/javascript">
+    var slideChange = ''
     $(document).ready(function() {
         $('#fullpage').fullpage({
             verticalCentered: false,
             controlArrows:false,
             onSlideLeave: function(anchorLink, index, slideIndex, direction){
                 console.log(index, slideIndex);
+                if(slideChange){
+                    slideChange(index, slideIndex);
+                }
         }
     });
     this.windowWidth = $(window).width();
