@@ -39,10 +39,10 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
           humane.log result.err
       return
 
-    $scope.updateURL = ->
+    $scope.update = (key)->
       data = {}
-      data.key = 'CurrentActivity'
-      data.value = $scope.CurrentActivity.value
+      data.key = key
+      data.value = $scope[key].value
       data._csrf = csrf
       $http.post '/dict/update/list', data
       .success (result) ->
@@ -61,7 +61,8 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.tagRemoved = (key) ->
       updateTags key, $scope[key], updateResult
 
-    getTags 'CurrentActivity'
+    getTags 'LotteryRatio'
+    getTags 'LotteryLimit'
 
     $scope.Pros = {}
     $scope.proRemoved = (key) ->

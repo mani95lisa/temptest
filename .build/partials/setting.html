@@ -7,20 +7,24 @@
     <progressbar class="progress-striped active" value="100" type="success">处理中</progressbar>
 </div>
 
-<div class="row">
-    <h4 class="col-md-4">产品分类</h4>
-    <h5 style="position: relative;float: right;color: #cccccc; padding-right: 10px">
-        管理外送产品可选分类
-    </h5>
-</div>
 <div>
-    <form class="input-group" ng-submit="search()">
-        <input type="text" class="form-control" ng-model="CurrentActivity.value"
-               tooltip="输入最新一起活动链接"
+    <form class="input-group" ng-submit="update('LotteryLimit')">
+        <input type="text" class="form-control" ng-model="LotteryLimit.value"
+               tooltip="限制每天中奖数"
                tooltip-placement="bottom"
                placeholder="">
                   <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" ng-click="updateURL()">更新</button>
+                    <button class="btn btn-default" type="button" ng-click="update('LotteryLimit')">更新</button>
+                  </span>
+    </form>
+
+    <form class="input-group" ng-submit="update('LotteryRatio')">
+        <input type="text" class="form-control" ng-model="LotteryRatio.value"
+               tooltip="中奖概率"
+               tooltip-placement="bottom"
+               placeholder="">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="update('LotteryRatio')">更新</button>
                   </span>
     </form>
 </div>

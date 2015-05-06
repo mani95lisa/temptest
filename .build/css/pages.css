@@ -1,63 +1,52 @@
-/* line 1, /Users/mani/outsourcing/proya/proya/css/pages */
 canvas {
   width: 100%;
   height: 100%;
 }
-/* line 6, /Users/mani/outsourcing/proya/proya/css/pages */
 .arrow {
   position: absolute;
   bottom: 10px;
   left: 50%;
+  z-index: 100;
 }
-/* line 12, /Users/mani/outsourcing/proya/proya/css/pages */
 .active .arrow {
   -webkit-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
   -moz-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
 }
 @-webkit-keyframes fadeOutUp {
-  /* line 19, /Users/mani/outsourcing/proya/proya/css/pages */
   0% {
     opacity: 0;
     -webkit-transform: translateY(0);
   }
-  /* line 23, /Users/mani/outsourcing/proya/proya/css/pages */
   30% {
     opacity: .6;
     -webkit-transform: translateY(-4px);
   }
-  /* line 27, /Users/mani/outsourcing/proya/proya/css/pages */
   40% {
     opacity: 1;
     -webkit-transform: translateY(-4px);
   }
-  /* line 31, /Users/mani/outsourcing/proya/proya/css/pages */
   80% {
     opacity: .8;
     -webkit-transform: translateY(-4px);
   }
-  /* line 35, /Users/mani/outsourcing/proya/proya/css/pages */
   90% {
     opacity: .5;
     -webkit-transform: translateY(-10px);
   }
-  /* line 39, /Users/mani/outsourcing/proya/proya/css/pages */
   95% {
     opacity: 0;
     -webkit-transform: translateY(-12px);
   }
-  /* line 43, /Users/mani/outsourcing/proya/proya/css/pages */
   100% {
     opacity: 0;
     -webkit-transform: translateY(-18px);
   }
 }
-/* line 49, /Users/mani/outsourcing/proya/proya/css/pages */
 #loading-img {
   position: absolute;
   width: 63%;
   left: 18.5%;
 }
-/* line 55, /Users/mani/outsourcing/proya/proya/css/pages */
 #loading-label {
   position: absolute;
   width: 100%;
@@ -65,7 +54,6 @@ canvas {
   font-size: 1.5em;
   color: #ff6e00;
 }
-/* line 63, /Users/mani/outsourcing/proya/proya/css/pages */
 #p5-label {
   position: absolute;
   width: 100%;
@@ -73,7 +61,6 @@ canvas {
   font-size: 1em;
   color: #ff6e00;
 }
-/* line 71, /Users/mani/outsourcing/proya/proya/css/pages */
 #love-label {
   position: absolute;
   text-align: center;

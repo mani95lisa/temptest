@@ -32,23 +32,45 @@ manifest1 = [
   {src: "p5-i5.png", id: "p5-i5"}
   {src: "p3-left-arrow.png", id: "p5-left-arrow"}
   {src: "p3-right-arrow.png", id: "p5-right-arrow"}
+  {src: "p6-bg2.jpg", id: "p6-bg2"}
+  {src: "p6-try.png", id: "p6-try"}
+  {src: "p6-share.png", id: "p6-share"}
+  {src: "p6-close.png", id: "p6-close"}
+  {src: "p6-tip2.jpg", id: "p6-tip2"}
+  {src: "p6-bg.jpg", id: "p6-bg"}
 ]
+
+count = 0
+intv = ''
+
+p1 = ->
+  top1 = (this.windowHeight-($('#loading-img').height()+$('#loading-label').height()+30))/2
+  $('#loading-img').css(top:top1)
+  top2 = top1+$('#loading-img').height()+30
+  $('#loading-label').css(top:top2)
+
+refresh = ->
+  if count > 10
+    clearInterval intv
+    return
+  p1()
+  count++
+
+intv = setInterval refresh, 500
 
 init = ->
   this.windowWidth = $(window).width()
   this.windowHeight = $(window).height()
   this.scale = this.windowWidth/750
-  h = $('#loading-img').height()
-  h = 153*this.scale unless h
-  top1 = (this.windowHeight-(h+$('#loading-label').height()+30))/2
-  $('#loading-img').css(top:top1)
-  top2 = top1+$('#loading-img').height()+30
-  $('#loading-label').css(top:top2)
   $('#fullpage').hide()
   $('#tip').hide()
   $('#tip').click ->
     $('#tip').hide()
+  $('#tip2').hide()
+  $('#tip2').click ->
+    $('#tip2').hide()
   $('#p5-label').css bottom:62*this.scale
+  p1()
 
 init()
 
@@ -58,27 +80,29 @@ handleProgress = (event)->
 handleComplete = (event)->
   s1 = $('#section0')
   arr = s1.find('img');
-  arr.animate {deg:180,opacity:1}, duration:1500, step:(now)->
-    if now > 1
-      arr.css transform: 'rotateX(' + (180-now) + 'deg)', '-webkit-transform':'rotateX(' + (180-now) + 'deg)'
-#  animate = ->
-#    i--
-#    if i > 0
-#      deg = 0
-#      img = s1.find(arr[i])
-#      img.animate {deg:180,opacity:1}, duration:300, step:(now)->
-#        img.css transform: 'rotateX(' + now + 'deg)'
-#      , complete:->
-#          animate()
-#  animate()
+#  arr.animate {deg:180,opacity:1}, duration:1500, step:(now)->
+#    if now > 1
+#      arr.css transform: 'rotateX(' + (180-now) + 'deg)', '-webkit-transform':'rotateX(' + (180-now) + 'deg)'
+  i = arr.length
+  animate = ->
+    i--
+    if i > 0
+      deg = 0
+      img = s1.find(arr[i])
+      img.animate {deg:180,opacity:1}, duration:500, step:(now)->
+        if now > 1
+          img.css transform: 'rotateX(' + (180-now) + 'deg)','-webkit-transform':'rotateX(' + (180-now) + 'deg)'
+      , complete:->
+          animate()
+  animate()
   $('#loading-img').animate opacity:0, 800
   $('#loading-label').animate opacity:0, 800, ->
     $('#loading-img').remove()
     $('#loading-label').remove()
     $('#fullpage').show()
-#  setTimeout ->
-#    $.fn.fullpage.moveTo(5,1);
-#  , 1000
+  setTimeout ->
+    $.fn.fullpage.moveTo(6,1);
+  , 1000
 
 initP1 = (image, id)->
   image.width *= this.scale
@@ -115,6 +139,13 @@ initP1 = (image, id)->
   s1.find(image).css position:'absolute',left:x,top:y,opacity:0,deg:180,'transform-origin': '50% 0% 0px',transform: 'rotateX(180deg)'
   home_arr.push w:w,h:h,x:x,y:y
 
+slideChange = (pi, si)->
+  this.pi = pi
+  this.si = si
+
+loveItem = ->
+  console.log this.pi, this.si
+
 initP3 = (image, id)->
 
   s2 = $('#section2')
@@ -135,6 +166,7 @@ initP3 = (image, id)->
   else if id == 'p3-love'
     ltop = top3+722*this.scale-10 - 38*this.scale
     s2.find(image).css width:43*this.scale,left:23*this.scale,top:ltop, position: 'absolute','z-index': 100
+    s2.find(image).click loveItem
   else if id == 'p3-share'
     stop = top3+722*this.scale-10-76*this.scale
     s2.find(image).css width:54*this.scale,right:23*this.scale,top:stop, position: 'absolute','z-index': 100
@@ -153,7 +185,9 @@ initP5 = (image, id)->
     s4.append image
   else
     $('#'+id).prepend image
-    $('#'+id).find(image).css width:602*this.scale,left:83*this.scale,top:269*this.scale,position:'relative'
+    it = if this.windowHeight < 500 then 160*this.scale else 240*this.scale
+    $('#'+id).find(image).css width:602*this.scale,left:83*this.scale,top:it,position:'relative'
+  btnbottom = if this.windowHeight < 530 then 80*this.scale else 120*this.scale
   if id == 'p5-bg'
     image.width = $(window).width()
     s4.find(image).css top:0,position:'absolute'
@@ -162,9 +196,57 @@ initP5 = (image, id)->
   else if id == 'p5-right-arrow'
     s4.find(image).css width:28*this.scale,right:10,top:(this.windowHeight-image.height)/2, position: 'absolute','z-index': 100
   else if id == 'p5-b1'
-    s4.find(image).css width:291*this.scale,left:57*this.scale,bottom:150*this.scale,position:'absolute'
+    s4.find(image).css width:291*this.scale,left:57*this.scale,bottom:btnbottom,position:'absolute'
   else if id == 'p5-b2'
-    s4.find(image).css width:291*this.scale,right:57*this.scale,bottom:150*this.scale,position:'absolute'
+    s4.find(image).css width:291*this.scale,right:57*this.scale,bottom:btnbottom,position:'absolute'
+
+p6p1 = ''
+p6p2 = ''
+p6try = ''
+
+initP6 = (image, id)->
+  s5 = $('#section5')
+  if id == 'p6-bg'
+    s5.prepend image
+    image.width = $(window).width()
+    p6p1 = s5.find(image)
+    p6p1.addClass 'p6p1'
+    p6p1.on 'click touchstart' , ->
+      console.log('11');
+      p6p1.hide()
+      $('.p6p2').show()
+    p6p1.css top:0,position:'absolute'
+  else if id == 'p6-bg2'
+    s5.prepend image
+    image.width = $(window).width()
+    p6p2 = s5.find(image)
+    p6p2.hide()
+    p6p2.addClass 'p6p2'
+    p6p2.css top:0,position:'absolute',display:'none'
+  else if id == 'p6-try'
+    s5.append image
+    s5.find(image).addClass 'p6p2'
+    p6try = s5.find(image)
+    s5.find(image).on 'click touchstart', ->
+      p6p1.show()
+      $('.p6p2').hide()
+    s5.find(image).css bottom:400*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
+  else if id == 'p6-share'
+    s5.append image
+    s5.find(image).addClass 'p6p2'
+    s5.find(image).click ->
+      $('#tip2').show()
+    s5.find(image).css bottom:292*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
+  else if id == 'p6-close'
+    s5.append image
+    css = width:74*this.scale,height:74*this.scale,top:20*this.scale,right:20*this.scale,position:'absolute'
+    s5.find(image).css css
+    s5.find(image).on 'click touchstart', ->
+      console.log 'close'
+      wx.closeWindow()
+  else if id == 'p6-tip2'
+    image.width = $(window).width()
+    $('#tip2).append image
 
 handleFileLoad = (event)->
   image = event.result
@@ -181,9 +263,11 @@ handleFileLoad = (event)->
     s3.prepend image
   else if item.id == 'share-tip'
     image.width = $(window).width()
-    $('#tip').append image
+    $('#tip').prepend image
   else if item.id.indexOf('p5') != -1
     initP5 image, item.id
+  else if item.id.indexOf('p6') != -1
+    initP6 image, item.id
   else if item.id.indexOf('t') != -1
     initP1 image, item.id
 
