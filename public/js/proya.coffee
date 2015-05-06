@@ -246,7 +246,7 @@ initP6 = (image, id)->
       wx.closeWindow()
   else if id == 'p6-tip2'
     image.width = $(window).width()
-    $('#tip2).append image
+    $('#tip2').append image
 
 handleFileLoad = (event)->
   image = event.result

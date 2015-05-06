@@ -446,7 +446,7 @@
         position: 'absolute'
       });
     } else if (id === 'p6-bg2') {
-      s5.append(image);
+      s5.prepend(image);
       image.width = $(window).width();
       p6p2 = s5.find(image);
       p6p2.hide();
@@ -460,10 +460,10 @@
       s5.append(image);
       s5.find(image).addClass('p6p2');
       p6try = s5.find(image);
-      s5.find(image).click = function() {
+      s5.find(image).on('click touchstart', function() {
         p6p1.show();
         return $('.p6p2').hide();
-      };
+      });
       return s5.find(image).css({
         bottom: 400 * this.scale,
         width: this.windowWidth / 2,
@@ -472,8 +472,8 @@
         display: 'none'
       });
     } else if (id === 'p6-share') {
+      s5.append(image);
       s5.find(image).addClass('p6p2');
-      $('#tip2').prepend(image);
       s5.find(image).click(function() {
         return $('#tip2').show();
       });
@@ -493,12 +493,14 @@
         right: 20 * this.scale,
         position: 'absolute'
       };
-      console.log('close', css);
       s5.find(image).css(css);
-      return s5.find(image).click = function() {
+      return s5.find(image).on('click touchstart', function() {
         console.log('close');
         return wx.closeWindow();
-      };
+      });
+    } else if (id === 'p6-tip2') {
+      image.width = $(window).width();
+      return $('#tip2').append(image);
     }
   };
 
