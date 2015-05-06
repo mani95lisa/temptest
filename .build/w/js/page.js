@@ -173,7 +173,7 @@ $(document).ready(function () {
         } else if (nextIndex == 4) {
             $('#p4mask').css({opacity: 1});
             $('#p41').animate({opacity: 0}, {
-                duration: 2000, complete: function () {
+                duration: 1500, complete: function () {
                     $('#p42').animate({opacity: 0}, {
                         duration: 1000, complete: function () {
                             $('#p43').animate({opacity: 0}, {
@@ -343,7 +343,6 @@ $(document).ready(function () {
         index_s4++
         if (index_s4 > $('.s4-img').length - 1) return;
         var tohide = index_s4 > 0 ? index_s4 - 1 : $('.s4-img').length - 1;
-        $('.s4-img').eq(tohide).removeClass('stretchLeft');
         $('.s4-img').eq(tohide).animate({
             left: -s4w,
             opacity: 0
@@ -352,7 +351,6 @@ $(document).ready(function () {
         }, "linear");
 
         $('.s4-img').eq(index_s4).css({left: $(window).width()});
-        $('.s4-img').eq(index_s4).addClass('stretchLeft');
         $('.s4-img').eq(index_s4).animate({
             left: s4l,
             opacity: 1
@@ -370,7 +368,6 @@ $(document).ready(function () {
         index_s4--;
         if (index_s4 < 0) return;
         var tohide = index_s4 < $('.s4-img').length - 1 ? index_s4 + 1 : 0;
-        $('.s4-img').eq(tohide).removeClass('stretchLeft');
         $('.s4-img').eq(tohide).animate({
             left: $(window).width(),
             opacity: 0
@@ -379,7 +376,6 @@ $(document).ready(function () {
         }, "linear");
 
         $('.s4-img').eq(index_s4).css({left: -s4w});
-        $('.s4-img').eq(index_s4).addClass('stretchLeft');
         $('.s4-img').eq(index_s4).animate({
             left: s4l,
             opacity: 1
