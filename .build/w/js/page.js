@@ -336,12 +336,13 @@ $(document).ready(function () {
     var s4l = $('.s4-img').css('left');
     $('#btn-right-b').click(function () {
         if (playing) return;
+        $('.p4mask').hide();
         playing = true;
         setTimeout(function () {
             playing = false;
         }, 1000);
         index_s4++
-        if (index_s4 > $('.s4-img').length - 1) return;
+        if(index_s4 > $('.s4-img').length-1) index_s4 = 0;
         var tohide = index_s4 > 0 ? index_s4 - 1 : $('.s4-img').length - 1;
         $('.s4-img').eq(tohide).animate({
             left: -s4w,
@@ -361,12 +362,13 @@ $(document).ready(function () {
     })
     $('#btn-left-b').click(function () {
         if (playing) return;
+        $('.p4mask').css({opacity: 0});
         playing = true;
         setTimeout(function () {
             playing = false;
         }, 1000);
         index_s4--;
-        if (index_s4 < 0) return;
+        if(index_s4 < 0) index_s4 = $('.s4-img').length - 1;
         var tohide = index_s4 < $('.s4-img').length - 1 ? index_s4 + 1 : 0;
         $('.s4-img').eq(tohide).animate({
             left: $(window).width(),
