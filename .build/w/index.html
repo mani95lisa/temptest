@@ -13,12 +13,54 @@
 <script src="js/page.js"></script>
 <script>
 //分享弹窗
-function openwin() {
-    window.open ("http://service.weibo.com/share/share.php?appkey=583395093&title=%E7%8F%80%E8%8E%B1%E9%9B%85&url=http://baidu.com", "newwindow", "height=300, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+var sharep2 = '';
+var openwin = function openwin(pic) {
+    var link = 'http://baidu.com';
+    var title = '珀莱雅';
+    var url = "http://service.weibo.com/share/share.php?appkey=583395093&title="+title+"&url="+link;
+    if(pic){
+        url += '&pic='+pic;
+    }
+    window.open (url, "newwindow", "height=300, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
 }
 </script>
 </head>
 <body>
+<style>
+    .tmall {
+        right: -13px;
+        position: absolute;
+        top: 50%;
+        margin-top: 110px;
+    }
+    .none1 {
+        display: none;
+    }
+    .love {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        cursor: pointer;
+    }
+
+    .loveNum {
+        position: absolute;left: 68px;bottom: 10px;
+        font-size: 28px;
+        color: #fc6e21;
+    }
+    .bg3 {
+        width: 100%;
+    }
+    .family {
+        position: absolute;
+    }
+    .ticket {
+        position: absolute;
+        right: 60px;
+        top: 50%;
+        margin-top: -45px;
+    }
+</style>
 <div id="main">
 
     <div class="main-item section" id="main-item-1">
@@ -26,7 +68,8 @@ function openwin() {
         <img class="logo slideDown" src="images/logo.png" />
         <img class="play pulse" src="images/play.png" />
         <img class="btn-bottom" src="images/bottom.png">
-        <a href="#" onclick="openwin()"><img class="btn-share" src="images/share.png"></a>
+        <a href="http://proya.tmall.com/" target="_blank"><img class="tmall" src="images/tmall.png"></a>
+        <a href="#" onclick="openwin('http://proyaproject.duapp.com/w/images/share1.jpg')"><img class="btn-share" src="images/share.png"></a>
         <video width="0" id="video" autobuffer>
             <source src="video/15s.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
         </video>
@@ -56,14 +99,18 @@ function openwin() {
                     </td>
                     <td colspan="1" rowspan="4" valign="top" id="img-main" width="191" style="position:relative;">
                     <div class="flip-container">
-                        <img id="i1" src="images/b1.jpg" class="img-i wb1" />
-                        <img id="i2" src="images/b2.jpg" class="img-i none wb1" />
-                        <img id="i3" src="images/b3.jpg" class="img-i none wb1" />
-                        <img id="i4" src="images/b4.jpg" class="img-i none wb1" />
-                        <img id="i5" src="images/b5.jpg" class="img-i none wb1" />
-                        <img id="i6" src="images/b1.jpg" class="img-i none wb1" />
-                        <img id="i7" src="images/b7.jpg" class="img-i none wb1" />
-                        <img id="i8" src="images/b8.jpg" class="img-i none wb1" />
+                        <img id="i0" src="images/i0.jpg" class="img-i wb1" />
+                        <img id="i1" src="images/i1.jpg" class="img-i none wb1" />
+                        <img id="i2" src="images/i2.jpg" class="img-i none wb1" />
+                        <img id="i3" src="images/i3.jpg" class="img-i none wb1" />
+                        <img id="i4" src="images/i4.jpg" class="img-i none wb1" />
+                        <img id="i5" src="images/i5.jpg" class="img-i none wb1" />
+                        <img id="i6" src="images/i1.jpg" class="img-i none wb1" />
+                        <img id="i7" src="images/i7.jpg" class="img-i none wb1" />
+                        <img id="i8" src="images/i8.jpg" class="img-i none wb1" />
+                        <img src="images/love.png" class="love"/>
+                        <label id="loveNum" class="loveNum"></label>
+                        <a href="#" onclick="sharep2()"><img class="btn-share" src="images/share.png"></a>
                     </div>
                     </td>
                 </tr>
@@ -138,15 +185,24 @@ function openwin() {
     </div><!-- two end -->
 
     <div class="main-item section" id="main-item-3">
-        <img id="bg3" src="images/bg3.jpg" style="width:100%" />
+        <img id="p3b0" class="bg3 none1" src="images/1.jpg" />
+        <img id="p3b1" class="bg3 none1" src="images/2.jpg" />
+        <img id="p3b2" class="bg3 " src="images/3.jpg" />
+        <img id="p3b3" class="bg3 none1" src="images/4.jpg" />
+        <img id="p3b4" class="bg3 none1" src="images/5.jpg" />
+        
+
+        <img src="images/tmall-ticket.png" class="ticket none">
+
         <div id="step3">
+            <img src="images/proya_family.png" class="family none">
             <img class="btn-f btn-left" id="btn-left-a" src="images/btnleft.png"></img>
             <img class="btn-f btn-right" id="btn-right-a" src="images/btnright.png"></img>
-            <img src="images/p3-i1.png" id="p3i1" class="p3i none">
-            <img src="images/p3-i2.png" style="z-index:100" id="p3i2" class="p3i none">
-            <img src="images/p3-i3.png" style="z-index:100" id="p3i3" class="p3i none">
-            <img src="images/p3-i4.png" style="z-index:100" id="p3i4" class="p3i none">
-            <img src="images/p3-i5.png" style="z-index:100" id="p3i5" class="p3i none">
+            <!--<img src="images/p3-i1.png" id="p3i1" class="p3i none">-->
+            <!--<img src="images/p3-i2.png" style="z-index:100" id="p3i2" class="p3i none">-->
+            <!--<img src="images/p3-i3.png" style="z-index:100" id="p3i3" class="p3i none">-->
+            <!--<img src="images/p3-i4.png" style="z-index:100" id="p3i4" class="p3i none">-->
+            <!--<img src="images/p3-i5.png" style="z-index:100" id="p3i5" class="p3i none">-->
             <img src="images/p3-m1.png" class="p3m">
             <img src="images/p3-m2.png" class="p3m">
             <img src="images/p3-m3.png" class="p3m">
@@ -166,6 +222,7 @@ function openwin() {
         <img class="btn-f btn-left" id="btn-left-b" src="images/left.png"></img>
         <img class="btn-f btn-right" id="btn-right-b" src="images/right.png"></img>
         <img src="images/step-4-1.jpg" class="an s4-img">
+        <div id="p40" class="p4mask"></div>
         <div id="p41" class="p4mask"></div>
         <div id="p42" class="p4mask"></div>
         <div id="p43" class="p4mask"></div>
