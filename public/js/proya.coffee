@@ -185,9 +185,9 @@ initP5 = (image, id)->
     s4.append image
   else
     $('#'+id).prepend image
-    it = if this.windowHeight < 500 then 160*this.scale else 240*this.scale
+    it = if this.windowHeight < 550 then 160*this.scale else 240*this.scale
     $('#'+id).find(image).css width:602*this.scale,left:83*this.scale,top:it,position:'relative'
-  btnbottom = if this.windowHeight < 530 then 80*this.scale else 120*this.scale
+  btnbottom = if this.windowHeight < 550 then 80*this.scale else 120*this.scale
   if id == 'p5-bg'
     image.width = $(window).width()
     s4.find(image).css top:0,position:'absolute'
@@ -211,7 +211,7 @@ initP6 = (image, id)->
     image.width = $(window).width()
     p6p1 = s5.find(image)
     p6p1.addClass 'p6p1'
-    p6p1.on 'click touchstart' , ->
+    p6p1.on 'click' , ->
       console.log('11');
       p6p1.hide()
       $('.p6p2').show()
@@ -227,7 +227,7 @@ initP6 = (image, id)->
     s5.append image
     s5.find(image).addClass 'p6p2'
     p6try = s5.find(image)
-    s5.find(image).on 'click touchstart', ->
+    s5.find(image).on 'click', ->
       p6p1.show()
       $('.p6p2').hide()
     s5.find(image).css bottom:400*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
@@ -241,7 +241,7 @@ initP6 = (image, id)->
     s5.append image
     css = width:74*this.scale,height:74*this.scale,top:20*this.scale,right:20*this.scale,position:'absolute'
     s5.find(image).css css
-    s5.find(image).on 'click touchstart', ->
+    s5.find(image).on 'click', ->
       console.log 'close'
       wx.closeWindow()
   else if id == 'p6-tip2'

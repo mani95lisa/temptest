@@ -371,7 +371,7 @@
       s4.append(image);
     } else {
       $('#' + id).prepend(image);
-      it = this.windowHeight < 500 ? 160 * this.scale : 240 * this.scale;
+      it = this.windowHeight < 550 ? 160 * this.scale : 240 * this.scale;
       $('#' + id).find(image).css({
         width: 602 * this.scale,
         left: 83 * this.scale,
@@ -379,7 +379,7 @@
         position: 'relative'
       });
     }
-    btnbottom = this.windowHeight < 530 ? 80 * this.scale : 120 * this.scale;
+    btnbottom = this.windowHeight < 550 ? 80 * this.scale : 120 * this.scale;
     if (id === 'p5-bg') {
       image.width = $(window).width();
       return s4.find(image).css({
@@ -433,7 +433,7 @@
       image.width = $(window).width();
       p6p1 = s5.find(image);
       p6p1.addClass('p6p1');
-      p6p1.on('click touchstart', function() {
+      p6p1.on('click', function() {
         console.log('11');
         p6p1.hide();
         return $('.p6p2').show();
@@ -457,7 +457,7 @@
       s5.append(image);
       s5.find(image).addClass('p6p2');
       p6try = s5.find(image);
-      s5.find(image).on('click touchstart', function() {
+      s5.find(image).on('click', function() {
         p6p1.show();
         return $('.p6p2').hide();
       });
@@ -491,7 +491,7 @@
         position: 'absolute'
       };
       s5.find(image).css(css);
-      return s5.find(image).on('click touchstart', function() {
+      return s5.find(image).on('click', function() {
         console.log('close');
         return wx.closeWindow();
       });
