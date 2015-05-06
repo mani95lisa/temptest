@@ -14,26 +14,16 @@
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'ProyaUser',
       index: true
     },
-    number: {
-      type: Number,
-      required: true,
+    day: {
+      type: String,
       index: true
-    },
-    notify: String,
-    status: {
-      type: Boolean,
-      "default": false
     },
     truename: String,
     address: String,
-    mobile: Number,
-    dispatched: {
-      type: Boolean,
-      "default": false
-    }
+    mobile: Number
   });
 
   Timestamps = require('mongoose-times');

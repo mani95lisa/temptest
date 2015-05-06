@@ -49,11 +49,11 @@
           }
         });
       };
-      $scope.updateURL = function() {
+      $scope.update = function(key) {
         var data;
         data = {};
-        data.key = 'CurrentActivity';
-        data.value = $scope.CurrentActivity.value;
+        data.key = key;
+        data.value = $scope[key].value;
         data._csrf = csrf;
         $http.post('/dict/update/list', data).success(function(result) {
           $scope.handling = false;
@@ -75,7 +75,8 @@
       $scope.tagRemoved = function(key) {
         return updateTags(key, $scope[key], updateResult);
       };
-      getTags('CurrentActivity');
+      getTags('LotteryRatio');
+      getTags('LotteryLimit');
       $scope.Pros = {};
       $scope.proRemoved = function(key) {
         return updateTags(key, $scope.Pros[key], updateResult, true);

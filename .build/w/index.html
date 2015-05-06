@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>防嗮</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" type="text/css" href="css/jquery.fullpage.css">
+<script src="js/jquery.js"></script>
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/jquery.fullPage.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/html5media.min.js"></script>
+<script src="js/page.js"></script>
+<script>
+//分享弹窗
+function openwin() {
+    window.open ("http://service.weibo.com/share/share.php?appkey=583395093&title=%E7%8F%80%E8%8E%B1%E9%9B%85&url=http://baidu.com", "newwindow", "height=300, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+}
+</script>
+</head>
+<body>
+<div id="main">
+
+    <div class="main-item section" id="main-item-1">
+        <img class="bg" id="bg1" src="images/01.jpg" />
+        <img class="logo slideDown" src="images/logo.png" />
+        <img class="play pulse" src="images/play.png" />
+        <img class="btn-bottom" src="images/bottom.png">
+        <a href="#" onclick="openwin()"><img class="btn-share" src="images/share.png"></a>
+        <video width="0" id="video" autobuffer>
+            <source src="video/15s.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+        </video>
+    </div><!-- one end -->
+
+    <div class="main-item section" id="main-item-2">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr class="firstRow">
+                    <td colspan="2" rowspan="1" valign="top">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img data-target="#i1" src="images/a1.jpg" class="img-i w1" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td colspan="1" rowspan="2" valign="top" width="191">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img data-target="#i2" src="images/a2.jpg" class="img-i w2" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td colspan="1" rowspan="4" valign="top" id="img-main" width="191" style="position:relative;">
+                    <div class="flip-container">
+                        <img id="i1" src="images/b1.jpg" class="img-i wb1" />
+                        <img id="i2" src="images/b2.jpg" class="img-i none wb1" />
+                        <img id="i3" src="images/b3.jpg" class="img-i none wb1" />
+                        <img id="i4" src="images/b4.jpg" class="img-i none wb1" />
+                        <img id="i5" src="images/b5.jpg" class="img-i none wb1" />
+                        <img id="i6" src="images/b1.jpg" class="img-i none wb1" />
+                        <img id="i7" src="images/b7.jpg" class="img-i none wb1" />
+                        <img id="i8" src="images/b8.jpg" class="img-i none wb1" />
+                    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="191">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front" clickable="true">
+                                    <img data-target="#i3" src="images/a3.jpg" style="position:absolute" class="img-i w3 wy" />
+                                    <img data-target="#i3" src="images/a3-s.png" style="position:absolute" class="img-i w3 wn" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top" width="191">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front" clickable="true">
+                                    <img data-target="#i4" src="images/a4.jpg" style="position:absolute" class="img-i w4 wy" />
+                                    <img data-target="#i4" src="images/a4-s.png" style="position:absolute" class="img-i w4 wn" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="2" valign="top" width="191">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img data-target="#i5" src="images/a5.jpg" class="img-i w3" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td colspan="2" rowspan="1" valign="top">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img data-target="#i6" src="images/a6.jpg" class="img-i w5" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="191">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front" clickable="true">
+                                    <img data-target="#i7" src="images/a7.jpg" style="position:absolute" class="img-i w4 wy" />
+                                    <img data-target="#i7" src="images/a7-s.png" style="position:absolute" class="img-i w4 wn" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top" width="191">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front" clickable="true">
+                                    <img data-target="#i8" src="images/a8.jpg" style="position:absolute" class="img-i w2 wy" />
+                                    <img data-target="#i8" src="images/a8-s.png" style="position:absolute" class="img-i w2 wn" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <img class="btn-bottom" src="images/bottom2.png">
+        <div style="height:54px;"></div>
+    </div><!-- two end -->
+
+    <div class="main-item section" id="main-item-3">
+        <img id="bg3" src="images/bg3.jpg" style="width:100%" />
+        <div id="step3">
+            <img class="btn-f btn-left" id="btn-left-a" src="images/btnleft.png"></img>
+            <img class="btn-f btn-right" id="btn-right-a" src="images/btnright.png"></img>
+            <img src="images/p3-i1.png" id="p3i1" class="p3i none">
+            <img src="images/p3-i2.png" style="z-index:100" id="p3i2" class="p3i none">
+            <img src="images/p3-i3.png" style="z-index:100" id="p3i3" class="p3i none">
+            <img src="images/p3-i4.png" style="z-index:100" id="p3i4" class="p3i none">
+            <img src="images/p3-i5.png" style="z-index:100" id="p3i5" class="p3i none">
+            <img src="images/p3-m1.png" class="p3m">
+            <img src="images/p3-m2.png" class="p3m">
+            <img src="images/p3-m3.png" class="p3m">
+            <img src="images/p3-m4.png" class="p3m">
+            <img src="images/p3-m5.png" class="p3m">
+            <img src="images/p3-t1.png" class="p31 p3t">
+            <img src="images/p3-t2.png" class="p32 none p3t">
+            <img src="images/p3-t3.png" class="p33 none p3t">
+            <img src="images/p3-t4.png" class="p34 none p3t">
+            <img src="images/p3-t5.png" class="p35 none p3t">
+        </div>
+        <img class="btn-bottom" src="images/bottom2.png">
+    </div><!-- three end -->
+
+    <div class="main-item section" id="main-item-4">
+        <img class="bg" id="bg4" src="images/bg4.jpg" />
+        <img class="btn-f btn-left" id="btn-left-b" src="images/left.png"></img>
+        <img class="btn-f btn-right" id="btn-right-b" src="images/right.png"></img>
+        <img src="images/step-4-1.jpg" class="an s4-img">
+        <div id="p41" class="p4mask"></div>
+        <div id="p42" class="p4mask"></div>
+        <div id="p43" class="p4mask"></div>
+        <div id="p44" class="p4mask"></div>
+        <div id="p45" class="p4mask"></div>
+        <img src="images/step-4-2.jpg" class="an s4-img none">
+        <img src="images/step-4-3.jpg" class="an s4-img none">
+        <img src="images/step-4-4.jpg" class="an s4-img none">
+    </div><!-- four end -->
+
+</div><!-- main end -->
+
+<div class="sidebar">
+    <ul id="menu">
+        <li data-menuanchor="page1" class="active" style="top:26px;"><a href="#page1"></a></li>
+        <li data-menuanchor="page2" style="top:68px;"><a href="#page2"></a></li>
+        <li data-menuanchor="page3" style="top:111px;"><a href="#page3"></a></li>
+        <li data-menuanchor="page4" style="top:155px;"><a href="#page4"></a></li>
+    </ul>
+</div><!-- sidebar end -->
+</body>
+</html>

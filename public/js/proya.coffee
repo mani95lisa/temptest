@@ -38,11 +38,10 @@ init = ->
   this.windowWidth = $(window).width()
   this.windowHeight = $(window).height()
   this.scale = this.windowWidth/750
-  h = $('#loading-img').height()
-  h = 153*this.scale unless h
+  h = 153*this.windowWidth*0.63/466
   top1 = (this.windowHeight-(h+$('#loading-label').height()+30))/2
   $('#loading-img').css(top:top1)
-  top2 = top1+$('#loading-img').height()+30
+  top2 = top1+h+30
   $('#loading-label').css(top:top2)
   $('#fullpage').hide()
   $('#tip').hide()
