@@ -40,7 +40,7 @@ $(document).ready(function () {
     sharep2 = function(){
         var sl = p1default.selector;
         sl = sl.replace('#', '');
-        openwin('http://proyaproject.duapp.com/w/images/' + sl);
+        openwin('http://proyaproject.duapp.com/w/images/' + sl+'.jpg');
         console.log(sl);
     }
 
