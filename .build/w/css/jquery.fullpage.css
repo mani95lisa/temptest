@@ -1602,6 +1602,7 @@ table td {
 }
 .s4-img {
     position: absolute;
+    box-shadow: 0 0 10px #999;
 }
 #menu li {
     list-style: none;
