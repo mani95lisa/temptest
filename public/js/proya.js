@@ -210,16 +210,13 @@
     $('#loading-img').animate({
       opacity: 0
     }, 800);
-    $('#loading-label').animate({
+    return $('#loading-label').animate({
       opacity: 0
     }, 800, function() {
       $('#loading-img').remove();
       $('#loading-label').remove();
       return $('#fullpage').show();
     });
-    return setTimeout(function() {
-      return $.fn.fullpage.moveTo(6, 1);
-    }, 1000);
   };
 
   initP1 = function(image, id) {

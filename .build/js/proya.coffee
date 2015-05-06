@@ -100,9 +100,9 @@ handleComplete = (event)->
     $('#loading-img').remove()
     $('#loading-label').remove()
     $('#fullpage').show()
-  setTimeout ->
-    $.fn.fullpage.moveTo(6,1);
-  , 1000
+#  setTimeout ->
+#    $.fn.fullpage.moveTo(6,1);
+#  , 1000
 
 initP1 = (image, id)->
   image.width *= this.scale
@@ -246,7 +246,7 @@ initP6 = (image, id)->
       wx.closeWindow()
   else if id == 'p6-tip2'
     image.width = $(window).width()
-    $('#tip2).append image
+    $('#tip2').append image
 
 handleFileLoad = (event)->
   image = event.result
