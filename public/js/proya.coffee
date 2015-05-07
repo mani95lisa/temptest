@@ -257,10 +257,18 @@ initP2 = (image, id)->
     image.width = $(window).width()
     s1.prepend image
   else if id == 'p2-video'
-    console.log image.height, image.width,  $(window).width()
     image.width = $(window).width()
     s1.prepend image
-    console.log image.height, image.width,  $(window).width()
+    s1.find(image).click = ->
+      video = document.getElementById('video')
+      $('#video').show();
+      if (video.paused)
+        video.width = $(window).width()
+        video.height = $(window).height()
+        video.play()
+      else
+        video.pause();
+        video.width = 0;
     s1.find(image).css top:this.windowHeight/2-(image.width*image.height/750)/2,position:'absolute'
 
 handleFileLoad = (event)->

@@ -512,10 +512,21 @@
       image.width = $(window).width();
       return s1.prepend(image);
     } else if (id === 'p2-video') {
-      console.log(image.height, image.width, $(window).width());
       image.width = $(window).width();
       s1.prepend(image);
-      console.log(image.height, image.width, $(window).width());
+      s1.find(image).click = function() {
+        var video;
+        video = document.getElementById('video');
+        $('#video').show();
+        if (video.paused) {
+          video.width = $(window).width();
+          video.height = $(window).height();
+          return video.play();
+        } else {
+          video.pause();
+          return video.width = 0;
+        }
+      };
       return s1.find(image).css({
         top: this.windowHeight / 2 - (image.width * image.height / 750) / 2,
         position: 'absolute'

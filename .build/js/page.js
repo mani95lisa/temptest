@@ -1,3 +1,8 @@
+manifest1 = [
+    {src: "t1.jpg", id: "t1"}
+];
+
+
 $(document).ready(function () {
     W_Width = $(window).width();
     W_Height = $(window).height();
@@ -244,6 +249,7 @@ $(document).ready(function () {
             $('.family').css({opacity: 0});
             $('#btn-left-a').css({opacity: 0});
             $('#btn-right-a').css({opacity: 0});
+            $('.ticket').css({opacity: 0});
             setTimeout(function () {
 
             $('.p3m').animate({opacity: 1}, {
@@ -254,6 +260,7 @@ $(document).ready(function () {
                             $('#btn-left-a').animate({opacity: 1}, {duration: 1000});
                             $('#btn-right-a').animate({opacity: 1}, {duration: 1000});
                             $('.family').animate({opacity: 1}, {duration: 1000});
+                            $('.ticket').animate({opacity: 1}, {duration: 1000});
                         }
                     })
                 }
@@ -407,7 +414,6 @@ $(document).ready(function () {
     var s4Left = W_Width * 80 / 1524;
     var s4w = (W_Height) * cr;
     var s4scale = s4w/1524;
-    console.log(s4w, s4scale);
 
     if(s4w/cr < W_Height){
         s4Left = (W_Width/2 - s4w/2);
@@ -448,12 +454,12 @@ $(document).ready(function () {
         var tohide = index_s4 > 0 ? index_s4 - 1 : $('.s4-img').length - 1;
         $('.s4-img').eq(tohide).animate({
             left: -s4w
-        }, 1000,'easeOutCubic');
+        }, 1000,'easeInOutBack');
 
         $('.s4-img').eq(index_s4).css({left: $(window).width()});
         $('.s4-img').eq(index_s4).animate({
             left: s4l
-        }, 1000,'easeOutCubic');
+        }, 1000,'easeInOutBack');
         setSmallImg(true);
     })
     $('#btn-left-b').click(function () {
@@ -470,14 +476,14 @@ $(document).ready(function () {
             left: $(window).width()
         },
             1000
-        , "easeOutCubic");
+        , "easeInOutBack");
 
         $('.s4-img').eq(index_s4).show();
         $('.s4-img').eq(index_s4).css({left: -s4w});
         $('.s4-img').eq(index_s4).animate({
             left: s4l
         }, 1000
-        , "easeOutCubic");
+        , "easeInOutBack");
 
         setSmallImg(false);
     })
