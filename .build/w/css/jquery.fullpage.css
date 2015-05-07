@@ -1654,15 +1654,12 @@ table td {
     z-index: 10;
 }
 .logo {
-    width: 400px;
-    top: 300px;
+    top: 50%;
     left: 50%;
+    margin-top: -75px;
     margin-left: -200px;
 }
 @media only screen and (min-width: 1400px) {
-    .logo {
-        top: 420px;
-    }
     .btn-f {
         top: 380px;
     }

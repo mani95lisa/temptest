@@ -17,12 +17,17 @@ var sharep2 = '';
 var openwin = function openwin(pic) {
     var link = 'http://baidu.com';
     var title = '珀莱雅';
-    var url = "http://service.weibo.com/share/share.php?appkey=583395093&title="+title+"&url="+link;
-    if(pic){
-        url += '&pic='+pic;
+    var url = "http://service.weibo.com/share/share.php?appkey=583395093&title=" + title + "&url=" + link;
+    if (pic) {
+        url += '&pic=' + pic;
     }
-    window.open (url, "newwindow", "height=300, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
-}
+    window.open(url, "newwindow", "height=300, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
+};
+
+    var videoEnded = function(){
+        $('#video').hide();
+    }
+
 </script>
 </head>
 <body>
@@ -50,6 +55,10 @@ var openwin = function openwin(pic) {
     }
     .bg3 {
         width: 100%;
+        bottom: 0px;
+        left: 0px;
+        position: absolute;
+        z-index: -100;
     }
     .family {
         position: absolute;
@@ -68,15 +77,14 @@ var openwin = function openwin(pic) {
         <img class="logo slideDown" src="images/logo.png" />
         <img class="play pulse" src="images/play.png" />
         <img class="btn-bottom" src="images/bottom.png">
-        <a href="http://proya.tmall.com/" target="_blank"><img class="tmall" src="images/tmall.png"></a>
         <a href="#" onclick="openwin('http://proyaproject.duapp.com/w/images/share1.jpg')"><img class="btn-share" src="images/share.png"></a>
-        <video width="0" id="video" autobuffer>
-            <source src="video/15s.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+        <video width="0" id="video" autobuffer onended="videoEnded()">
+            <source src="video/17.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
         </video>
     </div><!-- one end -->
 
     <div class="main-item section" id="main-item-2">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <table id="s2table" border="0" cellpadding="0" cellspacing="0">
             <tbody>
                 <tr class="firstRow">
                     <td colspan="2" rowspan="1" valign="top">
@@ -100,17 +108,17 @@ var openwin = function openwin(pic) {
                     <td colspan="1" rowspan="4" valign="top" id="img-main" width="191" style="position:relative;">
                     <div class="flip-container">
                         <img id="i0" src="images/i0.jpg" class="img-i wb1" />
-                        <img id="i1" src="images/i1.jpg" class="img-i none wb1" />
-                        <img id="i2" src="images/i2.jpg" class="img-i none wb1" />
-                        <img id="i3" src="images/i3.jpg" class="img-i none wb1" />
-                        <img id="i4" src="images/i4.jpg" class="img-i none wb1" />
-                        <img id="i5" src="images/i5.jpg" class="img-i none wb1" />
-                        <img id="i6" src="images/i1.jpg" class="img-i none wb1" />
-                        <img id="i7" src="images/i7.jpg" class="img-i none wb1" />
-                        <img id="i8" src="images/i8.jpg" class="img-i none wb1" />
-                        <img src="images/love.png" class="love"/>
+                        <img id="i1" src="images/is1.jpg" class="img-i none wb1" />
+                        <img id="i2" src="images/is2.jpg" class="img-i none wb1" />
+                        <img id="i3" src="images/is3.jpg" class="img-i none wb1" />
+                        <img id="i4" src="images/is4.jpg" class="img-i none wb1" />
+                        <img id="i5" src="images/is5.jpg" class="img-i none wb1" />
+                        <img id="i6" src="images/is1.jpg" class="img-i none wb1" />
+                        <img id="i7" src="images/is7.jpg" class="img-i none wb1" />
+                        <img id="i8" src="images/is8.jpg" class="img-i none wb1" />
+                        <img src="images/love.png" class="love none1"/>
                         <label id="loveNum" class="loveNum"></label>
-                        <a href="#" onclick="sharep2()"><img class="btn-share" src="images/share.png"></a>
+                        <a href="#" onclick="sharep2()"><img class="btn-share none1" src="images/share.png"></a>
                     </div>
                     </td>
                 </tr>
@@ -192,7 +200,7 @@ var openwin = function openwin(pic) {
         <img id="p3b4" class="bg3 none1" src="images/5.jpg" />
         
 
-        <img src="images/tmall-ticket.png" class="ticket none">
+        <!--<img src="images/tmall-ticket.png" class="ticket none">-->
 
         <div id="step3">
             <img src="images/proya_family.png" class="family none">
@@ -228,12 +236,14 @@ var openwin = function openwin(pic) {
         <div id="p43" class="p4mask"></div>
         <div id="p44" class="p4mask"></div>
         <div id="p45" class="p4mask"></div>
-        <img src="images/step-4-2.jpg" class="an s4-img none">
-        <img src="images/step-4-3.jpg" class="an s4-img none">
-        <img src="images/step-4-4.jpg" class="an s4-img none">
+        <img src="images/step-4-2.jpg" class="an none1 s4-img ">
+        <img src="images/step-4-3.jpg" class="an none1 s4-img ">
+        <img src="images/step-4-4.jpg" class="an none1 s4-img ">
     </div><!-- four end -->
 
 </div><!-- main end -->
+
+<a href="http://proya.tmall.com/" target="_blank"><img class="tmall" src="images/tmall.png"></a>
 
 <div class="sidebar">
     <ul id="menu">
