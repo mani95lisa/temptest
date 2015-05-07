@@ -373,7 +373,7 @@ $(document).ready(function () {
 // STEP 4
     var cr = 1524/888;
     var s4Left = W_Width * 80 / 1524;
-    var s4w = (W_Height - 20) * cr;
+    var s4w = (W_Height - 20) * cr - 80;
 
     if(s4w/cr < W_Height){
         console.log('oo')

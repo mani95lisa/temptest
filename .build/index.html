@@ -17,9 +17,9 @@
 var sharep2 = '';
 var openwin = function openwin(pic, txt) {
     var link = 'http://baidu.com';
-    var title = txt ? txt : '是萝莉是马，拿出来晒晒，#青春就要大胆晒#';
+    var title = txt ? txt : '不型不青春！#青春就要大胆晒#';
     title = title.replace(/#/gi, '%23');
-    title+='http://uv.proya.com/'
+    title += 'http://uv.proya.com/';
     var url = "http://service.weibo.com/share/share.php?appkey=583395093&title=" + title + "&url=" + link;
     if (pic) {
         url += '&pic=' + pic;
