@@ -414,10 +414,11 @@ $(document).ready(function () {
     if(s4w/cr < W_Height){
         s4Left = (W_Width/2 - s4w/2);
     }
+    var s4top = (W_Height-(s4w-80)/cr)/2;
     $('.s4-img').css({
         'left': s4Left,
         'width': s4w-80,
-        'top': $('#main-item-4 .bg').height() * 10 / 888
+        'top': s4top
     });
 
     var index_s4 = 0;
