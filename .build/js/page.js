@@ -147,6 +147,9 @@ $(document).ready(function () {
         if(si >= 10){
             clearInterval(si2);
         }
+        if($('.bg3').height()<W_Height){
+            $('.bg3').css({height: W_Height});
+        }
         setTableHeight();
         updateTable();
         positionTitle();
