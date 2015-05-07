@@ -389,7 +389,7 @@ module.exports = (router)->
         init req, res, result
 
   router.get '/', (req, res)->
-    res.render 'login'
+    res.redirectTo '/w'
 
   router.get '/test2', (req, res)->
     Order.find {}, products:$elemMatch:name:req.query.name, (err, result)->
