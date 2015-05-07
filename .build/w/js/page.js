@@ -351,7 +351,7 @@ $(document).ready(function () {
 // 		'margin-right':$('#step3').width()*0.62
 // 	})
         $('.btn-bottom').css({
-            top: $(window).height() - 60
+            top: $(window).height() - 40
         })
     }
 
