@@ -209,6 +209,8 @@ $(document).ready(function () {
             $('.p3t').eq(index_a).css({opacity: 0});
             $('.p3m').css({opacity: 0});
             $('.family').css({opacity: 0});
+            $('#btn-left-a').css({opacity: 0});
+            $('#btn-right-a').css({opacity: 0});
             setTimeout(function () {
 
             $('.p3m').animate({opacity: 1}, {

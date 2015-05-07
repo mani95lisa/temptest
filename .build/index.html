@@ -23,6 +23,8 @@ var openwin = function openwin(pic, txt) {
     var url = "http://service.weibo.com/share/share.php?appkey=583395093&title=" + title + "&url=" + link;
     if (pic) {
         url += '&pic=' + pic;
+    }else{
+        url += '&pic=http://uv.proya.com/images/5r.jpg';
     }
     window.open(url, "newwindow", "height=300, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")
 };
@@ -226,7 +228,7 @@ var openwin = function openwin(pic, txt) {
             <img src="images/p3-t4.png" class="p34 none p3t">
             <img src="images/p3-t5.png" class="p35 none p3t">
         </div>
-        <!--<img src="images/proya-logo.png" style="position: absolute; top: 20px; left: 20px">-->
+        <img src="images/proya-logo.png" style="position: absolute; top: 20px; left: 20px">
         <img class="btn-bottom" src="images/bottom2.png">
     </div><!-- three end -->
 
