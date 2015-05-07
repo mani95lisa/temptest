@@ -170,7 +170,7 @@ html, body {
     opacity: 1;
 }
 #fp-nav ul li .fp-tooltip.right {
-    right: 60px;
+    right: 20px;
 }
 #fp-nav ul li .fp-tooltip.left {
     left: 20px;
@@ -1595,10 +1595,10 @@ table td {
     margin-top: -156px;
 }
 #main-item-4 .btn-left {
-    left: 20px;
+    left: 10px;
 }
 #main-item-4 .btn-right {
-    right: 20px;
+    right: 80px;
 }
 .s4-img {
     position: absolute;
