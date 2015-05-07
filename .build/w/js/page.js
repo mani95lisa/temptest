@@ -46,7 +46,7 @@ $(document).ready(function () {
 
     function setTableHeight() {
         $('.w1').width(W_Width * 567 / 1524);
-        $('.w2').width(W_Width * 277 / 1524);
+        $('.w2').width(W_Width * 278 / 1524);
         $('.w3').width(W_Width * 259 / 1524);
         $('.w4').width(W_Width * 308 / 1524);
         $('.w5').width(W_Width * 585 / 1524);
@@ -197,8 +197,11 @@ $(document).ready(function () {
             $('.p3t').eq(index_a).css({opacity: 0});
             $('.p3m').css({opacity: 0});
             $('.family').css({opacity: 0});
+            setTimeout(function () {
+
             $('.p3m').animate({opacity: 1}, {
-                duration: 2000, complete: function () {
+                duration: 1000, complete: function () {
+                    console.log('oo2')
                     $('.p3t').eq(index_a).animate({opacity: 1}, {
                         duration: 500, complete: function () {
                             $('#btn-left-a').animate({opacity: 1}, {duration: 1000});
@@ -208,6 +211,7 @@ $(document).ready(function () {
                     })
                 }
             });
+            }, 1000);
         } else if (nextIndex == 4) {
             $('#p4mask').css({opacity: 1});
             $('#p40').animate({opacity: 0}, {
