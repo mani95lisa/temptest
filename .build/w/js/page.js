@@ -40,7 +40,20 @@ $(document).ready(function () {
     sharep2 = function(){
         var sl = p1default.selector;
         sl = sl.replace('#', '');
-        openwin('http://proyaproject.duapp.com/w/images/' + sl+'.jpg');
+        var txt = '';
+        var arr = [
+            '以为墨镜够高冷？#青春就要大胆晒#',
+            '鬼马清新看不懂？#青春就要大胆晒#',
+            '谁说土豪要低调？#青春就要大胆晒#',
+            '谁说土豪要低调？#青春就要大胆晒#',
+            '天赋异禀难自弃？#青春就要大胆晒#',
+            '头巾蒙面给谁看？#青春就要大胆晒#',
+            '脸基尼是什么鬼？#青春就要大胆晒#',
+            '全副武装没出路？#青春就要大胆晒#',
+            '畚箕遮阳算哪出？#青春就要大胆晒#'
+        ]
+        txt = arr[parseInt(sl.replace('i', ''))];
+        openwin('http://proyaproject.duapp.com/w/images/' + sl+'.jpg', txt);
         console.log(sl);
     }
 
