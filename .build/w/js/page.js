@@ -147,14 +147,12 @@ $(document).ready(function () {
         if(si >= 10){
             clearInterval(si2);
         }
+        if($('.bg3').height()<W_Height){
+            $('.bg3').css({height: W_Height});
+        }
         setTableHeight();
         updateTable();
         positionTitle();
-        console.log($('.bg3').height());
-        if($('.bg3').height()<W_Height){
-            console.log('resize');
-            $('.bg3').css({height: W_Height});
-        }
     }, 1000)
 // setTableHeight();
 
@@ -214,49 +212,47 @@ $(document).ready(function () {
             $('.p3t').eq(index_a).css({opacity: 0});
             $('.p3m').css({opacity: 0});
             $('.family').css({opacity: 0});
-            $('#btn-left-a').css({opacity: 0});
-            $('#btn-right-a').css({opacity: 0});
             setTimeout(function () {
 
-            $('.p3m').animate({opacity: 1}, {
-                duration: 1000, complete: function () {
-                    console.log('oo2')
-                    $('.p3t').eq(index_a).animate({opacity: 1}, {
-                        duration: 500, complete: function () {
-                            $('#btn-left-a').animate({opacity: 1}, {duration: 1000});
-                            $('#btn-right-a').animate({opacity: 1}, {duration: 1000});
-                            $('.family').animate({opacity: 1}, {duration: 1000});
-                        }
-                    })
-                }
-            });
+                $('.p3m').animate({opacity: 1}, {
+                    duration: 1000, complete: function () {
+                        console.log('oo2')
+                        $('.p3t').eq(index_a).animate({opacity: 1}, {
+                            duration: 500, complete: function () {
+                                $('#btn-left-a').animate({opacity: 1}, {duration: 1000});
+                                $('#btn-right-a').animate({opacity: 1}, {duration: 1000});
+                                $('.family').animate({opacity: 1}, {duration: 1000});
+                            }
+                        })
+                    }
+                });
             }, 1000);
         } else if (nextIndex == 4) {
             $('#p4mask').css({opacity: 1});
             $('#p40').animate({opacity: 0}, {
                 duration: 2000, complete: function () {
-                $('#p41').animate({opacity: 0}, {
-                    duration: 300, complete: function () {
-                        $('#p42').animate({opacity: 0}, {
-                            duration: 300, complete: function () {
-                                $('#p43').animate({opacity: 0}, {
-                                    duration: 300, complete: function () {
-                                        $('#p44').animate({opacity: 0}, {
-                                            duration: 300, complete: function () {
-                                                $('#p45').animate({opacity: 0}, {
-                                                    duration: 300, complete: function () {
+                    $('#p41').animate({opacity: 0}, {
+                        duration: 300, complete: function () {
+                            $('#p42').animate({opacity: 0}, {
+                                duration: 300, complete: function () {
+                                    $('#p43').animate({opacity: 0}, {
+                                        duration: 300, complete: function () {
+                                            $('#p44').animate({opacity: 0}, {
+                                                duration: 300, complete: function () {
+                                                    $('#p45').animate({opacity: 0}, {
+                                                        duration: 300, complete: function () {
 
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
-                })
-            }});
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    })
+                }});
         }
     };
 
@@ -435,17 +431,17 @@ $(document).ready(function () {
         if(index_s4 < 0) index_s4 = $('.s4-img').length - 1;
         var tohide = index_s4 < $('.s4-img').length - 1 ? index_s4 + 1 : 0;
         $('.s4-img').eq(tohide).animate({
-            left: $(window).width()
-        },
+                left: $(window).width()
+            },
             1000
-        , "easeOutCubic");
+            , "easeOutCubic");
 
         $('.s4-img').eq(index_s4).show();
         $('.s4-img').eq(index_s4).css({left: -s4w});
         $('.s4-img').eq(index_s4).animate({
-            left: s4l
-        }, 1000
-        , "easeOutCubic");
+                left: s4l
+            }, 1000
+            , "easeOutCubic");
 
         setSmallImg(false);
     })
