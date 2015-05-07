@@ -80,9 +80,12 @@
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
     <div class="section" id="section1"style="background-color: #ffffed">
+        <video width="0" id="video" autobuffer onended="videoEnded()">
+            <source src="video/17.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+        </video>
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
-    <div class="section" id="section2"style="background-color: #ffffed">
+    <div class="section" id="section2"style="background-color: #E3D3B4">
         <div id="p3-i1" class="slide"></div>
         <div id="p3-i2" class="slide"></div>
         <label id="love-label">x100</label>

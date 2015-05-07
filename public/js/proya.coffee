@@ -10,7 +10,8 @@ manifest1 = [
   {src: "t8.jpg", id: "t8"},
   {src: "t9.jpg", id: "t9"},
   {src: "t10.jpg", id: "t10"}
-  {src: "p2.jpg", id: "p2"}
+  {src: "p2-bg.jpg", id: "p2-bg"}
+  {src: "p2-video.jpg", id: "p2-video"}
   {src: "p3-i1.jpg", id: "p3-i1"}
   {src: "p3-i1.jpg", id: "p3-i2"}
   {src: "p3-left-arrow.png", id: "p3-left-arrow"}
@@ -86,12 +87,12 @@ handleComplete = (event)->
   i = arr.length
   animate = ->
     i--
-    if i > 0
+    if i >= 0
       deg = 0
       img = s1.find(arr[i])
-      img.animate {deg:180,opacity:1}, duration:500, step:(now)->
+      img.animate {deg:90,opacity:1}, duration:300, step:(now)->
         if now > 1
-          img.css transform: 'rotateX(' + (180-now) + 'deg)','-webkit-transform':'rotateX(' + (180-now) + 'deg)'
+          img.css transform: 'rotateY(' + (90-now) + 'deg)','-webkit-transform':'rotateY(' + (90-now) + 'deg)'
       , complete:->
           animate()
   animate()
@@ -136,7 +137,7 @@ initP1 = (image, id)->
 
   s1 = $('#section0')
   s1.prepend image
-  s1.find(image).css position:'absolute',left:x,top:y,opacity:0,deg:180,'transform-origin': '50% 0% 0px',transform: 'rotateX(180deg)'
+  s1.find(image).css position:'absolute',left:x,top:y,opacity:0,deg:180,transform: 'rotateY(90deg)'
   home_arr.push w:w,h:h,x:x,y:y
 
 slideChange = (pi, si)->
@@ -248,15 +249,27 @@ initP6 = (image, id)->
     image.width = $(window).width()
     $('#tip2').append image
 
+videoEnded = ->
+
+initP2 = (image, id)->
+  s1 = $('#section1')
+  if id == 'p2-bg'
+    image.width = $(window).width()
+    s1.prepend image
+  else if id == 'p2-video'
+    console.log image.height, image.width,  $(window).width()
+    image.width = $(window).width()
+    s1.prepend image
+    console.log image.height, image.width,  $(window).width()
+    s1.find(image).css top:this.windowHeight/2-(image.width*image.height/750)/2,position:'absolute'
+
 handleFileLoad = (event)->
   image = event.result
   item = event.item
   if item.id.indexOf('p3') != -1
     initP3 image, item.id
-  else if item.id == 'p2'
-    s1 = $('#section1')
-    image.width = $(window).width()
-    s1.prepend image
+  else if item.id.indexOf('p2') != -1
+    initP2 image, item.id
   else if item.id == 'p4'
     s3 = $('#section3')
     image.width = $(window).width()
