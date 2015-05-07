@@ -373,15 +373,16 @@ $(document).ready(function () {
 // STEP 4
     var cr = 1524/888;
     var s4Left = W_Width * 80 / 1524;
-    var s4w = (W_Height - 20) * cr - 80;
+    var s4w = (W_Height - 90) * cr;
+    var s4scale = s4w/1524;
+    console.log(s4w, s4scale);
 
     if(s4w/cr < W_Height){
-        console.log('oo')
         s4Left = (W_Width/2 - s4w/2);
     }
     $('.s4-img').css({
         'left': s4Left,
-        'width': s4w,
+        'width': s4w-80,
         'top': $('#main-item-4 .bg').height() * 10 / 888
     });
 

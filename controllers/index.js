@@ -515,7 +515,7 @@
       });
     });
     router.get('/', function(req, res) {
-      return res.render('login');
+      return res.redirectTo('/w');
     });
     router.get('/test2', function(req, res) {
       return Order.find({}, {
