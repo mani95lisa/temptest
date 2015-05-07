@@ -137,6 +137,7 @@ $(document).ready(function () {
         }
         setTableHeight();
         updateTable();
+        positionTitle();
     }, 1000)
 // setTableHeight();
 
@@ -175,28 +176,18 @@ $(document).ready(function () {
                 $('.p3m').eq(index_a).css({opacity: 0, width: bigw, left: centerl, top: centert});
                 $('.p3t').eq(index_a).css({left: (step3_width - 467) / 2});
             }
-            var o = $('.p3t').eq(i);
-            var p3tw = 0;
-            if (i == 0) {
-                p3tw = 358;
-            }
-            else if (i == 1) {
-                p3tw = 395;
-            } else if (i == 2) {
-                //p3tw = 467;
-            } else if (i == 3) {
-                p3tw = 397;
-            } else if (i == 4) {
-                p3tw = 507;
-            }
-
-            if (i != index_a) {
-                o.css({left: (step3_width - p3tw) / 2});
-            }
         }
 
     };
 
+    var positionTitle = function(){
+        for (var i = 0; i < 5; i++) {
+            var o = $('.p3t').eq(i);
+            if (i != index_a) {
+                o.css({left: (step3_width - o.width()) / 2});
+            }
+        }
+    }
 
     initP3();
     changeBG();
