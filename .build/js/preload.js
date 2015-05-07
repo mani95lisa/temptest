@@ -58,7 +58,8 @@
     console.log('Loaded');
     $('#main').show();
     $('.sidebar').show();
-    return $('.tmall').show();
+    $('.tmall').show();
+    return loaded();
   };
 
   load = function() {

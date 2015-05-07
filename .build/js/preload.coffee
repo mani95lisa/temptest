@@ -32,6 +32,7 @@ handleComplete = (event)->
   $('#main').show();
   $('.sidebar').show();
   $('.tmall').show();
+  loaded();
 
 load = ->
 

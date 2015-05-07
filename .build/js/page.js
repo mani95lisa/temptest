@@ -1,6 +1,6 @@
 
 
-$(document).ready(function () {
+var loaded = function(){
     W_Width = $(window).width();
     W_Height = $(window).height();
     var ratio = W_Width / W_Height;
@@ -557,4 +557,4 @@ $(document).ready(function () {
             content: '<object type="application/x-shockwave-flash" align="middle" data="./video/player.swf" width="310" height="188" id="player_normal"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="bgcolor" value="#000000"><param name="wmode" value="opaque"><param name="flashvars" value="image=/sun_block/video/mn.jpg&amp;movie=/sun_block/video/15s.mp4&amp;autoplay=true&amp;loop=false&amp;autohide=false&amp;fullscreen=true&amp;color_text=0xFFFFFF&amp;color_seekbar=0x13ABEC&amp;color_loadingbar=0x828282&amp;color_seekbarbg=0x333333&amp;color_button_out=0x333333&amp;color_button_over=0x000000&amp;color_button_highlight=0xffffff"></object>'
         });
     })
-});
+};
