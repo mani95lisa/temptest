@@ -448,12 +448,12 @@ $(document).ready(function () {
         var tohide = index_s4 > 0 ? index_s4 - 1 : $('.s4-img').length - 1;
         $('.s4-img').eq(tohide).animate({
             left: -s4w
-        }, 1000,'easeOutCubic');
+        }, 1000,'easeOutBack');
 
         $('.s4-img').eq(index_s4).css({left: $(window).width()});
         $('.s4-img').eq(index_s4).animate({
             left: s4l
-        }, 1000,'easeOutCubic');
+        }, 1000,'easeOutBack');
         setSmallImg(true);
     })
     $('#btn-left-b').click(function () {
@@ -470,14 +470,14 @@ $(document).ready(function () {
             left: $(window).width()
         },
             1000
-        , "easeOutCubic");
+        , "easeOutBack");
 
         $('.s4-img').eq(index_s4).show();
         $('.s4-img').eq(index_s4).css({left: -s4w});
         $('.s4-img').eq(index_s4).animate({
             left: s4l
         }, 1000
-        , "easeOutCubic");
+        , "easeOutBack");
 
         setSmallImg(false);
     })
