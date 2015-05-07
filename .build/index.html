@@ -80,8 +80,33 @@ var openwin = function openwin(pic, txt) {
     #main-item-2{background:#fff; overflow:hidden}
     table td{position: relative;margin: 0;padding: 0;}
     table{border-collapse:collapse;}
+
+    #loading-img {
+        position: absolute;
+        left: 50%;
+        margin-left: -233px;
+        top: 50%;
+        margin-top: -71px;
+    }
+
+    #loading-label {
+        left: 50%;
+        top: 50%;
+        margin-left: -100px;
+        position: absolute;
+        text-align: center;
+        width: 200px;
+        font-size: 30px;
+        color: #ff6e00;
+        margin-top: 100px;
+    }
 </style>
-<div id="main">
+
+<img src="imgs/loading.png" id="loading-img">
+<label id="loading-label">100%</label>
+
+
+<div id="main" class="none1">
 
     <div class="main-item section" id="main-item-1">
         <img class="bg" id="bg1" style="width: 100%;" src="images/01.jpg" />
@@ -224,9 +249,9 @@ var openwin = function openwin(pic, txt) {
 
 </div><!-- main end -->
 
-<a href="http://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=379424083&activityId=226562573" target="_blank"><img class="tmall" src="images/tmall.png"></a>
+<a href="http://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=379424083&activityId=226562573" target="_blank"><img class="tmall none1" src="images/tmall.png"></a>
 
-<div class="sidebar">
+<div class="sidebar none1">
     <ul id="menu">
         <li data-menuanchor="page1" class="active" style="top:26px;"><a href="#page1"></a></li>
         <li data-menuanchor="page2" style="top:68px;"><a href="#page2"></a></li>

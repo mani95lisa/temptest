@@ -1,6 +1,3 @@
-manifest1 = [
-    {src: "t1.jpg", id: "t1"}
-];
 
 
 $(document).ready(function () {
