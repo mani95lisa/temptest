@@ -177,13 +177,7 @@ $(document).ready(function () {
     $(window).scroll(function () {
         setTableHeight();
     });
-    var si = 0;
     var si2 = setInterval(function () {
-        console.log('u');
-        si++;
-        if(si >= 10){
-            clearInterval(si2);
-        }
         if($('.bg3').height()<W_Height){
             $('.bg3').css({height: W_Height});
         }
