@@ -52,7 +52,7 @@ $(document).ready(function () {
             '全副武装没出路？#青春就要大胆晒#',
             '畚箕遮阳算哪出？#青春就要大胆晒#'
         ]
-        txt = arr[parseInt(sl.replace('i', ''))];
+        txt = arr[parseInt(sl.replace('i', ''))-1];
         openwin('http://proyaproject.duapp.com/w/images/' + sl+'.jpg', txt);
         console.log(sl);
     }
