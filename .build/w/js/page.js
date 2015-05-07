@@ -150,6 +150,9 @@ $(document).ready(function () {
         setTableHeight();
         updateTable();
         positionTitle();
+        if($('.bg3').height()<W_Height){
+            $('.bg3').css({height: W_Height});
+        }
     }, 1000)
 // setTableHeight();
 
