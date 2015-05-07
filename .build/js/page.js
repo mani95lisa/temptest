@@ -56,7 +56,7 @@ $(document).ready(function () {
         console.log(sl);
     }
 
-    var width_step2 = W_Width/W_Height > 2 ? W_Height*2 : W_Width;
+    var width_step2 = W_Width/W_Height > 2 ? W_Height*1524/736 : W_Width;
     var height_step2 = width_step2*736/1524;
     $('#main-item-2 table').css({
         'margin-left': (W_Width-width_step2)/2,
@@ -230,9 +230,7 @@ $(document).ready(function () {
     var positionTitle = function(){
         for (var i = 0; i < 5; i++) {
             var o = $('.p3t').eq(i);
-            if (i != index_a) {
-                o.css({left: (step3_width - o.width()) / 2});
-            }
+            o.css({left: (step3_width - o.width()) / 2});
         }
     }
 
@@ -407,11 +405,13 @@ $(document).ready(function () {
 // STEP 4
     var cr = 1524/888;
     var s4Left = W_Width * 80 / 1524;
-    var s4w = (W_Height - 90) * cr;
+    var s4w = (W_Height) * cr;
     var s4scale = s4w/1524;
     console.log(s4w, s4scale);
 
     if(s4w/cr < W_Height){
+        s4Left = (W_Width/2 - s4w/2);
+    }else{
         s4Left = (W_Width/2 - s4w/2);
     }
     var s4top = (W_Height-(s4w-80)/cr)/2;
