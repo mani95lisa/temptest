@@ -12,8 +12,6 @@ manifest1 = [
   {src: "t10.jpg", id: "t10"}
   {src: "p2-bg.jpg", id: "p2-bg"}
   {src: "p2-video.jpg", id: "p2-video"}
-  {src: "p3-i1.jpg", id: "p3-i1"}
-  {src: "p3-i1.jpg", id: "p3-i2"}
   {src: "p3-left-arrow.png", id: "p3-left-arrow"}
   {src: "p3-right-arrow.png", id: "p3-right-arrow"}
   {src: "p3-top.png", id: "p3-top"}
@@ -40,6 +38,17 @@ manifest1 = [
   {src: "p6-tip2.jpg", id: "p6-tip2"}
   {src: "p6-bg.jpg", id: "p6-bg"}
 ]
+
+i = 0
+while i<9
+  i++
+  if i != 5
+    manifest1.push src: "p3-t"+i+".jpg", id: "p3-t"+i
+    manifest1.push src: "p3-m"+i+".jpg", id: "p3-m"+i
+
+while i<5
+  i++
+  manifest1.push src: "p5-i"+i+".png", id: "p5-i"+i
 
 count = 0
 intv = ''
@@ -101,9 +110,11 @@ handleComplete = (event)->
     $('#loading-img').remove()
     $('#loading-label').remove()
     $('#fullpage').show()
-#  setTimeout ->
-#    $.fn.fullpage.moveTo(6,1);
-#  , 1000
+  setTimeout ->
+    $.fn.fullpage.moveTo(5,1);
+  , 1000
+
+imgArr = []
 
 initP1 = (image, id)->
   image.width *= this.scale
@@ -137,15 +148,24 @@ initP1 = (image, id)->
 
   s1 = $('#section0')
   s1.prepend image
+  imgArr[id] = image
+  s1.find(image).click showImg
   s1.find(image).css position:'absolute',left:x,top:y,opacity:0,deg:180,transform: 'rotateY(90deg)'
   home_arr.push w:w,h:h,x:x,y:y
+
+showImg = (event)->
+  console.log(imgArr)
+
 
 slideChange = (pi, si)->
   this.pi = pi
   this.si = si
 
+loveNum = 0
+
 loveItem = ->
-  console.log this.pi, this.si
+  loveNum++
+  $('#love-label').text('x'+loveNum)
 
 initP3 = (image, id)->
 
@@ -153,7 +173,10 @@ initP3 = (image, id)->
   top3 = (this.windowHeight-722*this.scale)/2
   ltop = top3+722*this.scale-10 - 38*this.scale
   $('#love-label').css left:70*this.scale,top:ltop+5
-  if id.indexOf('p3-i') != -1
+  if id.indexOf('p3-t') != -1
+    $('#p3-m'+id.replace('p3-t', '')).prepend image
+    $('#p3-m'+id.replace('p3-t', '')).find(image).css width:432*this.scale,top:90*this.scale,left:178*this.scale,position:'relative', 'z-index':100
+  else if id.indexOf('p3-m') != -1
     $('#'+id).prepend image
     $('#'+id).find(image).css width:750*this.scale,top:top3,position:'absolute', 'z-index':100
   else
@@ -162,8 +185,6 @@ initP3 = (image, id)->
     s2.find(image).css width:28*this.scale,left:10,top:(this.windowHeight-image.height)/2, position: 'absolute','z-index': 100
   else if id == 'p3-right-arrow'
     s2.find(image).css width:28*this.scale,right:10,top:(this.windowHeight-image.height)/2, position: 'absolute','z-index': 100
-  else if id == 'p3-top'
-    s2.find(image).css width:432*this.scale,top:90*this.scale,left:178*this.scale,position:'absolute', 'z-index':100
   else if id == 'p3-love'
     ltop = top3+722*this.scale-10 - 38*this.scale
     s2.find(image).css width:43*this.scale,left:23*this.scale,top:ltop, position: 'absolute','z-index': 100
@@ -186,8 +207,8 @@ initP5 = (image, id)->
     s4.append image
   else
     $('#'+id).prepend image
-    it = if this.windowHeight < 550 then 160*this.scale else 240*this.scale
-    $('#'+id).find(image).css width:602*this.scale,left:83*this.scale,top:it,position:'relative'
+    it = if this.windowHeight < 550 then 160*this.scale else 180*this.scale
+    $('#'+id).find(image).css width:this.windowWidth,left:0,top:it,position:'relative'
   btnbottom = if this.windowHeight < 550 then 80*this.scale else 120*this.scale
   if id == 'p5-bg'
     image.width = $(window).width()

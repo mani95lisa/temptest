@@ -85,13 +85,19 @@
         </video>
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
-    <div class="section" id="section2"style="background-color: #E3D3B4">
-        <div id="p3-i1" class="slide"></div>
-        <div id="p3-i2" class="slide"></div>
-        <label id="love-label">x100</label>
+    <div class="section" id="section2"style="background-color: #ffffff">
+        <div id="p3-m1" class="slide"></div>
+        <div id="p3-m2" class="slide"></div>
+        <div id="p3-m3" class="slide"></div>
+        <div id="p3-m4" class="slide"></div>
+        <div id="p3-m6" class="slide"></div>
+        <div id="p3-m7" class="slide"></div>
+        <div id="p3-m8" class="slide"></div>
+        <div id="p3-m9" class="slide"></div>
+        <label id="love-label">0</label>
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
-    <div class="section" id="section3"style="background-color: #ffffff">
+    <div class="section" id="section3" style="background-color: #ffffff">
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
     <div class="section" id="section4"style="background-color: #f2ebd1">
@@ -104,7 +110,6 @@
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
     <div class="section" id="section5"style="background-color: #f2ebd1">
-        <img class="arrow" src="imgs/down-arrow.png">
     </div>
 </div>
 
