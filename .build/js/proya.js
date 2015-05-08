@@ -149,7 +149,7 @@
 
   p1 = function() {
     var top1, top2;
-    top1 = (this.windowHeight - ($('#loading-img').height() + $('#loading-label').height() + 30)) / 2;
+    top1 = (this.windowHeight - $('#loading-img').height()) / 2;
     $('#loading-img').css({
       top: top1
     });
@@ -231,16 +231,13 @@
     $('#loading-img').animate({
       opacity: 0
     }, 800);
-    $('#loading-label').animate({
+    return $('#loading-label').animate({
       opacity: 0
     }, 800, function() {
       $('#loading-img').remove();
       $('#loading-label').remove();
       return $('#fullpage').show();
     });
-    return setTimeout(function() {
-      return $.fn.fullpage.moveTo(5, 1);
-    }, 1000);
   };
 
   imgArr = [];
