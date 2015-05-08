@@ -44,10 +44,6 @@ canvas {
 }
 #loading-img {
   position: absolute;
-  left: 50%;
-  margin-left: -233px;
-  top: 50%;
-  margin-top: -76.5px;
 }
 #loading-label {
   position: absolute;

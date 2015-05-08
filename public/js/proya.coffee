@@ -54,9 +54,12 @@ count = 0
 intv = ''
 
 p1 = ->
-  top1 = (this.windowHeight-$('#loading-img').height())/2
-  $('#loading-img').css(top:top1)
-  top2 = top1+$('#loading-img').height()+30
+  lw = this.windowWidth*0.63
+  lh = lw*153/466
+  $('#loading-img').css(width:this.windowWidth*0.63);
+  top1 = (this.windowHeight-lh)/2
+  $('#loading-img').css(top:top1,left:this.windowWidth/2-lw/2)
+  top2 = top1+lh+30
   $('#loading-label').css(top:top2)
 
 refresh = ->
@@ -72,7 +75,6 @@ init = ->
   this.windowWidth = $(window).width()
   this.windowHeight = $(window).height()
   this.scale = this.windowWidth/750
-  $('#fullpage').hide()
   $('#tip').hide()
   $('#tip').click ->
     $('#tip').hide()
@@ -111,7 +113,7 @@ handleComplete = (event)->
     $('#loading-label').remove()
     $('#fullpage').show()
 #  setTimeout ->
-#    $.fn.fullpage.moveTo(5,1);
+#    $.fn.fullpage.moveTo(3,1);
 #  , 1000
 
 imgArr = []

@@ -148,12 +148,18 @@
   intv = '';
 
   p1 = function() {
-    var top1, top2;
-    top1 = (this.windowHeight - $('#loading-img').height()) / 2;
+    var lh, lw, top1, top2;
+    lw = this.windowWidth * 0.63;
+    lh = lw * 153 / 466;
     $('#loading-img').css({
-      top: top1
+      width: this.windowWidth * 0.63
     });
-    top2 = top1 + $('#loading-img').height() + 30;
+    top1 = (this.windowHeight - lh) / 2;
+    $('#loading-img').css({
+      top: top1,
+      left: this.windowWidth / 2 - lw / 2
+    });
+    top2 = top1 + lh + 30;
     return $('#loading-label').css({
       top: top2
     });
@@ -174,7 +180,6 @@
     this.windowWidth = $(window).width();
     this.windowHeight = $(window).height();
     this.scale = this.windowWidth / 750;
-    $('#fullpage').hide();
     $('#tip').hide();
     $('#tip').click(function() {
       return $('#tip').hide();

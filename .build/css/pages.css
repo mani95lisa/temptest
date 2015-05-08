@@ -55,10 +55,8 @@ canvas {
 /* line 50, /Users/mani/outsourcing/proya/proya/css/pages */
 #loading-img {
   position: absolute;
-  width: 63%;
-  left: 18.5%;
 }
-/* line 56, /Users/mani/outsourcing/proya/proya/css/pages */
+/* line 54, /Users/mani/outsourcing/proya/proya/css/pages */
 #loading-label {
   position: absolute;
   width: 100%;
@@ -66,7 +64,7 @@ canvas {
   font-size: 1.5em;
   color: #ff6e00;
 }
-/* line 64, /Users/mani/outsourcing/proya/proya/css/pages */
+/* line 62, /Users/mani/outsourcing/proya/proya/css/pages */
 #p5-label {
   position: absolute;
   width: 100%;
@@ -74,7 +72,7 @@ canvas {
   font-size: 1em;
   color: #ff6e00;
 }
-/* line 72, /Users/mani/outsourcing/proya/proya/css/pages */
+/* line 70, /Users/mani/outsourcing/proya/proya/css/pages */
 #love-label {
   position: absolute;
   text-align: center;
