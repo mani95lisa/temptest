@@ -54,7 +54,7 @@ count = 0
 intv = ''
 
 p1 = ->
-  top1 = (this.windowHeight-($('#loading-img').height()+$('#loading-label').height()+30))/2
+  top1 = (this.windowHeight-$('#loading-img').height())/2
   $('#loading-img').css(top:top1)
   top2 = top1+$('#loading-img').height()+30
   $('#loading-label').css(top:top2)
@@ -110,9 +110,9 @@ handleComplete = (event)->
     $('#loading-img').remove()
     $('#loading-label').remove()
     $('#fullpage').show()
-  setTimeout ->
-    $.fn.fullpage.moveTo(5,1);
-  , 1000
+#  setTimeout ->
+#    $.fn.fullpage.moveTo(5,1);
+#  , 1000
 
 imgArr = []
 
