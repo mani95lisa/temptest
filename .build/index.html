@@ -2,16 +2,19 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>防嗮</title>
+<title>我有我魅力，青春就要大胆晒</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" type="text/css" href="css/jquery.fullpage.css">
 <script src="js/jquery.js"></script>
 <script src="js/jquery-ui.js"></script>
-<script src="js/jquery.easing.min.js"></script>
+<!--<script src="js/jquery.easing.min.js"></script>-->
 <script src="js/jquery.fullPage.min.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/html5media.min.js"></script>
 <script src="js/page.js"></script>
+<script type="text/javascript" src="libs/easeljs-NEXT.min.js"></script>
+<script type="text/javascript" src="libs/preloadjs-NEXT.min.js"></script>
+<script src="js/preload.js"></script>
 <script>
 //分享弹窗
 var sharep2 = '';
@@ -74,9 +77,36 @@ var openwin = function openwin(pic, txt) {
         top: 50%;
         margin-top: -45px;
     }
-    #main-item-2{background:#fff}
+    #main-item-2{background:#fff; overflow:hidden}
+    table td{position: relative;margin: 0;padding: 0;}
+    table{border-collapse:collapse;}
+
+    #loading-img {
+        position: absolute;
+        left: 50%;
+        margin-left: -233px;
+        top: 50%;
+        margin-top: -71px;
+    }
+
+    #loading-label {
+        left: 50%;
+        top: 50%;
+        margin-left: -100px;
+        position: absolute;
+        text-align: center;
+        width: 200px;
+        font-size: 30px;
+        color: #ff6e00;
+        margin-top: 100px;
+    }
 </style>
-<div id="main">
+
+<img src="imgs/loading.png" id="loading-img">
+<label id="loading-label">0%</label>
+
+
+<div id="main" class="none1">
 
     <div class="main-item section" id="main-item-1">
         <img class="bg" id="bg1" style="width: 100%;" src="images/01.jpg" />
@@ -84,7 +114,7 @@ var openwin = function openwin(pic, txt) {
         <img class="play pulse" src="images/play.png" />
         <img class="btn-bottom" src="images/bottom.png">
         <video width="0" id="video" autobuffer onended="videoEnded()">
-            <source src="video/uv.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+            <source src="video/17.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
         </video>
         <a href="#" onclick="openwin('http://uv.proya.com/images/5r.jpg')"><img class="btn-share" src="images/share.png"></a>
     </div><!-- one end -->
@@ -92,26 +122,19 @@ var openwin = function openwin(pic, txt) {
     <div class="main-item section" id="main-item-2">
         <table id="s2table" style="width: 100%" border="0" cellpadding="0" cellspacing="0">
             <tbody>
-                <tr class="firstRow">
-                    <td colspan="2" rowspan="1" valign="top">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front">
-                                    <img data-target="#i1" src="images/a1.jpg" class="img-i w1" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td colspan="1" rowspan="2" valign="top" width="191">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front">
-                                    <img data-target="#i2" src="images/a2.jpg" class="img-i w2" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td colspan="1" rowspan="4" valign="top" id="img-main" width="191" style="position:relative;">
+            <tr class="firstRow">
+                <td colspan="2" rowspan="1" style="background-color: #16D1E2" valign="top" class="nw1 nh1">
+                    <div class="front">
+                        <img data-target="#i1" src="images/a1.jpg" class="img-i w1" />
+
+                    </div>
+                </td>
+                <td colspan="1" rowspan="2" style="background-color: #FB9447" valign="top" class="nw2 nh2">
+                    <div class="front">
+                        <img data-target="#i2" src="images/a2.jpg" class="img-i w2" />
+                    </div>
+                </td>
+                <td colspan="1" rowspan="4" valign="top" id="img-main">
                     <div class="flip-container">
                         <img id="i0" src="images/i0.jpg" class="img-i wb1" />
                         <img id="i1" src="images/is1.jpg" class="img-i none wb1" />
@@ -126,72 +149,48 @@ var openwin = function openwin(pic, txt) {
                         <label id="loveNum" class="loveNum none1"></label>
                         <a href="#" onclick="sharep2()"><img class="btn-share none1" src="images/share.png"></a>
                     </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top" width="191">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front" clickable="true">
-                                    <img data-target="#i3" src="images/a3.jpg" style="position:absolute;" class="img-i w3 wy" />
-                                    <img data-target="#i3" src="images/a3-s.png" style="position:absolute;" class="img-i w3 wn" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td valign="top" width="191">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front" clickable="true">
-                                    <img data-target="#i4" src="images/a4.jpg" style="position:absolute" class="img-i w4 wy" />
-                                    <img data-target="#i4" src="images/a4-s.png" style="position:absolute" class="img-i w4 wn" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="1" rowspan="2" valign="top" width="191">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front">
-                                    <img data-target="#i5" src="images/a5.jpg" class="img-i w3" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td colspan="2" rowspan="1" valign="top">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front">
-                                    <img data-target="#i6" src="images/a6.jpg" class="img-i w5" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top" width="191">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front" clickable="true">
-                                    <img data-target="#i7" src="images/a7.jpg" style="position:absolute" class="img-i w4 wy" />
-                                    <img data-target="#i7" src="images/a7-s.png" style="position:absolute" class="img-i w4 wn" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td valign="top" width="191">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper">
-                                <div class="front" clickable="true">
-                                    <img data-target="#i8" src="images/a8.jpg" style="position:absolute" class="img-i w2 wy" />
-                                    <img data-target="#i8" src="images/a8-s.png" style="position:absolute" class="img-i w2 wn" />
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="nw3 nh3">
+                    <div class="front" clickable="true">
+                        <img data-target="#i3" src="images/a3.jpg" style="position:absolute;" class="img-i w3 wy" />
+                        <img data-target="#i3" src="images/a3-s.png" style="position:absolute;" class="img-i w3 wn" />
+                    </div>
+                </td>
+                <td valign="top" class="nw5 nh3">
+                    <div class="front" clickable="true">
+                        <img data-target="#i4" src="images/a4.jpg" style="position:absolute" class="img-i w4 wy" />
+                        <img data-target="#i4" src="images/a4-s.png" style="position:absolute" class="img-i w4 wn" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="2" valign="top" class="nw4 nh4">
+                    <div class="front">
+                        <img data-target="#i5" src="images/a5.jpg" class="img-i w3" />
+                    </div>
+                </td>
+                <td colspan="2" rowspan="1" style="background-color: #16D1E2" valign="top" class="nw6 nh5">
+                    <div class="front">
+                        <img data-target="#i6" src="images/a6.jpg" class="img-i w5" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="nw5 nh6">
+                    <div class="front" clickable="true">
+                        <img data-target="#i7" src="images/a7.jpg" style="position:absolute" class="img-i w4 wy" />
+                        <img data-target="#i7" src="images/a7-s.png" style="position:absolute" class="img-i w4 wn" />
+                    </div>
+                </td>
+                <td valign="top" class="nw2 nh6">
+                    <div class="front" clickable="true">
+                        <img data-target="#i8" src="images/a8.jpg" style="position:absolute" class="img-i w2 wy" />
+                        <img data-target="#i8" src="images/a8-s.png" style="position:absolute" class="img-i w2 wn" />
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
         <img class="btn-bottom" src="images/bottom2.png">
@@ -204,9 +203,9 @@ var openwin = function openwin(pic, txt) {
         <img id="p3b2" class="bg3 " src="images/3.jpg" />
         <img id="p3b3" class="bg3 none1" src="images/4.jpg" />
         <img id="p3b4" class="bg3 none1" src="images/5.jpg" />
-        
 
-        <!--<img src="images/tmall-ticket.png" class="ticket none">-->
+
+        <a href="http://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=379424083&activityId=226562573" target="_blank"><img src="images/tmall-ticket.png" class="ticket none"></a>
 
         <div id="step3">
             <img src="images/proya_family.png" class="family none">
@@ -217,14 +216,14 @@ var openwin = function openwin(pic, txt) {
             <!--<img src="images/p3-i3.png" style="z-index:100" id="p3i3" class="p3i none">-->
             <!--<img src="images/p3-i4.png" style="z-index:100" id="p3i4" class="p3i none">-->
             <!--<img src="images/p3-i5.png" style="z-index:100" id="p3i5" class="p3i none">-->
-            <img src="images/p3-m1.png" class="p3m">
             <img src="images/p3-m2.png" class="p3m">
             <img src="images/p3-m3.png" class="p3m">
+            <img src="images/p3-m1.png" class="p3m">
             <img src="images/p3-m4.png" class="p3m">
             <img src="images/p3-m5.png" class="p3m">
-            <img src="images/p3-t1.png" class="p31 p3t none">
             <img src="images/p3-t2.png" class="p32 none p3t">
             <img src="images/p3-t3.png" class="p33 none p3t">
+            <img src="images/p3-t1.png" class="p31 p3t none">
             <img src="images/p3-t4.png" class="p34 none p3t">
             <img src="images/p3-t5.png" class="p35 none p3t">
         </div>
@@ -233,7 +232,7 @@ var openwin = function openwin(pic, txt) {
     </div><!-- three end -->
 
     <div class="main-item section" id="main-item-4">
-        <img class="bg" id="bg4" src="images/bg4.jpg" />
+        <img class="bg" id="bg4" src="images/bg4.jpg" style="width: 100%;height: 100%"/>
         <img class="btn-f btn-left" id="btn-left-b" src="images/left.png"></img>
         <img class="btn-f btn-right" id="btn-right-b" src="images/right.png"></img>
         <img src="images/step-4-1.jpg" class="an s4-img">
@@ -250,9 +249,9 @@ var openwin = function openwin(pic, txt) {
 
 </div><!-- main end -->
 
-<a href="http://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=379424083&activityId=226562573" target="_blank"><img class="tmall" src="images/tmall.png"></a>
+<a href="http://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=379424083&activityId=226562573" target="_blank"><img class="tmall none1" src="images/tmall.png"></a>
 
-<div class="sidebar">
+<div class="sidebar none1">
     <ul id="menu">
         <li data-menuanchor="page1" class="active" style="top:26px;"><a href="#page1"></a></li>
         <li data-menuanchor="page2" style="top:68px;"><a href="#page2"></a></li>
