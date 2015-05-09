@@ -432,36 +432,38 @@
     return $('#loading-label').animate({
       opacity: 0
     }, 800, function() {
-      var animate, arr, s1;
+      var animate, arr, cc, s1;
       $('#loading-img').remove();
       $('#loading-label').remove();
       $('#section0').show();
       s1 = $('#section0');
       arr = s1.find('img');
       i = arr.length;
+      cc = [];
       animate = function() {
         var deg, img;
-        console.log('ani', i);
         i--;
-        if (i >= 0) {
+        if (i > 0) {
           deg = 0;
           img = s1.find(arr[i]);
           return img.animate({
-            deg: 90,
+            deg: 180,
             opacity: 1
           }, {
-            duration: 300,
+            duration: 500,
             step: function(now) {
               if (now > 1) {
-                return img.css({
-                  transform: 'rotateY(' + (90 - now) + 'deg)',
-                  '-webkit-transform': 'rotateY(' + (90 - now) + 'deg)'
+                img.css({
+                  transform: 'rotateX(' + (180 - now) + 'deg)',
+                  '-webkit-transform': 'rotateX(' + (180 - now) + 'deg)'
                 });
+                if (now > 179 && cc.indexOf(i) === -1 && i > 0) {
+                  cc.push(i);
+                  return animate();
+                }
               }
             },
-            complete: function() {
-              return animate();
-            }
+            complete: function() {}
           });
         }
       };
@@ -526,7 +528,9 @@
       top: y,
       opacity: 0,
       deg: 180,
-      transform: 'rotateY(90deg)'
+      'transform-origin': '50% 0% 0px',
+      transform: 'rotateX(180deg)',
+      '-webkit-transform': 'rotateX(180deg)'
     });
     return home_arr.push({
       w: w,
