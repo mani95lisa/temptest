@@ -164,7 +164,7 @@ toPageSlide = (fromtop,page, slide)->
     selectP4Slide(false)
 
   if page_index != 2
-    wxData.description = '不型不青春！百份黄金BB，免费型不型？！'
+    wxData.desc = '不型不青春！百份黄金BB，免费型不型？！'
     wxData.imgUrl = 'http://uv.proya.com/images/5r.jpg'
     wxData2.title = '不型不青春！百份黄金BB，免费型不型？！'
     wxData2.imgUrl = 'http://uv.proya.com/images/5r.jpg'
@@ -263,7 +263,7 @@ selectP3Slide = (left,select)->
   txt = arr[si];
   img = 'http://proyaproject.duapp.com/w/images/' + imgs[si]+'.jpg'
   console.log si, txt, imgs[si]
-  wxData.description = txt
+  wxData.desc = txt
   wxData.imgUrl = img
   wxData2.imgUrl = img
   wxData2.title = txt
