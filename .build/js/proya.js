@@ -466,7 +466,7 @@
         }
       };
       animate();
-      $(document).swipe({
+      return $(document).swipe({
         swipe: function(event, direction) {
           console.log(direction);
           if (direction === 'up') {
@@ -480,7 +480,6 @@
           }
         }
       });
-      return toPageSlide(true, 5);
     });
   };
 
