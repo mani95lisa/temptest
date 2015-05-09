@@ -572,7 +572,7 @@
                 result: false
               });
             } else {
-              if (limitObject && limitObject[gotid] >= result) {
+              if (limitObject && limitObject[gotid] <= result) {
                 console.log('limited');
                 return res.json({
                   result: false
@@ -792,6 +792,7 @@
     router.get('/proya', function(req, res) {
       req.session.user = {};
       return getConfig(req, function(result) {
+        console.log('ProyaConfig:' + result);
         return res.render('proya', {
           config: result,
           share_url: 'http://uv.proya.com/proya'

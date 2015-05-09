@@ -437,7 +437,7 @@ module.exports = (router)->
           if err
             res.json result:false
           else
-            if limitObject && limitObject[gotid] >= result
+            if limitObject && limitObject[gotid] <= result
               console.log 'limited'
               res.json result:false
             else
@@ -568,6 +568,7 @@ module.exports = (router)->
   router.get '/proya', (req, res)->
     req.session.user = {}
     getConfig req, (result)->
+      console.log 'ProyaConfig:'+result
       res.render 'proya', config:result,share_url:'http://uv.proya.com/proya'
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
