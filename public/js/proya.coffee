@@ -279,7 +279,7 @@ handleComplete = (event)->
         else
           rightHandler()
     )
-    toPageSlide(true, 5)
+#    toPageSlide(true, 5)
 #    $('#section2').show()
 #  setTimeout ->
 #    $.fn.fullpage.moveTo(3,1);
