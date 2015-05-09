@@ -26,7 +26,7 @@
     var wxData = {
         "appId":appId,
         "title":"我有我魅力，青春就要大胆晒",
-        "description":"不型不青春！百份黄金BB，免费型不型？！",
+        "desc":"不型不青春！百份黄金BB，免费型不型？！",
         "imgUrl":"http://uv.proya.com/images/5r.jpg",
         "link" : $('#url').text()
     };
