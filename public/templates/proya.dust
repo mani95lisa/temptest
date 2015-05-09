@@ -25,17 +25,17 @@
 
     var wxData = {
         "appId":appId,
-        "title":"我有我魅力，青春就要大胆晒"
-        "description":"不型不青春！",
+        "title":"我有我魅力，青春就要大胆晒",
+        "description":"不型不青春！百份黄金BB，免费型不型？！",
         "imgUrl":"http://uv.proya.com/images/5r.jpg",
         "link" : $('#url').text()
     };
     var wxData2 = {
-        "appId":appId,
-        "title":"不型不青春！"
-        "imgUrl":"http://uv.proya.com/images/5r.jpg",
-        "link" : $('#url').text()
-    }
+        "appId": appId,
+        "title": "不型不青春！百份黄金BB，免费型不型？！",
+        "imgUrl": "http://uv.proya.com/images/5r.jpg",
+        "link": $('#url').text()
+    };
 
     wx.ready(function () {
 
@@ -102,9 +102,11 @@
         </div>
 
         <img class="arrow" src="imgs/down-arrow.png">
+        <img class="knowpro" src="imgs/home/know_product.png">
     </div>
     <div class="section" id="section3" style="background-color: #ffffff">
         <img class="arrow" src="imgs/down-arrow.png">
+        <img class="knowpro" src="imgs/home/know_product.png">
     </div>
     <div class="section" id="section4"style="background-color: #f2ebd1">
         <div id="p5-i1" class="slide"></div>
@@ -118,13 +120,13 @@
     <div class="section" id="section5"style="background-color: #f2ebd1">
         <form id="form" class="p6p3" style="display: none">
             <div class="field">
-                <input id="truename" type="text" name="mobile" placeholder="请输入姓名">
+                <input id="truename" type="text" name="truename" placeholder="请输入姓名">
             </div>
             <div class="field" id="mobile">
-                <input type="number" name="code" placeholder="请输入电话">
+                <input type="number" name="mobile" placeholder="请输入电话">
             </div>
             <div class="field" id="email">
-                <input type="email" name="password" placeholder="请输入邮箱">
+                <input type="email" name="email" placeholder="请输入邮箱">
             </div>
             <input type="hidden" id="csrf" name="_csrf" value="{_csrf}"/>
         </form>

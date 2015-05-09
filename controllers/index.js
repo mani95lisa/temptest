@@ -204,7 +204,7 @@
     var url;
     url = host + req.url;
     return api.getJsConfig({
-      debug: true,
+      debug: false,
       jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
       url: url
     }, function(err, result) {
@@ -508,7 +508,7 @@
       26: [1, 0, 0, 0],
       27: [1, 0, 0, 0]
     };
-    ratio = [0.8, 0.7, 0.6, 0.5];
+    ratio = [0.9, 0.7, 0.6, 0.5];
     router.post('/record_lottery', function(req, res) {
       var data, session;
       session = req.session;

@@ -99,6 +99,9 @@ init = ->
   $('#tip3').click ->
     $('#tip3').hide()
   $('#p5-label').css bottom:62*this.scale
+  $('.knowpro').css width:90*this.scale
+  $('.knowpro').on 'click', ->
+    toPageSlide(true, 4)
   p1()
 
 init()
@@ -161,9 +164,9 @@ toPageSlide = (fromtop,page, slide)->
     selectP4Slide(false)
 
   if page_index != 2
-    wxData.description = '不型不青春！'
+    wxData.description = '不型不青春！百份黄金BB，免费型不型？！'
     wxData.imgUrl = 'http://uv.proya.com/images/5r.jpg'
-    wxData2.title = '不型不青春！'
+    wxData2.title = '不型不青春！百份黄金BB，免费型不型？！'
     wxData2.imgUrl = 'http://uv.proya.com/images/5r.jpg'
 
 leftHandler = ->
@@ -204,9 +207,9 @@ selectP3Slide = (left,select)->
       slide_index = 8
   else
     if !left
-      slide_index = if slide_index > 1 then slide_index - 1 else 8
+      slide_index = if slide_index > 1 then slide_index - 1 else 9
     else
-      slide_index = if slide_index < 8 then slide_index + 1 else 1
+      slide_index = if slide_index < 9 then slide_index + 1 else 1
     if old == 5
       old = if left then 6 else 4
     if slide_index == 5
@@ -235,25 +238,35 @@ selectP3Slide = (left,select)->
       $('#p3-m' + slide_index).removeClass toc
     $('#p3-m' + slide_index).addClass toc
 
-    txt = '';
-    arr = [
-      '以为墨镜够高冷，挡得住眼挡不住脸！玩转潮流有逼格',
-      '举片树叶遮太阳，这是野人新风尚？亲近自然爱阳光',
-      '帅气多金不敢露，头戴草帽装路人！谁说土豪要低调',
-      '满嘴术语没人懂，高端装备脑洞开太大。天赋异禀难自弃',
-      '头巾包的只剩眼，人群里看N百遍也认不出！一见钟情不是梦',
-      '脸基尼是什么鬼？又不是飞檐走壁的蜘蛛侠！太阳底下任我行',
-      'Dota打怪不积极，出个门又何必武装至此！轻装出行无压力',
-      '顶个畚箕当阳伞，难怪永远单身狗！要想男神女神爱'
-    ]
-    si = if slide_index > 5 then slide_index-2 else slide_index-1
-    txt = arr[si];
-    img = 'http://proyaproject.duapp.com/w/images/' + (si+1)+'.jpg'
-    alert(txt+img)
-    wxData.description = txt
-    wxData.imgUrl = img
-    wxData2.imgUrl = img
-    wxData2.title = txt
+  txt = '';
+  arr = [
+    '脸基尼是什么鬼？不如来领百份礼！',
+    '鬼马清新看不懂？不如来领百份礼！',
+    '天赋异禀难自弃？不如来领百份礼！',
+    '以为墨镜够高冷？不如来领百份礼！',
+    '畚箕遮阳算哪出？不如来领百份礼！',
+    '全副武装没出路？不如来领百份礼！',
+    '头巾蒙面给谁看？不如来领百份礼！',
+    '谁说土豪要低调？不如来领百份礼！'
+  ]
+  imgs = [
+    6
+    2
+    4
+    1
+    8
+    7
+    5
+    3
+  ]
+  si = if slide_index > 5 then slide_index-2 else slide_index-1
+  txt = arr[si];
+  img = 'http://proyaproject.duapp.com/w/images/' + imgs[si]+'.jpg'
+  console.log si, txt, imgs[si]
+  wxData.description = txt
+  wxData.imgUrl = img
+  wxData2.imgUrl = img
+  wxData2.title = txt
 
 #    $('#p3-m' + slide_index).css left: froml, display:'block'
 #    $('#p3-m' + slide_index).animate left: 0, 500
@@ -308,7 +321,7 @@ handleComplete = (event)->
         else
           rightHandler()
     )
-    toPageSlide(true, 5)
+#    toPageSlide(true, 5)
 #    $('#section2').show()
 #  setTimeout ->
 #    $.fn.fullpage.moveTo(3,1);
@@ -495,7 +508,7 @@ initP6 = (image, id)->
     s5.prepend image
     image.width = $(window).width()
     p6p3 = s5.find(image)
-    lindex = parseInt(id.replace('p6-l', ''))+1
+    lindex = parseInt(id.replace('p6-l', ''))
     lotteryBGS[lindex] = p6p3
     p6p3.hide()
     p6p3.addClass 'p6p3'

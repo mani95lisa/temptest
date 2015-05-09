@@ -141,7 +141,7 @@ getUrl = (channel, page)->
 
 getConfig = (req, callback)->
   url = host + req.url
-  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -396,7 +396,7 @@ module.exports = (router)->
     27:[1,0,0,0]
   }
 #  ratio = [0.1,0.05,0.04,0.01]
-  ratio = [0.8,0.7,0.6,0.5]
+  ratio = [0.9,0.7,0.6,0.5]
 
   router.post '/record_lottery', (req, res)->
     session = req.session
