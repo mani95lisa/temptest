@@ -59,7 +59,7 @@ canvas {
   font-size: 1em;
   color: #ff6e00;
 }
-#love-label {
+.love-label {
   position: absolute;
   text-align: center;
   z-index: 100;

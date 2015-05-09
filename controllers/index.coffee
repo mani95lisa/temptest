@@ -3,8 +3,8 @@
 auth = require '../lib/auth'
 API = require 'wechat-api'
 
-appid = 'wx1f9fe13fd3655a8d'
-secret = '2a3792094fc7e3b91a4920a8afb0a0c1'
+appid = 'wx91e339282bcd9aa6'
+secret = '7d5c869ddbacd15c9f9646a70b3951e9'
 models = require '../models/index'
 User = models.User
 Token = models.Token
@@ -132,54 +132,16 @@ save_js_sdk_ticket = (type, ticket, cb)->
 
 api.registerTicketHandle get_js_sdk_ticket, save_js_sdk_ticket
 
-host = 'http://lottery.rsct.com'
-home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___weixin;;p___lottery&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+host = 'http://uv.proya.com'
+home_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+console.log 'HomeURL:'+home_url
 
 getUrl = (channel, page)->
   return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+channel+';;p___'+page+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
 
-menu =
-  'button':[
-    {
-      name:'幸运石'
-      type:'view'
-      url:'http://lottery.rsct.com/lucky'
-    }
-    {
-      name:'帮你赚钱'
-      sub_button:[
-        {
-          type:'view'
-          name:'我的账户'
-          url:'http://www.rsct.com/finance/website/to_login.action'
-        }
-        {
-          name:'快速投资'
-          type:'view'
-          url:'http://www.rsct.com/finance/website/index.action'
-        }
-      ]
-    }
-    {
-      name:'关于润石'
-      sub_button:[
-        {
-          type:'view'
-          name:'关于润石'
-          url:'http://www.rsct.com/finance/website/dima.action'
-        }
-        {
-          name:'呼叫小石头'
-          type:'click'
-          key:'call_kf'
-        }
-      ]
-    }
-  ]
-
 getConfig = (req, callback)->
   url = host + req.url
-  api.getJsConfig debug: false, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
+  api.getJsConfig debug: true, jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ',
                                             'onMenuShareWeibo'], url: url, (err, result)->
     callback err, result
 
@@ -254,54 +216,45 @@ module.exports = (router)->
         if(err)
           logger.error 'ConfigError:'+err
         req.session.user = user
-        req.session.state = state
-        page = params.p
-        if page == 'lottery'
-          id = params.id
-          if !id
-            errorHandler res, LINK_ERROR
-          else
-            Lottery.findById id, (err, result)->
-              if err
-                logger.error err
-              else if result
-                plus = 0
-                if result.plus
-                  plus = result.plus
-                result.joined += plus
-                share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
-                countdown = moment(result.end).valueOf() - moment().valueOf()
-                begin = moment().valueOf() - moment(result.begin).valueOf()
-                draw_url = '/draw_lottery'
-                success_bg_url = if result.success_bg_url then result.success_bg_url else 'imgs/success_bg.jpg'
-                req.session.shareInfo =
-                  success_bg_url:success_bg_url
-                  begin:result.begin
-                  end:result.end
-                  name:result.name
-                  group_desc:result.group_desc
-                  desc:result.description
-                  img:result.thumb
-                  url:share_url
-                detail_url = if result.detail_url then result.detail_url else 'imgs/need_know_detail.jpg'
-                bg_url = if result.bg_url then result.bg_url else 'imgs/lottery_bg.jpg'
-                data =
-                  begin:begin
-                  uid:user._id
-                  draw_url:draw_url
-                  detail_url:detail_url
-                  bg_url:bg_url
-                  joined:result.joined
-                  config:config
-                  desc:result.description
-                  group_desc:result.group_desc
-                  url:share_url
-                  img:result.thumb
-                  countdown:countdown
-                  name:result.name
-                res.render 'lottery', data
-        else
-          errorHandler res, LINK_ERROR
+        data =
+          config:config
+          share_url:home_url
+        res.render 'proya', data
+#        req.session.state = state
+#        page = params.p
+#        if page == 'lottery'
+#          id = params.id
+#          if !id
+#            errorHandler res, LINK_ERROR
+#          else
+#            Lottery.findById id, (err, result)->
+#              if err
+#                logger.error err
+#              else if result
+#                plus = 0
+#                if result.plus
+#                  plus = result.plus
+#                result.joined += plus
+#                share_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+host+'/init_auto&state=c___'+params.c+';;p___'+params.p+';;id___'+id+'&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect'
+#                countdown = moment(result.end).valueOf() - moment().valueOf()
+#                begin = moment().valueOf() - moment(result.begin).valueOf()
+#                draw_url = '/draw_lottery'
+#                success_bg_url = if result.success_bg_url then result.success_bg_url else 'imgs/success_bg.jpg'
+#                req.session.shareInfo =
+#                  success_bg_url:success_bg_url
+#                  begin:result.begin
+#                  end:result.end
+#                  name:result.name
+#                  group_desc:result.group_desc
+#                  desc:result.description
+#                  img:result.thumb
+#                  url:share_url
+#                detail_url = if result.detail_url then result.detail_url else 'imgs/need_know_detail.jpg'
+#                bg_url = if result.bg_url then result.bg_url else 'imgs/lottery_bg.jpg'
+
+#                res.render 'lottery', data
+#        else
+#          errorHandler res, LINK_ERROR
 
     User.findOne openid:result.openid, (err, userResult)->
       if err
@@ -345,16 +298,6 @@ module.exports = (router)->
           else
             logger.trace 'UserInitSaved:'+JSON.stringify(result)
             ep.emit 'ok', result
-
-  router.get '/menu', (req, res)->
-    api.createMenu menu, (err, result)->
-      if err
-        logger.error err
-        res.json err:err
-      else
-        logger.trace 'menu setted:',result
-        api.getMenu (err, result)->
-          res.json result
 
   router.get '/init_auto', (req, res)->
     headers = req.headers
@@ -433,250 +376,87 @@ module.exports = (router)->
     bg_url = 'imgs/lottery_bg.jpg'
     res.render 'lottery',bg_url:bg_url,detail_url:detail_url,draw_url:'/draw_lottery',joined:moment().format('YYMMDD'), countdown:94170370
 
-  router.get '/draw_lottery', (req, res)->
+  limit = {
+    9:[10,10,10,10]
+    12:[15,1,1,1]
+    13:[15,1,1,1]
+    14:[7,0,0,0]
+    15:[7,0,0,0]
+    16:[1,0,0,0]
+    17:[1,0,0,0]
+    18:[4,0,0,0]
+    19:[15,1,0,1]
+    20:[15,0,0,1]
+    21:[7,0,0,0]
+    22:[7,0,0,0]
+    23:[1,0,0,0]
+    24:[1,0,0,0]
+    25:[2,0,0,0]
+    26:[1,0,0,0]
+    27:[1,0,0,0]
+  }
+#  ratio = [0.1,0.05,0.04,0.01]
+  ratio = [0.8,0.7,0.6,0.5]
+
+  router.post '/record_lottery', (req, res)->
     session = req.session
-    user = session.user
-    state = session.state
-    shareInfo = req.session.shareInfo
-    if !user || !state
-      console.log 'Error1:'
-      errorHandler res, TIME_OUT_ERROR
-    else if user.mobile
-      params = getParams(state)
-      getConfig req, (err, config)->
-        shareInfo.config = config
-
-        countdown = moment(shareInfo.end).valueOf() - moment().valueOf()
-        begin = moment().valueOf() - moment(shareInfo.begin).valueOf()
-
-        if begin < 0
-          errorHandler res, '活动尚未开始，请稍候再试'
-        else
-          LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
-            console.log 'CD:'+countdown+' B:'+begin
-            if result && result.length
-              arr = []
-              result.forEach (r)->
-                if r.status
-                  status = '已中奖'
-                else
-                  status = if countdown > 0 then '未开奖' else '未中奖'
-                arr.push value:r.number,status:status
-              shareInfo.nums = arr
-              shareInfo.uid = user._id
-              res.render 'success', shareInfo
-            else if countdown > 0
-              getRewardNumber params.id, user._id, user.openid, (err, result)->
-                if err
-                  console.log 'Error2:'
-                  errorHandler res, SYSTEM_ERROR
-                else
-                  arr = [value:result,status:'未开奖']
-                  shareInfo.nums = arr
-                  shareInfo.uid = user._id
-                  Lottery.findByIdAndUpdate params.id, $inc:joined:1, (err, result)->
-                    if err
-                      logger.error 'RecordLotterJoinErr:'+err
-                    else
-                      logger.warn 'LotteryJoinedRecord:'+params.id+'-'+arr[0].value+'-'+user._id
-                  res.render 'success', shareInfo
-            else
-              errorHandler res, '您没有参与此次活动，请关注润石创投公众号，获取最新活动动态'
-    else
-      res.render 'sign_up'
-
-  router.get '/shared_lottery', (req, res)->
-    session = req.session
-    user = session.user
-    state = session.state
-    shareInfo = req.session.shareInfo
-    if !user || !state
-      errorHandler res, TIME_OUT_ERROR
-    else if !user.registered
-      params = getParams(state)
-      getConfig req, (err, config)->
-        shareInfo.config = config
-        LotteryRecord.find lottery:params.id,user:user._id, (err, result)->
-          if result.length == 3
-            arr = []
-            result.forEach (r)->
-              status = if r.status then '已中奖' else '未开奖'
-              arr.push value:r.number,status:status
-            shareInfo.nums = arr
-            shareInfo.uid = user._id
-            res.render 'success', shareInfo
-          else if result.length == 1
-            ep = new EventProxy()
-            ep.all 'n1', 'n2', (n1, n2)->
-              arr = [value:result[0].number,status:'未开奖']
-              arr.push value:n1, status:'未开奖'
-              arr.push value:n2, status:'未开奖'
-              shareInfo.nums = arr
-              shareInfo.uid = user._id
-              res.render 'success', shareInfo
-
-            ep.fail (err)->
-              logger.error err
-              errorHandler res, SYSTEM_ERROR
-
-            getRewardNumber params.id, user._id, user.openid, ep.done 'n1'
-            getRewardNumber params.id, user._id, user.openid, ep.done 'n2'
-
-  router.post '/verify_code', (req, res)->
-    mobile = req.body.mobile
-    if !mobile
-      res.json err:'手机号不能为空'
-    else
-      request.post code_url, form:mobileNo:mobile, (err, result, body)->
-        if err
-          res.json err:err
-        else
-          body = JSON.parse(body)
-          if body.result == '1'
-            res.json err:body.tip
+    data = req.body
+    if !session.lid || !data.lid
+      res.json err:'网络连接超时啦，请稍候再试或截图保留中奖证据并联系客服'
+      return
+    LotteryRecord.findById data.lid, (err, result)->
+      if err
+        res.json err:'网络连接超时啦，请稍候再试或截图保留中奖证据并联系客服'
+      else
+        result.truename = data.truename
+        result.mobile = data.mobile
+        result.email = data.email
+        result.save (err, result)->
+          if err
+            res.json err:'网络连接超时啦，请稍候再试或截图保留中奖证据并联系客服'
           else
             res.json result:true
 
-
-  router.get '/sign_up', (req, res)->
-    res.render 'sign_up'
-
-  router.post '/code', (req, res)->
-    console.log req.body
-
-  router.post '/do_sign_in', (req, res)->
-    data = req.body
-    user = req.session.user
+  router.get '/draw_lottery', (req, res)->
+    session = req.session
+    user = session.user
     if !user
+      console.log 'no user:'
       errorHandler res, TIME_OUT_ERROR
-      return
-    logger.trace 'DoSignInSessionUser:'+JSON.stringify(user)
-    if !data.mobile
-      res.json err:'请输入手机号'
-    else if !data.password
-      res.json err:'请输入密码'
     else
-      formData = form:nickName:data.mobile,password:data.password
-      logger.trace 'DoSignSignIn:'+JSON.stringify(formData)
-      request.post sign_in_url, formData, (err, result, body)->
-        if err
-          res.json err:err
-        else
-          body = JSON.parse(body)
-          logger.trace 'Registered:'+JSON.stringify(body)
-          if body.result == '1'
-            res.json err:body.tip
-          else
-            if user
-              User.findByIdAndUpdate user._id, $set:mobile:data.mobile, (err, result)->
-                if err
-                  logger.error 'UserSetMobileError:'+user._id+'-'+data.mobile+'-'+err
-                else
-                  logger.warn 'UserSetMobileOK:'+user._id+'-'+data.mobile
-                  req.session.user = result
-                res.json result:true
-            else
-              res.json result:true
-
-  router.post '/do_sign_up', (req, res)->
-    data = req.body
-    user = req.session.user
-    if !user
-      errorHandler res, TIME_OUT_ERROR
-      return
-    logger.trace 'DoSignUpSessionUser:'+JSON.stringify(user)
-    if data.nickname
-      nickname = data.nickname
-    else if user
-      nickname = user.nickname
-    if !data.mobile
-      res.json err:'请输入手机号'
-    else if !data.code
-      res.json err:'请输入验证码'
-    else if !data.password
-      res.json err:'请输入密码'
-    else
-      formData = form:mobileNo:data.mobile,nickName:nickname,password:data.password,rePassword:data.password,verifyCode:data.code
-      logger.trace 'DoSignUp:'+JSON.stringify(formData)
-      request.post regist_url, formData, (err, result, body)->
-        req.session.doing = false
-        if err
-          res.json err:err
-        else
-          body = JSON.parse(body)
-          logger.trace 'Registered:'+JSON.stringify(body)
-          if body.result == '1'
-            res.json err:body.tip
-          else
-            if user
-              User.findByIdAndUpdate user._id, $set:mobile:data.mobile, (err, result)->
-                if err
-                  logger.error 'UserSetMobileError:'+user._id+'-'+data.mobile+'-'+err
-                else
-                  logger.warn 'UserSetMobileOK:'+user._id+'-'+data.mobile
-                  req.session.user = result
-                res.json result:true
-            else
-              res.json result:true
-
-  router.post '/test', (req, res)->
-    res.redirect '/draw_lottery'
-
-  router.post '/lottery_records/update', auth.isAuthenticated(), (req, res)->
-    data = req.body
-    logger.trace 'LotteryRecordUpdate:'+JSON.stringify(data)
-    LotteryRecord.findById(data._id)
-    .populate('user', 'openid mobile')
-    .populate('lottery', 'name')
-    .exec (err, result) ->
-      if err
-        logger.error 'LRind:'+err
-        res.json err:err
-      else
-        diff = UpdateObject result, data, ['created_at','lottery','user','updated_at']
-        lname = result.lottery.name
-        openid = result.user.openid
-        mobile = result.user.mobile
-        result.save (err, result) ->
+      today = moment().format('YYYY-MM-DD')
+      rm = Math.random()
+      limitObject = limit[new Date().getDate()]
+      gotid = ''
+      ratio.forEach (r)->
+        lindex = ratio.indexOf(r)
+        if r > rm
+          gotid = lindex
+      if gotid != ''
+        LotteryRecord.count day:today,lottery:gotid, (err, result)->
           if err
-            logger.error 'LRUpdated:'+err
-            res.json err:err
+            res.json result:false
           else
-            logger.warn 'LRUpdated:'+diff
-            if result.status
-              textok = false
-              smsok = false
-              ep = new EventProxy()
-              ep.all 'text', 'sms', ->
-                console.log 'update', smsok, textok
-                if !textok && !smsok
-                  res.json err:'微信和短信通知均发送失败，请再试'
-                else if !textok
-                  res.json err:'发送微信通知失败，有可能是用户尚未关注服务号所致，但已发送短信通知'
-                else if !smsok
-                  res.json err:'发送短信通知失败，但已发送微信通知'
-                else
-                  res.json result:result
-              template =
-                template_id:'9en1WJmo6ylyBBXpCRlE6FWyjN5SJrKMvl-xThKqAM0'
-                topcolor: '#913623'
-                data:
-                  first:value:'恭喜您获得电话充值卡一张'
-                  num:value:100,color:'#E5B457'
-              template.data.remark = '我们将会尽快为您充值，如有问题请通过服务号随时联系我们：）'
-              api.sendTemplate openid, template.template_id, template.url, template.topcolor,template.data, (err, result)->
-                if err
-                  logger.error 'SEND LOTTERY NOTIFY:'+err
-                else
-                  textok = true
-                ep.emit 'text'
-              smsok = true
-              ep.emit 'sms'
+            if limitObject && limitObject[gotid] >= result
+              console.log 'limited'
+              res.json result:false
             else
-              res.json result:result
-
-  router.get '/error', (req, res)->
-    res.render 'error', error:'test'
+              lr = new LotteryRecord(
+                openid:user.openid
+                user:user._id
+                day:today
+                lottery:gotid
+              )
+              console.log 'got:',gotid
+              lr.save (err, result)->
+                if err
+                  res.json result:false
+                else
+                  session.lid = result._id
+                  session.lottery = result:gotid
+                  res.json result:lid:result._id,lot:gotid
+      else
+        res.json result:false
 
   router.post '/like', (req, res)->
     session = req.session
@@ -790,14 +570,10 @@ module.exports = (router)->
   router.get '/proya', (req, res)->
     res.render 'proya'
 
-
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [
       {path:'dashboard',name:'仪表盘',icon:'fa fa-dashboard'}
-      {path:'lottery',name:'抽奖管理',icon:'fa fa-list'}
       {path:'joined',name:'得奖管理',icon:'fa fa-gift'}
       {path:'user',name:'用户管理',icon:'fa fa-users'}
-      {path:'sms',name:'短信记录',icon:'fa fa-envelope'}
-      {path:'setting', name:'系统设置', icon:'fa fa-cogs'}
     ]
     res.render 'admin', nav:nav

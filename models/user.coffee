@@ -17,6 +17,7 @@ UserSchema = new Schema
   subscribe_time:String
   remark:String
   headimgurl:String
+  email:String
   mobile:type:String,index:sparse:true
   mobile2:String #送货手机号
   verify_code:String #手机验证码

@@ -23,7 +23,8 @@
     },
     truename: String,
     address: String,
-    mobile: Number
+    mobile: Number,
+    lottery: String
   });
 
   Timestamps = require('mongoose-times');

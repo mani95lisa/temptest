@@ -13,6 +13,7 @@
         var arr = "{config.jsApiList}";
         arr = arr.split(',');
         appId = "{config.appId}";
+        alert(appId);
         wx.config({
             debug:"{config.debug}",
             appId: "{config.appId}",
@@ -23,19 +24,13 @@
         });
         {/config}
 
-    var shared_success = function(){
+    var wxData = {
+        "appId":appId,
+        "link" : $('#url').text()
     };
 
     wx.ready(function () {
 
-        var wxData = {
-            "appId":appId,
-            "title" : '{name}',
-            "desc" : '{desc}',
-            "imgUrl" : '{img}',
-            "link" : $('#url').text(),
-            success:shared_success
-        };
 
         wx.onMenuShareAppMessage(wxData);
         wx.onMenuShareQQ(wxData);
@@ -84,16 +79,27 @@
     </div>
     <div class="section" id="section2" style="background-color: #ffffff">
         <div id="p3c">
-            <div id="p3-m1" class="slide"></div>
-            <div id="p3-m2" class="slide"></div>
-            <div id="p3-m3" class="slide"></div>
-            <div id="p3-m4" class="slide"></div>
-            <div id="p3-m6" class="slide"></div>
-            <div id="p3-m7" class="slide"></div>
-            <div id="p3-m8" class="slide"></div>
-            <div id="p3-m9" class="slide"></div>
+            <div id="p3-m1" class="slide">
+                <img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label>
+                <img class="p3-share" src="imgs/home/p3-share.png">
+            </div>
+            <div id="p3-m2" class="slide"><img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label><img class="p3-share" src="imgs/home/p3-share.png"></div>
+            <div id="p3-m3" class="slide"><img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label><img class="p3-share" src="imgs/home/p3-share.png"></div>
+            <div id="p3-m4" class="slide"><img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label><img class="p3-share" src="imgs/home/p3-share.png"></div>
+            <div id="p3-m6" class="slide"><img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label><img class="p3-share" src="imgs/home/p3-share.png"></div>
+            <div id="p3-m7" class="slide"><img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label><img class="p3-share" src="imgs/home/p3-share.png"></div>
+            <div id="p3-m8" class="slide"><img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label><img class="p3-share" src="imgs/home/p3-share.png"></div>
+            <div id="p3-m9" class="slide"><img class="p3-love" src="imgs/home/p3-love.png">
+                <label class="love-label">0</label><img class="p3-share" src="imgs/home/p3-share.png"></div>
         </div>
-        <label id="love-label">0</label>
+
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
     <div class="section" id="section3" style="background-color: #ffffff">

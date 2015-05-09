@@ -26,6 +26,7 @@
     subscribe_time: String,
     remark: String,
     headimgurl: String,
+    email: String,
     mobile: {
       type: String,
       index: {

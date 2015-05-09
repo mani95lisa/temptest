@@ -41,7 +41,10 @@ manifest1 = [
   {src: "p6-close.png", id: "p6-close"}
   {src: "p6-bg1.jpg", id: "p6-bg1"}
   {src: "p6-gift.png", id: "p6-gift"}
-  {src: "p6-bg3.jpg", id: "p6-bg3"}
+  {src: "p6-l1.jpg", id: "p6-l1"}
+  {src: "p6-l2.jpg", id: "p6-l2"}
+  {src: "p6-l3.jpg", id: "p6-l3"}
+  {src: "p6-l4.jpg", id: "p6-l4"}
   {src: "p6-sub.png", id: "p6-sub"}
 ]
 
@@ -144,7 +147,6 @@ toPageSlide = (fromtop,page, slide)->
   $('#section'+page_index).show()
   $('#section'+page_index).css top:0, 'z-index':0
   toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
-  console.log hidec, toc
   $('#section'+page_index).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     $('#section'+page_index).removeClass toc
   $('#section'+page_index).addClass toc
@@ -154,7 +156,7 @@ toPageSlide = (fromtop,page, slide)->
       slide = 1
     selectP3Slide(false, slide)
   else if page_index == 4
-    slide_index = 1
+    slide_index = 2
     $('.slide').hide()
     selectP4Slide(false)
 
@@ -190,6 +192,10 @@ selectP3Slide = (left,select)->
       slide_index = 7
     else if slide_index == 7
       slide_index = 6
+    else if slide_index == 8
+      slide_index = 9
+    else if slide_index == 9
+      slide_index = 8
   else
     if !left
       slide_index = if slide_index > 1 then slide_index - 1 else 8
@@ -202,11 +208,9 @@ selectP3Slide = (left,select)->
     tol = if left then -this.ww else this.ww
   if select
     playing = false
-    console.log 'sl', old, select, slide_index
     $('.slide').hide()
     $('#p3-m' + slide_index).css left: 0, display:'block'
   else
-    console.log(tol, left, old, slide_index)
     hidec = if left then 'animated zoomOutLeft' else 'animated zoomOutRight'
     $('#p3-m'+old).addClass hidec
     $('#p3-m'+old).css 'z-index':-100
@@ -219,7 +223,6 @@ selectP3Slide = (left,select)->
     froml = if left then this.ww else -this.ww
 
     toc = if left then 'animated slideInRight' else 'animated slideInLeft'
-    console.log hidec, toc
     $('#p3-m' + slide_index).show()
     $('#p3-m' + slide_index).css left:0, 'z-index':0
     $('#p3-m' + slide_index).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
@@ -244,6 +247,7 @@ handleProgress = (event)->
   percent = event.loaded
   $('#loading-label').text(Math.round(percent*100)+'%')
 handleComplete = (event)->
+
   $('#loading-img').animate opacity:0, 800
   $('#loading-label').animate opacity:0, 800, ->
     $('#loading-img').remove()
@@ -259,7 +263,6 @@ handleComplete = (event)->
     animate = ->
       i--
       if i >= 0
-        console.log i
         deg = 0
         img = s1.find(arr[i])
         img.animate {deg:90,opacity:1}, duration:150, step:(now)->
@@ -270,7 +273,6 @@ handleComplete = (event)->
     animate()
     $(document).swipe(
       swipe:(event, direction)->
-        console.log direction
         if direction == 'up'
           upHandler()
         else if direction == 'down'
@@ -280,7 +282,7 @@ handleComplete = (event)->
         else
           rightHandler()
     )
-#    toPageSlide(true, 5)
+    toPageSlide(true, 5)
 #    $('#section2').show()
 #  setTimeout ->
 #    $.fn.fullpage.moveTo(3,1);
@@ -328,23 +330,38 @@ initP1 = (image, id)->
 showImg = (event)->
   for key, value of imgArr
     if value==event.target
-      console.log 'Got:'+key
       id = key.replace('t', '')
-      if id != 10
-        toPageSlide true,2,parseInt(id)
+      if id != '10'
+        console.log id
+        if id == '5'
+          toPageSlide true,1
+        else
+          toPageSlide true,2,parseInt(id)
 
 loveNum = 0
 
-loveItem = ->
+loveItem = (event)->
+  console.log $(this).siblings('label')
   loveNum++
-  $('#love-label').text('x'+loveNum)
+  $(this).siblings('label').text('x'+loveNum)
+
+inited3 = false
 
 initP3 = (image, id)->
 
   s2 = $('#section2')
   top3 = (this.windowHeight-722*this.scale)/2
   ltop = top3+722*this.scale-10 - 38*this.scale
-  $('#love-label').css left:70*this.scale,top:ltop+5
+  if !inited3
+    inited3 = true
+    $('.love-label').css left:70*this.scale,top:ltop+5
+    ltop = top3+722*this.scale-10 - 38*this.scale
+    $('.p3-love').css width:43*this.scale,left:23*this.scale,top:ltop, position: 'absolute','z-index': 100
+    $('.p3-love').click loveItem
+    stop = top3+722*this.scale-10-76*this.scale
+    $('.p3-share').css width:100*this.scale,right:23*this.scale,top:stop, position: 'absolute','z-index': 100
+    $('.p3-share').click ->
+      $('#tip').show()
   if id.indexOf('p3-t') != -1
     iiid = id.replace('p3-t', '')
     $('#p3-m'+iiid).prepend image
@@ -352,21 +369,14 @@ initP3 = (image, id)->
   else if id.indexOf('p3-m') != -1
     $('#'+id).prepend image
     $('#'+id).find(image).css width:750*this.scale,top:top3,position:'absolute', 'z-index':100
+  else if id == 'p3-love'
+  else if id == 'p3-share'
   else
     s2.append image
   if id == 'p3-left-arrow'
     s2.find(image).css width:28*this.scale,left:10,top:(this.windowHeight-image.height)/2, position: 'absolute','z-index': 100
   else if id == 'p3-right-arrow'
     s2.find(image).css width:28*this.scale,right:10,top:(this.windowHeight-image.height)/2, position: 'absolute','z-index': 100
-  else if id == 'p3-love'
-    ltop = top3+722*this.scale-10 - 38*this.scale
-    s2.find(image).css width:43*this.scale,left:23*this.scale,top:ltop, position: 'absolute','z-index': 100
-    s2.find(image).click loveItem
-  else if id == 'p3-share'
-    stop = top3+722*this.scale-10-76*this.scale
-    s2.find(image).css width:100*this.scale,right:23*this.scale,top:stop, position: 'absolute','z-index': 100
-    s2.find(image).click ->
-      $('#tip').show()
   else if id == 'p3-btn'
     p3w = 316*this.scale
     s2.find(image).on 'click', ->
@@ -402,10 +412,14 @@ p6p2 = ''
 p6try = ''
 
 gotR = false
+requesting = false
+lid = ''
+lotteryBGS = []
 
 initP6 = (image, id)->
   s5 = $('#section5')
   $('#form').css width:278*this.scale,height:262*this.scale,left:302*this.scale,top:650*this.scale
+  console.log id
   if id == 'p6-bg1'
     s5.prepend image
     image.width = $(window).width()
@@ -429,14 +443,23 @@ initP6 = (image, id)->
       'animation-iteration-count': 'infinite'
     }
     gift.on 'click', ->
+      if requesting
+        return
       $('.p6p1').hide()
-      r = Math.random()
-      if gotR
-        gotR = false
-        $('.p6p3').show()
-      else
-        gotR = true
-        $('.p6p2').show()
+      requesting = true
+      $.get('/draw_lottery',(result)->
+        requesting = false
+        if result.err
+          alert err
+        else if result.result
+          lid = result.result.lid
+          lot = result.result.lot
+          lotteryBGS[lot].show()
+          $('.p6p3').show()
+        else
+          $('.p6p2').show()
+      ).fail ->
+        alert '网络连接失败，请稍候再试'
 
   else if id == 'p6-bg2'
     s5.prepend image
@@ -445,29 +468,50 @@ initP6 = (image, id)->
     p6p2.hide()
     p6p2.addClass 'p6p2'
     p6p2.css top:0,position:'absolute',display:'none'
-  else if id == 'p6-bg3'
+  else if id.indexOf('p6-l') != -1
     s5.prepend image
     image.width = $(window).width()
     p6p3 = s5.find(image)
+    lindex = parseInt(id.replace('p6-l', ''))+1
+    lotteryBGS[lindex] = p6p3
     p6p3.hide()
     p6p3.addClass 'p6p3'
-    p6p3.css top:0,position:'absolute'
+    p6p3.css top:0,position:'absolute',display:'none'
   else if id == 'p6-sub'
     s5.append image
     s5.find(image).addClass 'p6p3'
     p6try = s5.find(image)
     s5.find(image).on 'click', ->
-      $('#tip3').show()
+      if requesting
+        return
+      requesting = true
+      data = $('#form').serializeArray()
+      o = {lid:lid}
+      data.forEach (d)->
+        o[d.name] = d.value
+      $.post('/record_lottery', o, (result)->
+        requesting = false
+        if result.err
+          alert(result.err)
+        else
+          $('#tip3').show()
+      ).fail ->
+        requesting = false
+        alert '网络连接失败，请稍候再试'
+#      $('#tip3').show()
     s5.find(image).css top:960*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
   else if id == 'p6-try'
+    console.log 'p6-try'
     s5.append image
-    s5.find(image).addClass 'p6p2'
     p6try = s5.find(image)
-    s5.find(image).on 'click', ->
+    p6try.addClass 'p6p2'
+    console.log p6try
+    p6try.on 'click', ->
       $('.p6p1').show()
       $('.p6p2').hide()
-    s5.find(image).css bottom:400*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
+    p6try.css bottom:400*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
   else if id == 'p6-share'
+    console.log 'p6-share'
     s5.append image
     s5.find(image).addClass 'p6p2'
     s5.find(image).click ->
@@ -483,7 +527,6 @@ initP6 = (image, id)->
 
 playVideoImg = ''
 videoEnded = ->
-  console.log 'end'
   $('#video').hide();
   playVideoImg.show()
 
@@ -536,7 +579,6 @@ handleFileLoad = (event)->
   else if item.id.indexOf('p5') != -1
     initP5 image, item.id
   else if item.id.indexOf('p6') != -1
-    console.log item.id
     initP6 image, item.id
   else if item.id.indexOf('t') != -1
     initP1 image, item.id
