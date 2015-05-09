@@ -304,11 +304,15 @@
       if (!slide) {
         slide = 1;
       }
-      return selectP3Slide(false, slide);
+      selectP3Slide(false, slide);
     } else if (page_index === 4) {
       slide_index = 2;
       $('.slide').hide();
-      return selectP4Slide(false);
+      selectP4Slide(false);
+    }
+    if (page_index !== 2) {
+      wxData.title = '不型不青春！#青春就要大胆晒#';
+      return wxData.imgUrl = 'http://uv.proya.com/images/5r.jpg';
     }
   };
 
@@ -352,7 +356,7 @@
   };
 
   selectP3Slide = function(left, select) {
-    var froml, hidec, old, toc, tol;
+    var arr, froml, hidec, img, old, si, toc, tol, txt;
     old = slide_index;
     if (select) {
       slide_index = select;
@@ -409,7 +413,15 @@
       $('#p3-m' + slide_index).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
         return $('#p3-m' + slide_index).removeClass(toc);
       });
-      return $('#p3-m' + slide_index).addClass(toc);
+      $('#p3-m' + slide_index).addClass(toc);
+      txt = '';
+      arr = ['以为墨镜够高冷，挡得住眼挡不住脸！玩转潮流有逼格', '举片树叶遮太阳，这是野人新风尚？亲近自然爱阳光', '帅气多金不敢露，头戴草帽装路人！谁说土豪要低调', '满嘴术语没人懂，高端装备脑洞开太大。天赋异禀难自弃', '头巾包的只剩眼，人群里看N百遍也认不出！一见钟情不是梦', '脸基尼是什么鬼？又不是飞檐走壁的蜘蛛侠！太阳底下任我行', 'Dota打怪不积极，出个门又何必武装至此！轻装出行无压力', '顶个畚箕当阳伞，难怪永远单身狗！要想男神女神爱'];
+      si = slide_index > 5 ? slide_index - 2 : slide_index - 1;
+      txt = arr[si];
+      img = 'http://proyaproject.duapp.com/w/images/' + (si + 1) + '.jpg';
+      alert(txt + img);
+      wxData.title = txt;
+      return wxData.imgUrl = img;
     }
   };
 
@@ -554,7 +566,6 @@
       if (value === event.target) {
         id = key.replace('t', '');
         if (id !== '10') {
-          console.log(id);
           if (id === '5') {
             _results.push(toPageSlide(true, 1));
           } else {
@@ -573,7 +584,6 @@
   loveNum = 0;
 
   loveItem = function(event) {
-    console.log($(this).siblings('label'));
     loveNum++;
     return $(this).siblings('label').text('x' + loveNum);
   };
@@ -754,106 +764,156 @@
       left: 302 * this.scale,
       top: 650 * this.scale
     });
-    return console.log(iduku.jm(mjuuuuuu, id === 'p6-bg1' ? (s5.prepend(image), image.width = $(window).width(), p6p1 = s5.find(image), p6p1.addClass('p6p1'), p6p1.css({
-      top: 0,
-      position: 'absolute'
-    })) : id === 'p6-gift' ? (s5.append(image), gift = s5.find(image), gift.addClass('p6p1 animated tada'), gift.css({
-      width: 367 * this.scale,
-      top: 554 * this.scale,
-      left: this.ww / 2 - 367 * this.scale / 2,
-      position: 'absolute',
-      '-webkit-animation-duration': '3s',
-      '-webkit-animation-delay': '2s',
-      '-webkit-animation-iteration-count': 'infinite',
-      'animation-duration': '3s',
-      'animation-delay': '2s',
-      'animation-iteration-count': 'infinite'
-    }), gift.on('click', function() {
-      if (requesting) {
-        return;
-      }
-      $('.p6p1').hide();
-      requesting = true;
-      return $.get('/draw_lottery', function(result) {
-        var lot;
-        requesting = false;
-        if (result.err) {
-          return alert(err);
-        } else if (result.result) {
-          lid = result.result.lid;
-          lot = result.result.lot;
-          lotteryBGS[lot].show();
-          return $('.p6p3').show();
-        } else {
-          return $('.p6p2').show();
-        }
-      }).fail(function() {
-        return alert('网络连接失败，请稍候再试');
+    if (id === 'p6-bg1') {
+      s5.prepend(image);
+      image.width = $(window).width();
+      p6p1 = s5.find(image);
+      p6p1.addClass('p6p1');
+      return p6p1.css({
+        top: 0,
+        position: 'absolute'
       });
-    })) : id === 'p6-bg2' ? (s5.prepend(image), image.width = $(window).width(), p6p2 = s5.find(image), p6p2.hide(), p6p2.addClass('p6p2'), p6p2.css({
-      top: 0,
-      position: 'absolute',
-      display: 'none'
-    })) : id.indexOf('p6-l') !== -1 ? (s5.prepend(image), image.width = $(window).width(), p6p3 = s5.find(image), lindex = parseInt(id.replace('p6-l', '')) + 1, lotteryBGS[lindex] = p6p3, p6p3.hide(), p6p3.addClass('p6p3'), p6p3.css({
-      top: 0,
-      position: 'absolute',
-      display: 'none'
-    })) : id === 'p6-sub' ? (s5.append(image), s5.find(image).addClass('p6p3'), p6try = s5.find(image), s5.find(image).on('click', function() {
-      var data, o;
-      if (requesting) {
-        return;
-      }
-      requesting = true;
-      data = $('#form').serializeArray();
-      o = {
-        lid: lid
+    } else if (id === 'p6-gift') {
+      s5.append(image);
+      gift = s5.find(image);
+      gift.addClass('p6p1 animated tada');
+      gift.css({
+        width: 367 * this.scale,
+        top: 554 * this.scale,
+        left: this.ww / 2 - 367 * this.scale / 2,
+        position: 'absolute',
+        '-webkit-animation-duration': '3s',
+        '-webkit-animation-delay': '2s',
+        '-webkit-animation-iteration-count': 'infinite',
+        'animation-duration': '3s',
+        'animation-delay': '2s',
+        'animation-iteration-count': 'infinite'
+      });
+      return gift.on('click', function() {
+        if (requesting) {
+          return;
+        }
+        $('.p6p1').hide();
+        requesting = true;
+        return $.get('/draw_lottery', function(result) {
+          var lot;
+          requesting = false;
+          if (result.err) {
+            return alert(err);
+          } else if (result.result) {
+            lid = result.result.lid;
+            lot = result.result.lot;
+            lotteryBGS[lot].show();
+            return $('.p6p3').show();
+          } else {
+            return $('.p6p2').show();
+          }
+        }).fail(function() {
+          return alert('网络连接失败，请稍候再试');
+        });
+      });
+    } else if (id === 'p6-bg2') {
+      s5.prepend(image);
+      image.width = $(window).width();
+      p6p2 = s5.find(image);
+      p6p2.hide();
+      p6p2.addClass('p6p2');
+      return p6p2.css({
+        top: 0,
+        position: 'absolute',
+        display: 'none'
+      });
+    } else if (id.indexOf('p6-l') !== -1) {
+      s5.prepend(image);
+      image.width = $(window).width();
+      p6p3 = s5.find(image);
+      lindex = parseInt(id.replace('p6-l', '')) + 1;
+      lotteryBGS[lindex] = p6p3;
+      p6p3.hide();
+      p6p3.addClass('p6p3');
+      return p6p3.css({
+        top: 0,
+        position: 'absolute',
+        display: 'none'
+      });
+    } else if (id === 'p6-sub') {
+      s5.append(image);
+      s5.find(image).addClass('p6p3');
+      p6try = s5.find(image);
+      s5.find(image).on('click', function() {
+        var data, o;
+        if (requesting) {
+          return;
+        }
+        requesting = true;
+        data = $('#form').serializeArray();
+        o = {
+          lid: lid
+        };
+        data.forEach(function(d) {
+          return o[d.name] = d.value;
+        });
+        return $.post('/record_lottery', o, function(result) {
+          requesting = false;
+          if (result.err) {
+            return alert(result.err);
+          } else {
+            return $('#tip3').show();
+          }
+        }).fail(function() {
+          requesting = false;
+          return alert('网络连接失败，请稍候再试');
+        });
+      });
+      return s5.find(image).css({
+        top: 960 * this.scale,
+        width: this.windowWidth / 2,
+        left: this.windowWidth / 4,
+        position: 'absolute',
+        display: 'none'
+      });
+    } else if (id === 'p6-try') {
+      s5.append(image);
+      p6try = s5.find(image);
+      p6try.addClass('p6p2');
+      p6try.on('click', function() {
+        $('.p6p1').show();
+        return $('.p6p2').hide();
+      });
+      return p6try.css({
+        bottom: 400 * this.scale,
+        width: this.windowWidth / 2,
+        left: this.windowWidth / 4,
+        position: 'absolute',
+        display: 'none'
+      });
+    } else if (id === 'p6-share') {
+      s5.append(image);
+      s5.find(image).addClass('p6p2');
+      s5.find(image).click(function() {
+        return $('#tip2').show();
+      });
+      return s5.find(image).css({
+        bottom: 292 * this.scale,
+        width: this.windowWidth / 2,
+        left: this.windowWidth / 4,
+        position: 'absolute',
+        display: 'none'
+      });
+    } else if (id === 'p6-close') {
+      s5.append(image);
+      css = {
+        width: 74 * this.scale,
+        height: 74 * this.scale,
+        top: 20 * this.scale,
+        right: 20 * this.scale,
+        position: 'absolute'
       };
-      data.forEach(function(d) {
-        return o[d.name] = d.value;
+      s5.find(image).css(css);
+      return s5.find(image).on('click', function() {
+        return toPageSlide(false, 4);
       });
-      return $.post('/record_lottery', o, function(result) {
-        requesting = false;
-        if (result.err) {
-          return alert(result.err);
-        } else {
-          return $('#tip3').show();
-        }
-      }).fail(function() {
-        requesting = false;
-        return alert('网络连接失败，请稍候再试');
-      });
-    }), s5.find(image).css({
-      top: 960 * this.scale,
-      width: this.windowWidth / 2,
-      left: this.windowWidth / 4,
-      position: 'absolute',
-      display: 'none'
-    })) : id === 'p6-try' ? (console.log('p6-try'), s5.append(image), p6try = s5.find(image), p6try.addClass('p6p2'), console.log(p6try), p6try.on('click', function() {
-      $('.p6p1').show();
-      return $('.p6p2').hide();
-    }), p6try.css({
-      bottom: 400 * this.scale,
-      width: this.windowWidth / 2,
-      left: this.windowWidth / 4,
-      position: 'absolute',
-      display: 'none'
-    })) : id === 'p6-share' ? (console.log('p6-share'), s5.append(image), s5.find(image).addClass('p6p2'), s5.find(image).click(function() {
-      return $('#tip2').show();
-    }), s5.find(image).css({
-      bottom: 292 * this.scale,
-      width: this.windowWidth / 2,
-      left: this.windowWidth / 4,
-      position: 'absolute',
-      display: 'none'
-    })) : id === 'p6-close' ? (s5.append(image), css = {
-      width: 74 * this.scale,
-      height: 74 * this.scale,
-      top: 20 * this.scale,
-      right: 20 * this.scale,
-      position: 'absolute'
-    }, s5.find(image).css(css), s5.find(image).on('click', function() {
-      return toPageSlide(false, 4);
-    })) : void 0));
+    }
   };
 
   playVideoImg = '';

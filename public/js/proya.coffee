@@ -160,6 +160,10 @@ toPageSlide = (fromtop,page, slide)->
     $('.slide').hide()
     selectP4Slide(false)
 
+  if page_index != 2
+    wxData.title = '不型不青春！#青春就要大胆晒#'
+    wxData.imgUrl = 'http://uv.proya.com/images/5r.jpg'
+
 leftHandler = ->
   if playing
     return
@@ -228,6 +232,24 @@ selectP3Slide = (left,select)->
     $('#p3-m' + slide_index).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
       $('#p3-m' + slide_index).removeClass toc
     $('#p3-m' + slide_index).addClass toc
+
+    txt = '';
+    arr = [
+      '以为墨镜够高冷，挡得住眼挡不住脸！玩转潮流有逼格',
+      '举片树叶遮太阳，这是野人新风尚？亲近自然爱阳光',
+      '帅气多金不敢露，头戴草帽装路人！谁说土豪要低调',
+      '满嘴术语没人懂，高端装备脑洞开太大。天赋异禀难自弃',
+      '头巾包的只剩眼，人群里看N百遍也认不出！一见钟情不是梦',
+      '脸基尼是什么鬼？又不是飞檐走壁的蜘蛛侠！太阳底下任我行',
+      'Dota打怪不积极，出个门又何必武装至此！轻装出行无压力',
+      '顶个畚箕当阳伞，难怪永远单身狗！要想男神女神爱'
+    ]
+    si = if slide_index > 5 then slide_index-2 else slide_index-1
+    txt = arr[si];
+    img = 'http://proyaproject.duapp.com/w/images/' + (si+1)+'.jpg'
+    alert(txt+img)
+    wxData.title = txt
+    wxData.imgUrl = img
 
 #    $('#p3-m' + slide_index).css left: froml, display:'block'
 #    $('#p3-m' + slide_index).animate left: 0, 500
@@ -332,7 +354,6 @@ showImg = (event)->
     if value==event.target
       id = key.replace('t', '')
       if id != '10'
-        console.log id
         if id == '5'
           toPageSlide true,1
         else
@@ -341,7 +362,6 @@ showImg = (event)->
 loveNum = 0
 
 loveItem = (event)->
-  console.log $(this).siblings('label')
   loveNum++
   $(this).siblings('label').text('x'+loveNum)
 
@@ -419,7 +439,6 @@ lotteryBGS = []
 initP6 = (image, id)->
   s5 = $('#section5')
   $('#form').css width:278*this.scale,height:262*this.scale,left:302*this.scale,top:650*this.scale
-  console.log iduku.jm  mjuuuuuu,
   if id == 'p6-bg1'
     s5.prepend image
     image.width = $(window).width()
@@ -501,17 +520,14 @@ initP6 = (image, id)->
 #      $('#tip3').show()
     s5.find(image).css top:960*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
   else if id == 'p6-try'
-    console.log 'p6-try'
     s5.append image
     p6try = s5.find(image)
     p6try.addClass 'p6p2'
-    console.log p6try
     p6try.on 'click', ->
       $('.p6p1').show()
       $('.p6p2').hide()
     p6try.css bottom:400*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
   else if id == 'p6-share'
-    console.log 'p6-share'
     s5.append image
     s5.find(image).addClass 'p6p2'
     s5.find(image).click ->
@@ -523,7 +539,6 @@ initP6 = (image, id)->
     s5.find(image).css css
     s5.find(image).on 'click', ->
       toPageSlide(false,4)
-#      wx.closeWindow()
 
 playVideoImg = ''
 videoEnded = ->
