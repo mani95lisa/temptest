@@ -111,6 +111,13 @@ toPageSlide = (fromtop,page, slide)->
   if (fromtop && page_index >= 5) || (!fromtop && page_index <= 0)
     return
 
+  if videoplaying
+    playVideoImg.show()
+    video = document.getElementById('video')
+    video.pause()
+    $('#video').hide()
+    videoplaying = false
+
   console.log 'toPageSlid:',fromtop, page, slide
 
   slide_index = slide if slide
@@ -131,7 +138,7 @@ toPageSlide = (fromtop,page, slide)->
 
   $('#section'+page_index).show()
   $('#section'+page_index).css top:0
-  toc = if fromtop then 'animated zoomInDown' else 'animated zoomInUp'
+  toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
   console.log hidec, toc
   $('#section'+page_index).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     $('#section'+page_index).removeClass toc
@@ -205,7 +212,7 @@ selectP3Slide = (left,select)->
 #      playing = false
     froml = if left then this.ww else -this.ww
 
-    toc = if left then 'animated zoomInRight' else 'animated zoomInLeft'
+    toc = if left then 'animated slideInRight' else 'animated slideInLeft'
     console.log hidec, toc
     $('#p3-m' + slide_index).show()
     $('#p3-m' + slide_index).css left:0
@@ -359,6 +366,8 @@ initP3 = (image, id)->
       $('#tip').show()
   else if id == 'p3-btn'
     p3w = 316*this.scale
+    s2.find(image).on 'click', ->
+      toPageSlide(false, 1)
     s2.find(image).css top:(722*this.scale+top3),width:p3w,left:(this.windowWidth-p3w)/2,position:'absolute'
   else if id == 'p3-bottom'
     p3bw = 175*this.scale
@@ -449,7 +458,13 @@ initP6 = (image, id)->
     image.width = $(window).width()
     $('#tip2').append image
 
+playVideoImg = ''
 videoEnded = ->
+  console.log 'end'
+  $('#video').hide();
+  playVideoImg.show()
+
+videoplaying = false
 
 initP2 = (image, id)->
   s1 = $('#section1')
@@ -459,16 +474,20 @@ initP2 = (image, id)->
   else if id == 'p2-video'
     image.width = $(window).width()
     s1.prepend image
+    playVideoImg = s1.find(image)
+    video = document.getElementById('video')
+    $('#video').on 'click', ->
+      alert 'v'
+      playVideoImg.show()
+      $('#video').hide();
+      video.pause()
     s1.find(image).on 'click', ->
-      video = document.getElementById('video')
-      $('#video').show();
-      if (video.paused)
-        video.width = $(window).width()
-        video.height = $(window).height()
-        video.play()
-      else
-        video.pause();
-        video.width = 0;
+      playVideoImg.hide()
+      $('#video').show()
+      video.width = $(window).width()
+      video.height = $(window).height()
+      video.play()
+      videoplaying = true
     s1.find(image).css top:this.windowHeight/2-(image.width*image.height/750)/2,position:'absolute'
 
 handleFileLoad = (event)->

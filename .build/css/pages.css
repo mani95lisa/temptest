@@ -1,62 +1,50 @@
-/* line 1, /Users/mani/outsourcing/proya/proya/css/pages */
 canvas {
   width: 100%;
   height: 100%;
 }
-/* line 6, /Users/mani/outsourcing/proya/proya/css/pages */
 .arrow {
   position: absolute;
   bottom: 10px;
   left: 50%;
   z-index: 100;
 }
-/* line 13, /Users/mani/outsourcing/proya/proya/css/pages */
 .active .arrow {
   -webkit-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
   -moz-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
 }
 @-webkit-keyframes fadeOutUp {
-  /* line 20, /Users/mani/outsourcing/proya/proya/css/pages */
   0% {
     opacity: 0;
     -webkit-transform: translateY(0);
   }
-  /* line 24, /Users/mani/outsourcing/proya/proya/css/pages */
   30% {
     opacity: .6;
     -webkit-transform: translateY(-4px);
   }
-  /* line 28, /Users/mani/outsourcing/proya/proya/css/pages */
   40% {
     opacity: 1;
     -webkit-transform: translateY(-4px);
   }
-  /* line 32, /Users/mani/outsourcing/proya/proya/css/pages */
   80% {
     opacity: .8;
     -webkit-transform: translateY(-4px);
   }
-  /* line 36, /Users/mani/outsourcing/proya/proya/css/pages */
   90% {
     opacity: .5;
     -webkit-transform: translateY(-10px);
   }
-  /* line 40, /Users/mani/outsourcing/proya/proya/css/pages */
   95% {
     opacity: 0;
     -webkit-transform: translateY(-12px);
   }
-  /* line 44, /Users/mani/outsourcing/proya/proya/css/pages */
   100% {
     opacity: 0;
     -webkit-transform: translateY(-18px);
   }
 }
-/* line 50, /Users/mani/outsourcing/proya/proya/css/pages */
 #loading-img {
   position: absolute;
 }
-/* line 54, /Users/mani/outsourcing/proya/proya/css/pages */
 #loading-label {
   position: absolute;
   width: 100%;
@@ -64,7 +52,6 @@ canvas {
   font-size: 1.5em;
   color: #ff6e00;
 }
-/* line 62, /Users/mani/outsourcing/proya/proya/css/pages */
 #p5-label {
   position: absolute;
   width: 100%;
@@ -72,7 +59,6 @@ canvas {
   font-size: 1em;
   color: #ff6e00;
 }
-/* line 70, /Users/mani/outsourcing/proya/proya/css/pages */
 #love-label {
   position: absolute;
   text-align: center;
@@ -80,18 +66,15 @@ canvas {
   font-size: 1em;
   color: #ff6e00;
 }
-/* line 78, /Users/mani/outsourcing/proya/proya/css/pages */
 #fullpage {
   display: none;
   position: absolute;
   width: 100%;
   height: 100%;
 }
-/* line 86, /Users/mani/outsourcing/proya/proya/css/pages */
 body {
   margin: 0px;
 }
-/* line 90, /Users/mani/outsourcing/proya/proya/css/pages */
 .section {
   width: 100%;
   height: 100%;
@@ -100,10 +83,14 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
 }
-/* line 99, /Users/mani/outsourcing/proya/proya/css/pages */
 .slide {
   display: none;
   width: 100%;
   height: 100%;
   position: absolute;
+}
+.video {
+  position: absolute;
+  left: 0px;
+  top: 0px;
 }
