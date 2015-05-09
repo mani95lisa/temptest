@@ -262,7 +262,7 @@ handleComplete = (event)->
         console.log i
         deg = 0
         img = s1.find(arr[i])
-        img.animate {deg:90,opacity:1}, duration:300, step:(now)->
+        img.animate {deg:90,opacity:1}, duration:150, step:(now)->
           if now > 1
             img.css transform: 'rotateY(' + (90-now) + 'deg)','-webkit-transform':'rotateY(' + (90-now) + 'deg)'
         , complete:->

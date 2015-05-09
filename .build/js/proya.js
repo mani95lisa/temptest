@@ -451,7 +451,7 @@
             deg: 90,
             opacity: 1
           }, {
-            duration: 300,
+            duration: 150,
             step: function(now) {
               if (now > 1) {
                 return img.css({
