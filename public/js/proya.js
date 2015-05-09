@@ -443,27 +443,26 @@
       animate = function() {
         var deg, img;
         i--;
-        if (i > 0) {
+        if (i >= 0) {
+          console.log(i);
           deg = 0;
           img = s1.find(arr[i]);
           return img.animate({
             deg: 180,
             opacity: 1
           }, {
-            duration: 500,
+            duration: 300,
             step: function(now) {
               if (now > 1) {
-                img.css({
+                return img.css({
                   transform: 'rotateX(' + (180 - now) + 'deg)',
                   '-webkit-transform': 'rotateX(' + (180 - now) + 'deg)'
                 });
-                if (now > 179 && cc.indexOf(i) === -1 && i > 0) {
-                  cc.push(i);
-                  return animate();
-                }
               }
             },
-            complete: function() {}
+            complete: function() {
+              return animate();
+            }
           });
         }
       };

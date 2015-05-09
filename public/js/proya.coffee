@@ -258,17 +258,18 @@ handleComplete = (event)->
     cc = []
     animate = ->
       i--
-      if i > 0
+      if i >= 0
+        console.log i
         deg = 0
         img = s1.find(arr[i])
-        img.animate {deg:180,opacity:1}, duration:500, step:(now)->
+        img.animate {deg:180,opacity:1}, duration:300, step:(now)->
           if now > 1
             img.css transform: 'rotateX(' + (180-now) + 'deg)','-webkit-transform':'rotateX(' + (180-now) + 'deg)'
-            if now > 179 && cc.indexOf(i) == -1 && i>0
-              cc.push i
-              animate()
+#            if now > 80 && cc.indexOf(i) == -1 && i>0
+#              cc.push i
+#              animate()
         , complete:->
-#          animate()
+          animate()
     animate()
     $(document).swipe(
       swipe:(event, direction)->

@@ -255,15 +255,19 @@ handleComplete = (event)->
     #    if now > 1
     #      arr.css transform: 'rotateX(' + (180-now) + 'deg)', '-webkit-transform':'rotateX(' + (180-now) + 'deg)'
     i = arr.length
+    cc = []
     animate = ->
-      console.log 'ani', i
       i--
       if i >= 0
+        console.log i
         deg = 0
         img = s1.find(arr[i])
-        img.animate {deg:90,opacity:1}, duration:300, step:(now)->
+        img.animate {deg:180,opacity:1}, duration:300, step:(now)->
           if now > 1
-            img.css transform: 'rotateY(' + (90-now) + 'deg)','-webkit-transform':'rotateY(' + (90-now) + 'deg)'
+            img.css transform: 'rotateX(' + (180-now) + 'deg)','-webkit-transform':'rotateX(' + (180-now) + 'deg)'
+#            if now > 80 && cc.indexOf(i) == -1 && i>0
+#              cc.push i
+#              animate()
         , complete:->
           animate()
     animate()
@@ -321,7 +325,7 @@ initP1 = (image, id)->
   s1.prepend image
   imgArr[id] = image
   s1.find(image).click showImg
-  s1.find(image).css position:'absolute',left:x,top:y,opacity:0,deg:180,transform: 'rotateY(90deg)'
+  s1.find(image).css position:'absolute',left:x,top:y,opacity:0,deg:180,'transform-origin': '50% 0% 0px',transform: 'rotateX(180deg)','-webkit-transform':'rotateX(180deg)'
   home_arr.push w:w,h:h,x:x,y:y
 
 showImg = (event)->
