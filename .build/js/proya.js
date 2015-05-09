@@ -448,15 +448,15 @@
           deg = 0;
           img = s1.find(arr[i]);
           return img.animate({
-            deg: 180,
+            deg: 90,
             opacity: 1
           }, {
             duration: 300,
             step: function(now) {
               if (now > 1) {
                 return img.css({
-                  transform: 'rotateX(' + (180 - now) + 'deg)',
-                  '-webkit-transform': 'rotateX(' + (180 - now) + 'deg)'
+                  transform: 'rotateY(' + (90 - now) + 'deg)',
+                  '-webkit-transform': 'rotateY(' + (90 - now) + 'deg)'
                 });
               }
             },
@@ -527,9 +527,8 @@
       top: y,
       opacity: 0,
       deg: 180,
-      'transform-origin': '50% 0% 0px',
-      transform: 'rotateX(180deg)',
-      '-webkit-transform': 'rotateX(180deg)'
+      transform: 'rotateY(90deg)',
+      '-webkit-transform': 'rotateY(90deg)'
     });
     return home_arr.push({
       w: w,
