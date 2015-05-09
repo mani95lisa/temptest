@@ -734,8 +734,6 @@
           value = Math.random();
           if (value > ratio) {
             lr = new LotteryRecord({
-              user: session.user._id,
-              openid: session.user.openid,
               day: moment().format('YYYY-MM-DD')
             });
             return lr.save(function(err, result) {
@@ -792,7 +790,13 @@
       });
     });
     router.get('/proya', function(req, res) {
-      return res.render('proya');
+      req.session.user = {};
+      return getConfig(req, function(result) {
+        return res.render('proya', {
+          config: result,
+          share_url: 'http://uv.proya.com/proya'
+        });
+      });
     });
     return router.get('/admin', auth.isAuthenticated(), function(req, res) {
       var nav;

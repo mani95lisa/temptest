@@ -486,7 +486,7 @@ initP6 = (image, id)->
         return
       requesting = true
       data = $('#form').serializeArray()
-      o = {lid:lid}
+      o = {lid:lid}po-
       data.forEach (d)->
         o[d.name] = d.value
       $.post('/record_lottery', o, (result)->

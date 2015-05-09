@@ -537,8 +537,6 @@ module.exports = (router)->
         value = Math.random()
         if value > ratio
           lr = new LotteryRecord(
-            user:session.user._id
-            openid:session.user.openid
             day:moment().format('YYYY-MM-DD')
           )
           lr.save (err, result)->
@@ -568,7 +566,9 @@ module.exports = (router)->
     res.json status:true
 
   router.get '/proya', (req, res)->
-    res.render 'proya'
+    req.session.user = {}
+    getConfig req, (result)->
+      res.render 'proya', config:result,share_url:'http://uv.proya.com/proya'
 
   router.get '/admin', auth.isAuthenticated(), (req, res)->
     nav = [

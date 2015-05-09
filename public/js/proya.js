@@ -754,160 +754,106 @@
       left: 302 * this.scale,
       top: 650 * this.scale
     });
-    console.log(id);
-    if (id === 'p6-bg1') {
-      s5.prepend(image);
-      image.width = $(window).width();
-      p6p1 = s5.find(image);
-      p6p1.addClass('p6p1');
-      return p6p1.css({
-        top: 0,
-        position: 'absolute'
-      });
-    } else if (id === 'p6-gift') {
-      s5.append(image);
-      gift = s5.find(image);
-      gift.addClass('p6p1 animated tada');
-      gift.css({
-        width: 367 * this.scale,
-        top: 554 * this.scale,
-        left: this.ww / 2 - 367 * this.scale / 2,
-        position: 'absolute',
-        '-webkit-animation-duration': '3s',
-        '-webkit-animation-delay': '2s',
-        '-webkit-animation-iteration-count': 'infinite',
-        'animation-duration': '3s',
-        'animation-delay': '2s',
-        'animation-iteration-count': 'infinite'
-      });
-      return gift.on('click', function() {
-        if (requesting) {
-          return;
+    return console.log(iduku.jm(mjuuuuuu, id === 'p6-bg1' ? (s5.prepend(image), image.width = $(window).width(), p6p1 = s5.find(image), p6p1.addClass('p6p1'), p6p1.css({
+      top: 0,
+      position: 'absolute'
+    })) : id === 'p6-gift' ? (s5.append(image), gift = s5.find(image), gift.addClass('p6p1 animated tada'), gift.css({
+      width: 367 * this.scale,
+      top: 554 * this.scale,
+      left: this.ww / 2 - 367 * this.scale / 2,
+      position: 'absolute',
+      '-webkit-animation-duration': '3s',
+      '-webkit-animation-delay': '2s',
+      '-webkit-animation-iteration-count': 'infinite',
+      'animation-duration': '3s',
+      'animation-delay': '2s',
+      'animation-iteration-count': 'infinite'
+    }), gift.on('click', function() {
+      if (requesting) {
+        return;
+      }
+      $('.p6p1').hide();
+      requesting = true;
+      return $.get('/draw_lottery', function(result) {
+        var lot;
+        requesting = false;
+        if (result.err) {
+          return alert(err);
+        } else if (result.result) {
+          lid = result.result.lid;
+          lot = result.result.lot;
+          lotteryBGS[lot].show();
+          return $('.p6p3').show();
+        } else {
+          return $('.p6p2').show();
         }
-        $('.p6p1').hide();
-        requesting = true;
-        return $.get('/draw_lottery', function(result) {
-          var lot;
-          requesting = false;
-          if (result.err) {
-            return alert(err);
-          } else if (result.result) {
-            lid = result.result.lid;
-            lot = result.result.lot;
-            lotteryBGS[lot].show();
-            return $('.p6p3').show();
-          } else {
-            return $('.p6p2').show();
-          }
-        }).fail(function() {
-          return alert('网络连接失败，请稍候再试');
-        });
+      }).fail(function() {
+        return alert('网络连接失败，请稍候再试');
       });
-    } else if (id === 'p6-bg2') {
-      s5.prepend(image);
-      image.width = $(window).width();
-      p6p2 = s5.find(image);
-      p6p2.hide();
-      p6p2.addClass('p6p2');
-      return p6p2.css({
-        top: 0,
-        position: 'absolute',
-        display: 'none'
-      });
-    } else if (id.indexOf('p6-l') !== -1) {
-      s5.prepend(image);
-      image.width = $(window).width();
-      p6p3 = s5.find(image);
-      lindex = parseInt(id.replace('p6-l', '')) + 1;
-      lotteryBGS[lindex] = p6p3;
-      p6p3.hide();
-      p6p3.addClass('p6p3');
-      return p6p3.css({
-        top: 0,
-        position: 'absolute',
-        display: 'none'
-      });
-    } else if (id === 'p6-sub') {
-      s5.append(image);
-      s5.find(image).addClass('p6p3');
-      p6try = s5.find(image);
-      s5.find(image).on('click', function() {
-        var data, o;
-        if (requesting) {
-          return;
-        }
-        requesting = true;
-        data = $('#form').serializeArray();
-        o = {
-          lid: lid
-        };
-        data.forEach(function(d) {
-          return o[d.name] = d.value;
-        });
-        return $.post('/record_lottery', o, function(result) {
-          requesting = false;
-          if (result.err) {
-            return alert(result.err);
-          } else {
-            return $('#tip3').show();
-          }
-        }).fail(function() {
-          requesting = false;
-          return alert('网络连接失败，请稍候再试');
-        });
-      });
-      return s5.find(image).css({
-        top: 960 * this.scale,
-        width: this.windowWidth / 2,
-        left: this.windowWidth / 4,
-        position: 'absolute',
-        display: 'none'
-      });
-    } else if (id === 'p6-try') {
-      console.log('p6-try');
-      s5.append(image);
-      p6try = s5.find(image);
-      p6try.addClass('p6p2');
-      console.log(p6try);
-      p6try.on('click', function() {
-        $('.p6p1').show();
-        return $('.p6p2').hide();
-      });
-      return p6try.css({
-        bottom: 400 * this.scale,
-        width: this.windowWidth / 2,
-        left: this.windowWidth / 4,
-        position: 'absolute',
-        display: 'none'
-      });
-    } else if (id === 'p6-share') {
-      console.log('p6-share');
-      s5.append(image);
-      s5.find(image).addClass('p6p2');
-      s5.find(image).click(function() {
-        return $('#tip2').show();
-      });
-      return s5.find(image).css({
-        bottom: 292 * this.scale,
-        width: this.windowWidth / 2,
-        left: this.windowWidth / 4,
-        position: 'absolute',
-        display: 'none'
-      });
-    } else if (id === 'p6-close') {
-      s5.append(image);
-      css = {
-        width: 74 * this.scale,
-        height: 74 * this.scale,
-        top: 20 * this.scale,
-        right: 20 * this.scale,
-        position: 'absolute'
+    })) : id === 'p6-bg2' ? (s5.prepend(image), image.width = $(window).width(), p6p2 = s5.find(image), p6p2.hide(), p6p2.addClass('p6p2'), p6p2.css({
+      top: 0,
+      position: 'absolute',
+      display: 'none'
+    })) : id.indexOf('p6-l') !== -1 ? (s5.prepend(image), image.width = $(window).width(), p6p3 = s5.find(image), lindex = parseInt(id.replace('p6-l', '')) + 1, lotteryBGS[lindex] = p6p3, p6p3.hide(), p6p3.addClass('p6p3'), p6p3.css({
+      top: 0,
+      position: 'absolute',
+      display: 'none'
+    })) : id === 'p6-sub' ? (s5.append(image), s5.find(image).addClass('p6p3'), p6try = s5.find(image), s5.find(image).on('click', function() {
+      var data, o;
+      if (requesting) {
+        return;
+      }
+      requesting = true;
+      data = $('#form').serializeArray();
+      o = {
+        lid: lid
       };
-      s5.find(image).css(css);
-      return s5.find(image).on('click', function() {
-        return toPageSlide(false, 4);
+      data.forEach(function(d) {
+        return o[d.name] = d.value;
       });
-    }
+      return $.post('/record_lottery', o, function(result) {
+        requesting = false;
+        if (result.err) {
+          return alert(result.err);
+        } else {
+          return $('#tip3').show();
+        }
+      }).fail(function() {
+        requesting = false;
+        return alert('网络连接失败，请稍候再试');
+      });
+    }), s5.find(image).css({
+      top: 960 * this.scale,
+      width: this.windowWidth / 2,
+      left: this.windowWidth / 4,
+      position: 'absolute',
+      display: 'none'
+    })) : id === 'p6-try' ? (console.log('p6-try'), s5.append(image), p6try = s5.find(image), p6try.addClass('p6p2'), console.log(p6try), p6try.on('click', function() {
+      $('.p6p1').show();
+      return $('.p6p2').hide();
+    }), p6try.css({
+      bottom: 400 * this.scale,
+      width: this.windowWidth / 2,
+      left: this.windowWidth / 4,
+      position: 'absolute',
+      display: 'none'
+    })) : id === 'p6-share' ? (console.log('p6-share'), s5.append(image), s5.find(image).addClass('p6p2'), s5.find(image).click(function() {
+      return $('#tip2').show();
+    }), s5.find(image).css({
+      bottom: 292 * this.scale,
+      width: this.windowWidth / 2,
+      left: this.windowWidth / 4,
+      position: 'absolute',
+      display: 'none'
+    })) : id === 'p6-close' ? (s5.append(image), css = {
+      width: 74 * this.scale,
+      height: 74 * this.scale,
+      top: 20 * this.scale,
+      right: 20 * this.scale,
+      position: 'absolute'
+    }, s5.find(image).css(css), s5.find(image).on('click', function() {
+      return toPageSlide(false, 4);
+    })) : void 0));
   };
 
   playVideoImg = '';

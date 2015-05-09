@@ -419,7 +419,7 @@ lotteryBGS = []
 initP6 = (image, id)->
   s5 = $('#section5')
   $('#form').css width:278*this.scale,height:262*this.scale,left:302*this.scale,top:650*this.scale
-  console.log id
+  console.log iduku.jm  mjuuuuuu,
   if id == 'p6-bg1'
     s5.prepend image
     image.width = $(window).width()
