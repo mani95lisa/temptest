@@ -2,6 +2,8 @@ home_arr = []
 page_index = 0
 slide_index = 1
 manifest1 = [
+  {src: "tip2.jpg", id: "tip2"}
+  {src: "tip3.jpg", id: "tip3"}
   {src: "t1.jpg", id: "t1"},
   {src: "t2.jpg", id: "t2"},
   {src: "t3.jpg", id: "t3"},
@@ -37,9 +39,10 @@ manifest1 = [
   {src: "p6-try.png", id: "p6-try"}
   {src: "p6-share.png", id: "p6-share"}
   {src: "p6-close.png", id: "p6-close"}
-  {src: "p6-tip2.jpg", id: "p6-tip2"}
   {src: "p6-bg1.jpg", id: "p6-bg1"}
   {src: "p6-gift.png", id: "p6-gift"}
+  {src: "p6-bg3.jpg", id: "p6-bg3"}
+  {src: "p6-sub.png", id: "p6-sub"}
 ]
 
 i = 0
@@ -89,6 +92,9 @@ init = ->
   $('#tip2').hide()
   $('#tip2').click ->
     $('#tip2').hide()
+  $('#tip3').hide()
+  $('#tip3').click ->
+    $('#tip3').hide()
   $('#p5-label').css bottom:62*this.scale
   p1()
 
@@ -118,8 +124,6 @@ toPageSlide = (fromtop,page, slide)->
     $('#video').hide()
     videoplaying = false
 
-  console.log 'toPageSlid:',fromtop, page, slide
-
   slide_index = slide if slide
   playing = true
   old = page_index
@@ -130,6 +134,7 @@ toPageSlide = (fromtop,page, slide)->
   hidetop = if fromtop then -this.wh else this.wh
   hidec = if fromtop then 'animated zoomOutUp' else 'animated zoomOutDown'
   $('#section'+old).addClass hidec
+  $('#section'+old).css 'z-index':-100
   $('#section'+old).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     $('#section'+old).removeClass hidec
     $('#section'+old).css top:hidetop
@@ -137,7 +142,7 @@ toPageSlide = (fromtop,page, slide)->
   showtop = if fromtop then this.wh else -this.wh
 
   $('#section'+page_index).show()
-  $('#section'+page_index).css top:0
+  $('#section'+page_index).css top:0, 'z-index':0
   toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
   console.log hidec, toc
   $('#section'+page_index).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
@@ -204,6 +209,7 @@ selectP3Slide = (left,select)->
     console.log(tol, left, old, slide_index)
     hidec = if left then 'animated zoomOutLeft' else 'animated zoomOutRight'
     $('#p3-m'+old).addClass hidec
+    $('#p3-m'+old).css 'z-index':-100
     $('#p3-m'+old).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
       $('#p3-m'+old).removeClass hidec
       $('#p3-m'+old).css left:tol
@@ -215,7 +221,7 @@ selectP3Slide = (left,select)->
     toc = if left then 'animated slideInRight' else 'animated slideInLeft'
     console.log hidec, toc
     $('#p3-m' + slide_index).show()
-    $('#p3-m' + slide_index).css left:0
+    $('#p3-m' + slide_index).css left:0, 'z-index':0
     $('#p3-m' + slide_index).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
       $('#p3-m' + slide_index).removeClass toc
     $('#p3-m' + slide_index).addClass toc
@@ -273,7 +279,7 @@ handleComplete = (event)->
         else
           rightHandler()
     )
-#    toPageSlide(true, 5)
+    toPageSlide(true, 5)
 #    $('#section2').show()
 #  setTimeout ->
 #    $.fn.fullpage.moveTo(3,1);
@@ -325,10 +331,6 @@ showImg = (event)->
       id = key.replace('t', '')
       if id != 10
         toPageSlide true,2,parseInt(id)
-
-slideChange = (pi, si)->
-  this.pi = pi
-  this.si = si
 
 loveNum = 0
 
@@ -398,8 +400,11 @@ p6p1 = ''
 p6p2 = ''
 p6try = ''
 
+gotR = false
+
 initP6 = (image, id)->
   s5 = $('#section5')
+  $('#form').css width:278*this.scale,height:262*this.scale,left:302*this.scale,top:650*this.scale
   if id == 'p6-bg1'
     s5.prepend image
     image.width = $(window).width()
@@ -424,7 +429,13 @@ initP6 = (image, id)->
     }
     gift.on 'click', ->
       $('.p6p1').hide()
-      $('.p6p2').show()
+      r = Math.random()
+      if gotR
+        gotR = false
+        $('.p6p3').show()
+      else
+        gotR = true
+        $('.p6p2').show()
 
   else if id == 'p6-bg2'
     s5.prepend image
@@ -433,6 +444,20 @@ initP6 = (image, id)->
     p6p2.hide()
     p6p2.addClass 'p6p2'
     p6p2.css top:0,position:'absolute',display:'none'
+  else if id == 'p6-bg3'
+    s5.prepend image
+    image.width = $(window).width()
+    p6p3 = s5.find(image)
+    p6p3.hide()
+    p6p3.addClass 'p6p3'
+    p6p3.css top:0,position:'absolute'
+  else if id == 'p6-sub'
+    s5.append image
+    s5.find(image).addClass 'p6p3'
+    p6try = s5.find(image)
+    s5.find(image).on 'click', ->
+      $('#tip3').show()
+    s5.find(image).css top:960*this.scale,width:this.windowWidth/2,left:this.windowWidth/4,position:'absolute',display:'none'
   else if id == 'p6-try'
     s5.append image
     s5.find(image).addClass 'p6p2'
@@ -454,9 +479,6 @@ initP6 = (image, id)->
     s5.find(image).on 'click', ->
       console.log 'close'
       wx.closeWindow()
-  else if id == 'p6-tip2'
-    image.width = $(window).width()
-    $('#tip2').append image
 
 playVideoImg = ''
 videoEnded = ->
@@ -493,7 +515,13 @@ initP2 = (image, id)->
 handleFileLoad = (event)->
   image = event.result
   item = event.item
-  if item.id.indexOf('p3') != -1
+  if item.id == 'tip2'
+    image.width = $(window).width()
+    $('#tip2').append image
+  else if item.id == 'tip3'
+    image.width = $(window).width()
+    $('#tip3').append image
+  else if item.id.indexOf('p3') != -1
     initP3 image, item.id
   else if item.id.indexOf('p2') != -1
     initP2 image, item.id
@@ -507,6 +535,7 @@ handleFileLoad = (event)->
   else if item.id.indexOf('p5') != -1
     initP5 image, item.id
   else if item.id.indexOf('p6') != -1
+    console.log item.id
     initP6 image, item.id
   else if item.id.indexOf('t') != -1
     initP1 image, item.id
