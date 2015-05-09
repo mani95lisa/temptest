@@ -567,7 +567,7 @@ module.exports = (router)->
 
   router.get '/proya', (req, res)->
     req.session.user = {}
-    getConfig req, (result)->
+    getConfig req, (err,result)->
       console.log 'ProyaConfig:'+result
       res.render 'proya', config:result,share_url:'http://uv.proya.com/proya'
 

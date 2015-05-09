@@ -791,7 +791,7 @@
     });
     router.get('/proya', function(req, res) {
       req.session.user = {};
-      return getConfig(req, function(result) {
+      return getConfig(req, function(err, result) {
         console.log('ProyaConfig:' + result);
         return res.render('proya', {
           config: result,
