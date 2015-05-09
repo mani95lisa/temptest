@@ -161,8 +161,10 @@ toPageSlide = (fromtop,page, slide)->
     selectP4Slide(false)
 
   if page_index != 2
-    wxData.title = '不型不青春！#青春就要大胆晒#'
+    wxData.description = '不型不青春！'
     wxData.imgUrl = 'http://uv.proya.com/images/5r.jpg'
+    wxData2.title = '不型不青春！'
+    wxData2.imgUrl = 'http://uv.proya.com/images/5r.jpg'
 
 leftHandler = ->
   if playing
@@ -248,8 +250,10 @@ selectP3Slide = (left,select)->
     txt = arr[si];
     img = 'http://proyaproject.duapp.com/w/images/' + (si+1)+'.jpg'
     alert(txt+img)
-    wxData.title = txt
+    wxData.description = txt
     wxData.imgUrl = img
+    wxData2.imgUrl = img
+    wxData2.title = txt
 
 #    $('#p3-m' + slide_index).css left: froml, display:'block'
 #    $('#p3-m' + slide_index).animate left: 0, 500

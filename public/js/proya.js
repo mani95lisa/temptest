@@ -311,8 +311,10 @@
       selectP4Slide(false);
     }
     if (page_index !== 2) {
-      wxData.title = '不型不青春！#青春就要大胆晒#';
-      return wxData.imgUrl = 'http://uv.proya.com/images/5r.jpg';
+      wxData.description = '不型不青春！';
+      wxData.imgUrl = 'http://uv.proya.com/images/5r.jpg';
+      wxData2.title = '不型不青春！';
+      return wxData2.imgUrl = 'http://uv.proya.com/images/5r.jpg';
     }
   };
 
@@ -420,8 +422,10 @@
       txt = arr[si];
       img = 'http://proyaproject.duapp.com/w/images/' + (si + 1) + '.jpg';
       alert(txt + img);
-      wxData.title = txt;
-      return wxData.imgUrl = img;
+      wxData.description = txt;
+      wxData.imgUrl = img;
+      wxData2.imgUrl = img;
+      return wxData2.title = txt;
     }
   };
 

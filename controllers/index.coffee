@@ -456,6 +456,7 @@ module.exports = (router)->
                   session.lottery = result:gotid
                   res.json result:lid:result._id,lot:gotid
       else
+        console.log 'not got:',rm
         res.json result:false
 
   router.post '/like', (req, res)->

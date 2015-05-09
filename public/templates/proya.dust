@@ -25,17 +25,24 @@
 
     var wxData = {
         "appId":appId,
-        "title":"不型不青春！",
+        "title":"我有我魅力，青春就要大胆晒"
+        "description":"不型不青春！",
         "imgUrl":"http://uv.proya.com/images/5r.jpg",
         "link" : $('#url').text()
     };
+    var wxData2 = {
+        "appId":appId,
+        "title":"不型不青春！"
+        "imgUrl":"http://uv.proya.com/images/5r.jpg",
+        "link" : $('#url').text()
+    }
 
     wx.ready(function () {
 
         wx.onMenuShareAppMessage(wxData);
         wx.onMenuShareQQ(wxData);
         wx.onMenuShareWeibo(wxData);
-        wx.onMenuShareTimeline(wxData);
+        wx.onMenuShareTimeline(wxData2);
 
     });
 </script>
