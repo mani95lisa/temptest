@@ -156,7 +156,7 @@ toPageSlide = (fromtop,page, slide)->
   else if page_index == 4
     slide_index = 1
     $('.slide').hide()
-    $('#p5-i1').show()
+    selectP4Slide(false)
 
 leftHandler = ->
   if playing
@@ -364,7 +364,7 @@ initP3 = (image, id)->
     s2.find(image).click loveItem
   else if id == 'p3-share'
     stop = top3+722*this.scale-10-76*this.scale
-    s2.find(image).css width:54*this.scale,right:23*this.scale,top:stop, position: 'absolute','z-index': 100
+    s2.find(image).css width:100*this.scale,right:23*this.scale,top:stop, position: 'absolute','z-index': 100
     s2.find(image).click ->
       $('#tip').show()
   else if id == 'p3-btn'
@@ -478,8 +478,8 @@ initP6 = (image, id)->
     css = width:74*this.scale,height:74*this.scale,top:20*this.scale,right:20*this.scale,position:'absolute'
     s5.find(image).css css
     s5.find(image).on 'click', ->
-      console.log 'close'
-      wx.closeWindow()
+      toPageSlide(false,4)
+#      wx.closeWindow()
 
 playVideoImg = ''
 videoEnded = ->

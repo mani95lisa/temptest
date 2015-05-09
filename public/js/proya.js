@@ -300,7 +300,7 @@
     } else if (page_index === 4) {
       slide_index = 1;
       $('.slide').hide();
-      return $('#p5-i1').show();
+      return selectP4Slide(false);
     }
   };
 
@@ -624,7 +624,7 @@
     } else if (id === 'p3-share') {
       stop = top3 + 722 * this.scale - 10 - 76 * this.scale;
       s2.find(image).css({
-        width: 54 * this.scale,
+        width: 100 * this.scale,
         right: 23 * this.scale,
         top: stop,
         position: 'absolute',
@@ -839,8 +839,7 @@
       };
       s5.find(image).css(css);
       return s5.find(image).on('click', function() {
-        console.log('close');
-        return wx.closeWindow();
+        return toPageSlide(false, 4);
       });
     }
   };
