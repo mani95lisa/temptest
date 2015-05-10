@@ -192,18 +192,18 @@
 
   p5 = function() {
     var formH;
-    formH = 262 * this.scale;
+    formH = 280 * this.scale;
     $('#form').css({
       width: 278 * this.scale,
       height: formH,
       left: 302 * this.scale,
-      top: 640 * this.scale
+      top: 630 * this.scale
     });
     $('.field').css({
       height: formH / 3
     });
     return $('.field input').css({
-      'margin-bottom': 15 * this.scale
+      'margin-bottom': 30 * this.scale
     });
   };
 
@@ -245,9 +245,13 @@
     $('#tip3').click(function() {
       return $('#tip3').hide();
     });
-    $('#p5-label').css({
-      bottom: 62 * this.scale
-    });
+    if (this.wh > 568) {
+      $('#p5-label').css({
+        bottom: 62 * this.scale
+      });
+    } else {
+      $('#p5-label').hide();
+    }
     $('.knowpro').css({
       width: 90 * this.scale
     });
@@ -529,7 +533,7 @@
         }
       };
       animate();
-      return $(document).swipe({
+      $(document).swipe({
         swipe: function(event, direction) {
           if (direction === 'up') {
             return upHandler();
@@ -542,6 +546,7 @@
           }
         }
       });
+      return toPageSlide(true, 5);
     });
   };
 

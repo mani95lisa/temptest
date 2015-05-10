@@ -72,10 +72,10 @@ p1 = ->
   $('#loading-label').css(top:top2)
 
 p5 = ->
-  formH = 262*this.scale
-  $('#form').css width:278*this.scale,height:formH,left:302*this.scale,top:640*this.scale
+  formH = 280*this.scale
+  $('#form').css width:278*this.scale,height:formH,left:302*this.scale,top:630*this.scale
   $('.field').css height:formH/3
-  $('.field input').css 'margin-bottom':15*this.scale
+  $('.field input').css 'margin-bottom':30*this.scale
 
 refresh = ->
   if count > 10
@@ -104,7 +104,10 @@ init = ->
   $('#tip3').hide()
   $('#tip3').click ->
     $('#tip3').hide()
-  $('#p5-label').css bottom:62*this.scale
+  if this.wh > 568
+    $('#p5-label').css bottom:62*this.scale
+  else
+    $('#p5-label').hide()
   $('.knowpro').css width:90*this.scale
   $('.knowpro').on 'click', ->
     toPageSlide(true, 4)
@@ -340,7 +343,7 @@ handleComplete = (event)->
         else
           rightHandler()
     )
-#    toPageSlide(true, 5)
+    toPageSlide(true, 5)
 #    $('.p6p1').show()
 #    $('.p6p3').show()
 #    $('#section2').show()

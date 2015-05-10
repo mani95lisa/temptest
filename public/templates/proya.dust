@@ -119,13 +119,13 @@
     </div>
     <div class="section" id="section5"style="background-color: #f2ebd1">
         <form id="form" class="p6p3" style="display: none">
-            <div class="field">
+            <div id="field1" class="field">
                 <input id="truename" type="text" name="truename" placeholder="请输入姓名">
             </div>
-            <div class="field" id="mobile">
+            <div id="field2" class="field" id="mobile">
                 <input type="number" name="mobile" placeholder="请输入电话">
             </div>
-            <div class="field" id="email">
+            <div id="field3" class="field" id="email">
                 <input type="email" name="email" placeholder="请输入邮箱">
             </div>
             <input type="hidden" id="csrf" name="_csrf" value="{_csrf}"/>
