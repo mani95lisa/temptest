@@ -258,11 +258,12 @@
     $('.knowpro').on('click', function() {
       return toPageSlide(true, 4);
     });
-    p1();
-    return p5();
+    return p1();
   };
 
   init();
+
+  p5();
 
   playing = false;
 
@@ -318,6 +319,7 @@
     hidec = fromtop ? 'animated zoomOutUp' : 'animated zoomOutDown';
     oldsection = $('#section' + old);
     oldsection.addClass(hidec);
+    oldsection.addClass('active');
     oldsection.css({
       'z-index': -100
     });
@@ -339,6 +341,7 @@
     newsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
       return newsection.removeClass(toc);
     });
+    newsection.removeClass('active');
     newsection.addClass(toc);
     if (page_index === 2) {
       if (!slide) {

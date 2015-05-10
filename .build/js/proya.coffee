@@ -112,9 +112,10 @@ init = ->
   $('.knowpro').on 'click', ->
     toPageSlide(true, 4)
   p1()
-  p5()
+
 
 init()
+p5()
 
 playing = false
 max_page = 5
@@ -160,6 +161,7 @@ toPageSlide = (fromtop,page, slide)->
   hidec = if fromtop then 'animated zoomOutUp' else 'animated zoomOutDown'
   oldsection = $('#section'+old)
   oldsection.addClass hidec
+  oldsection.addClass 'active'
   oldsection.css 'z-index':-100
   oldsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     oldsection.removeClass hidec
@@ -173,6 +175,7 @@ toPageSlide = (fromtop,page, slide)->
   newsection.css top:0, 'z-index':0
   newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     newsection.removeClass toc
+  newsection.removeClass 'active'
   newsection.addClass toc
 #  $('#section'+page_index).animate {top:0}, 500
   if page_index == 2
