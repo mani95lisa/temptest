@@ -155,7 +155,7 @@ toPageSlide = (fromtop,page, slide)->
   else
     page_index = if fromtop then page_index+1 else page_index-1
   hidetop = if fromtop then -this.wh else this.wh
-  hidec = if fromtop then 'animated slideOutUp' else 'animated zoomOutDown'
+  hidec = if fromtop then 'animated slideOutUp' else 'animated slideOutDown'
   oldsection = $('#section'+old)
   showtop = if fromtop then this.wh else -this.wh
 
@@ -167,7 +167,7 @@ toPageSlide = (fromtop,page, slide)->
     oldsection.removeClass hidec
     oldsection.removeClass 'active'
     oldsection.css top:hidetop
-  toc = if !fromtop then 'animated slideInDown' else 'animated zoomInUp'
+  toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
   newsection.css top:0, 'z-index':0
   newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     newsection.removeClass toc

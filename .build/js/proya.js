@@ -314,7 +314,7 @@
       page_index = fromtop ? page_index + 1 : page_index - 1;
     }
     hidetop = fromtop ? -this.wh : this.wh;
-    hidec = fromtop ? 'animated slideOutUp' : 'animated zoomOutDown';
+    hidec = fromtop ? 'animated slideOutUp' : 'animated slideOutDown';
     oldsection = $('#section' + old);
     showtop = fromtop ? this.wh : -this.wh;
     newsection = $('#section' + page_index);
@@ -330,7 +330,7 @@
         top: hidetop
       });
     });
-    toc = !fromtop ? 'animated slideInDown' : 'animated zoomInUp';
+    toc = !fromtop ? 'animated slideInDown' : 'animated slideInUp';
     newsection.css({
       top: 0,
       'z-index': 0
