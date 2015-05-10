@@ -16,21 +16,6 @@
       $scope.header = 'partials/grid/grid_header.html';
       $scope.filters = ['所有', '未中奖', '已中奖', '已派奖'];
       $scope.searchTip = '请输入7位抽奖号或11位用户手机号或抽奖活动标题';
-      $http.get('/lottery/name_list').success(function(result) {
-        var defaut;
-        if (result.err) {
-          return humane.log(result.err);
-        } else {
-          defaut = {
-            name: '显示所有'
-          };
-          result.result.unshift(defaut);
-          $scope.category = {
-            value: defaut
-          };
-          return $scope.categories = result.result;
-        }
-      });
       $scope.filter = {
         value: '所有'
       };
@@ -101,10 +86,6 @@
         enableSorting: false,
         columnDefs: [
           {
-            name: '活动名称',
-            field: 'lottery.name',
-            enableSorting: false
-          }, {
             name: '用户手机号',
             field: 'user.mobile',
             width: 100,
@@ -122,11 +103,6 @@
           }, {
             name: '已中奖',
             field: 'status',
-            width: 80,
-            enableSorting: false
-          }, {
-            name: '已派奖',
-            field: 'dispatched',
             width: 80,
             enableSorting: false
           }, {

@@ -554,13 +554,15 @@
         rm = Math.random();
         limitObject = limit[new Date().getDate()];
         gotid = '';
-        ratio.forEach(function(r) {
-          var lindex;
-          lindex = ratio.indexOf(r);
-          if (r > rm) {
-            return gotid = lindex;
-          }
-        });
+        if (rm < 0.25) {
+          gotid = 0;
+        } else if (rm < 0.5) {
+          gotid = 1;
+        } else if (rm < 0.7) {
+          gotid = 2;
+        } else if (rm < 0.9) {
+          gotid = 3;
+        }
         if (gotid !== '') {
           return LotteryRecord.count({
             day: today,
@@ -785,6 +787,9 @@
         }
       });
     });
+    router.get('/admin_login', function(req, res) {
+      return res.render('login');
+    });
     router.get('/baecheck', function(req, res) {
       return res.json({
         status: true
@@ -804,17 +809,9 @@
       var nav;
       nav = [
         {
-          path: 'dashboard',
-          name: '仪表盘',
-          icon: 'fa fa-dashboard'
-        }, {
           path: 'joined',
           name: '得奖管理',
           icon: 'fa fa-gift'
-        }, {
-          path: 'user',
-          name: '用户管理',
-          icon: 'fa fa-users'
         }
       ];
       return res.render('admin', {

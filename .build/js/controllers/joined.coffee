@@ -17,14 +17,14 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.header = 'partials/grid/grid_header.html'
     $scope.filters = ['所有','未中奖', '已中奖', '已派奖']
     $scope.searchTip = '请输入7位抽奖号或11位用户手机号或抽奖活动标题'
-    $http.get('/lottery/name_list').success (result)->
-      if result.err
-        humane.log result.err
-      else
-        defaut = name:'显示所有'
-        result.result.unshift(defaut)
-        $scope.category = value:defaut
-        $scope.categories = result.result
+#    $http.get('/lottery/name_list').success (result)->
+#      if result.err
+#        humane.log result.err
+#      else
+#        defaut = name:'显示所有'
+#        result.result.unshift(defaut)
+#        $scope.category = value:defaut
+#        $scope.categories = result.result
 
     $scope.filter = {value:'所有'}
     $scope.$watch 'filter.value', (n)->
@@ -89,12 +89,10 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.gridOptions =
       enableSorting: false
       columnDefs:[
-        {name:'活动名称', field:'lottery.name', enableSorting: false}
         {name:'用户手机号', field:'user.mobile', width:100, enableSorting: false}
         {name:'用户昵称', field:'user.nickname', width:100, enableSorting: false}
         {name:'抽奖号', field:'number', width:100, enableSorting: false}
         {name: '已中奖',field: 'status',width: 80, enableSorting: false}
-        {name: '已派奖',field: 'dispatched',width: 80, enableSorting: false}
         {name: '日期',field: 'created_at',width: 100, enableSorting: false}
         {name: '操作',field: 'created_at',width: 120, enableSorting: false, cellTemplate:handler}
       ]

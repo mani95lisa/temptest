@@ -37,7 +37,7 @@ exports.isAuthenticated =  (role) ->
   return  (req, res, next)->
     if (!req.isAuthenticated())
       req.session.goingTo = req.originalUrl
-      res.redirect('/')
+      res.redirect('/admin_login')
     else
       if (role && req.user.role != role)
         res.status(401)

@@ -109,12 +109,21 @@ init()
 playing = false
 max_page = 5
 
+enablePlay = ->
+  console.log 'enable p'
+  setTimeout ->
+    console.log 'enabled p'
+    playing = false
+  , 500
+
 upHandler = ->
+  console.log 'up', playing
   if playing
     return
   toPageSlide(true)
 
 downHandler = ->
+  console.log 'down', playing
   if playing
     return
   toPageSlide(false)
@@ -139,20 +148,22 @@ toPageSlide = (fromtop,page, slide)->
     page_index = if fromtop then page_index+1 else page_index-1
   hidetop = if fromtop then -this.wh else this.wh
   hidec = if fromtop then 'animated zoomOutUp' else 'animated zoomOutDown'
-  $('#section'+old).addClass hidec
-  $('#section'+old).css 'z-index':-100
-  $('#section'+old).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
-    $('#section'+old).removeClass hidec
-    $('#section'+old).css top:hidetop
-    playing = false
+  oldsection = $('#section'+old)
+  oldsection.addClass hidec
+  oldsection.css 'z-index':-100
+  oldsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+    oldsection.removeClass hidec
+    oldsection.css top:hidetop
+    enablePlay()
   showtop = if fromtop then this.wh else -this.wh
 
-  $('#section'+page_index).show()
-  $('#section'+page_index).css top:0, 'z-index':0
+  newsection = $('#section'+page_index)
+  newsection.show()
   toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
-  $('#section'+page_index).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
-    $('#section'+page_index).removeClass toc
-  $('#section'+page_index).addClass toc
+  newsection.css top:0, 'z-index':0
+  newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+    newsection.removeClass toc
+  newsection.addClass toc
 #  $('#section'+page_index).animate {top:0}, 500
   if page_index == 2
     if !slide
@@ -188,7 +199,7 @@ selectP4Slide = (left)->
     slide_index = if slide_index < 5 then slide_index + 1 else 1
   tol = if left then -this.ww else this.ww
   $('#p5-i' + old).animate left: tol, 500, ->
-    playing = false
+    enablePlay()
   froml = if left then this.ww else -this.ww
   $('#p5-i' + slide_index).css left: froml, display:'block'
   $('#p5-i' + slide_index).animate left: 0, 500
@@ -216,7 +227,7 @@ selectP3Slide = (left,select)->
       slide_index = if left then slide_index+1 else slide_index-1
     tol = if left then -this.ww else this.ww
   if select
-    playing = false
+    enablePlay()
     $('.slide').hide()
     $('#p3-m' + slide_index).css left: 0, display:'block'
   else
@@ -226,7 +237,7 @@ selectP3Slide = (left,select)->
     $('#p3-m'+old).one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
       $('#p3-m'+old).removeClass hidec
       $('#p3-m'+old).css left:tol
-      playing = false
+      enablePlay()
 #    $('#p3-m' + old).animate left: tol, 500, ->
 #      playing = false
     froml = if left then this.ww else -this.ww
@@ -261,7 +272,7 @@ selectP3Slide = (left,select)->
   ]
   si = if slide_index > 5 then slide_index-2 else slide_index-1
   txt = arr[si];
-  img = 'http://proyaproject.duapp.com/w/images/' + imgs[si]+'.jpg'
+  img = 'http://uv.proya.com/images/i' + imgs[si]+'.jpg'
   console.log si, txt, imgs[si]
   wxData.desc = txt
   wxData.imgUrl = img
@@ -293,6 +304,7 @@ handleComplete = (event)->
     $('#loading-label').remove()
     $('#section0').show()
     s1 = $('#section0')
+    s1.addClass 'active'
     arr = s1.find('img');
     #  arr.animate {deg:180,opacity:1}, duration:1500, step:(now)->
     #    if now > 1

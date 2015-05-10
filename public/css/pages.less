@@ -9,9 +9,12 @@ canvas {
   left: 50%;
   z-index: 100;
 }
-.arrow {
-  -webkit-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
-  -moz-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
+
+.active {
+  .arrow {
+    -webkit-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
+    -moz-animation: fadeOutUp 2s 0.5s ease-in-out infinite;
+  }
 }
 
 @-webkit-keyframes fadeOutUp {
@@ -167,5 +170,4 @@ body {
 .knowpro {
   position: absolute;
   top: 0px;
-  left: 0px;
 }
