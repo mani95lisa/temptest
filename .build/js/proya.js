@@ -270,15 +270,12 @@
   max_page = 5;
 
   enablePlay = function() {
-    console.log('enable p');
     return setTimeout(function() {
-      console.log('enabled p');
       return playing = false;
     }, 500);
   };
 
   upHandler = function() {
-    console.log('up', playing);
     if (playing) {
       return;
     }
@@ -286,7 +283,6 @@
   };
 
   downHandler = function() {
-    console.log('down', playing);
     if (playing) {
       return;
     }
@@ -294,7 +290,7 @@
   };
 
   toPageSlide = function(fromtop, page, slide) {
-    var hidec, hidetop, newsection, old, oldsection, showtop, toc, video, videoplaying;
+    var hidec, hidetop, newsection, old, oldsection, showtop, video, videoplaying;
     if ((fromtop && page_index >= 5) || (!fromtop && page_index <= 0)) {
       return;
     }
@@ -333,16 +329,19 @@
     showtop = fromtop ? this.wh : -this.wh;
     newsection = $('#section' + page_index);
     newsection.show();
-    toc = !fromtop ? 'animated slideInDown' : 'animated slideInUp';
-    newsection.css({
-      top: 0,
-      'z-index': 0
-    });
-    newsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-      return newsection.removeClass(toc);
-    });
-    newsection.removeClass('active');
-    newsection.addClass(toc);
+    setTimeout(function() {
+      var toc;
+      toc = !fromtop ? 'animated slideInDown' : 'animated slideInUp';
+      newsection.css({
+        top: 0,
+        'z-index': 0
+      });
+      newsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        return newsection.removeClass(toc);
+      });
+      newsection.removeClass('active');
+      return newsection.addClass(toc);
+    }, 100);
     if (page_index === 2) {
       if (!slide) {
         slide = 1;
@@ -466,7 +465,6 @@
     si = slide_index > 5 ? slide_index - 2 : slide_index - 1;
     txt = arr[si];
     img = 'http://uv.proya.com/images/i' + imgs[si] + '.jpg';
-    console.log(si, txt, imgs[si]);
     wxData.desc = txt;
     wxData.imgUrl = img;
     wxData2.imgUrl = img;
@@ -660,16 +658,16 @@
         left: 70 * this.scale,
         top: ltop + 5
       });
-      ltop = top3 + 722 * this.scale - 10 - 38 * this.scale;
+      ltop = top3 + 722 * this.scale - 10 - 68 * this.scale;
       $('.p3-love').css({
-        width: 43 * this.scale,
-        left: 23 * this.scale,
+        width: 100 * this.scale,
+        left: -10 * this.scale,
         top: ltop,
         position: 'absolute',
         'z-index': 100
       });
       $('.p3-love').click(loveItem);
-      stop = top3 + 722 * this.scale - 10 - 76 * this.scale;
+      stop = top3 + 722 * this.scale - 10 - 66 * this.scale;
       $('.p3-share').css({
         width: 100 * this.scale,
         right: 23 * this.scale,

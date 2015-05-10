@@ -121,20 +121,16 @@ playing = false
 max_page = 5
 
 enablePlay = ->
-  console.log 'enable p'
   setTimeout ->
-    console.log 'enabled p'
     playing = false
   , 500
 
 upHandler = ->
-  console.log 'up', playing
   if playing
     return
   toPageSlide(true)
 
 downHandler = ->
-  console.log 'down', playing
   if playing
     return
   toPageSlide(false)
@@ -171,12 +167,14 @@ toPageSlide = (fromtop,page, slide)->
 
   newsection = $('#section'+page_index)
   newsection.show()
-  toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
-  newsection.css top:0, 'z-index':0
-  newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
-    newsection.removeClass toc
-  newsection.removeClass 'active'
-  newsection.addClass toc
+  setTimeout ->
+    toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
+    newsection.css top:0, 'z-index':0
+    newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+      newsection.removeClass toc
+    newsection.removeClass 'active'
+    newsection.addClass toc
+  , 100
 #  $('#section'+page_index).animate {top:0}, 500
   if page_index == 2
     if !slide
@@ -286,7 +284,6 @@ selectP3Slide = (left,select)->
   si = if slide_index > 5 then slide_index-2 else slide_index-1
   txt = arr[si];
   img = 'http://uv.proya.com/images/i' + imgs[si]+'.jpg'
-  console.log si, txt, imgs[si]
   wxData.desc = txt
   wxData.imgUrl = img
   wxData2.imgUrl = img
@@ -426,10 +423,10 @@ initP3 = (image, id)->
   if !inited3
     inited3 = true
     $('.love-label').css left:70*this.scale,top:ltop+5
-    ltop = top3+722*this.scale-10 - 38*this.scale
-    $('.p3-love').css width:43*this.scale,left:23*this.scale,top:ltop, position: 'absolute','z-index': 100
+    ltop = top3+722*this.scale-10 - 68*this.scale
+    $('.p3-love').css width:100*this.scale,left:-10*this.scale,top:ltop, position: 'absolute','z-index': 100
     $('.p3-love').click loveItem
-    stop = top3+722*this.scale-10-76*this.scale
+    stop = top3+722*this.scale-10-66*this.scale
     $('.p3-share').css width:100*this.scale,right:23*this.scale,top:stop, position: 'absolute','z-index': 100
     $('.p3-share').click ->
       $('#tip').show()
