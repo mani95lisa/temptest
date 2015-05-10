@@ -191,7 +191,12 @@
   };
 
   p5 = function() {
-    var formH;
+    var formH, isAndroid, ua;
+    ua = navigator.userAgent.toLowerCase();
+    isAndroid = ua.indexOf("android") > -1;
+    if (isAndroid) {
+      $('#form').appendTo('#section5');
+    }
     formH = 280 * this.scale;
     $('#form').css({
       width: 278 * this.scale,

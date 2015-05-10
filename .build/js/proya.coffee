@@ -72,6 +72,10 @@ p1 = ->
   $('#loading-label').css(top:top2)
 
 p5 = ->
+  ua = navigator.userAgent.toLowerCase()
+  isAndroid = ua.indexOf("android") > -1
+  if isAndroid
+    $('#form').appendTo('#section5')
   formH = 280*this.scale
   $('#form').css width:278*this.scale,height:formH,left:302*this.scale,top:630*this.scale
   $('.field').css height:formH/3
