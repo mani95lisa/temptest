@@ -397,11 +397,18 @@ showImg = (event)->
         else
           toPageSlide true,2,parseInt(id)
 
-loveNum = 0
+loveNumArr = []
+i = 0
+while i< 10
+  value = Math.round(100*Math.random())
+  loveNumArr.push value
+  $('.love-label').eq(i).text('x'+value)
+  i++
 
 loveItem = (event)->
-  loveNum++
-  $(this).siblings('label').text('x'+loveNum)
+  txt = $(this).siblings('label').text()
+  num = parseInt(txt.replace('x', ''))+1
+  $(this).siblings('label').text('x'+num)
 
 inited3 = false
 
@@ -467,7 +474,7 @@ initP5 = (image, id)->
     s4.find(image).css width:291*this.scale,left:57*this.scale,bottom:btnbottom,position:'absolute','z-index':100
   else if id == 'p5-b2'
     s4.find(image).on 'click', ->
-      window.location =url
+      toPageSlide(true,5)
     s4.find(image).css width:291*this.scale,right:57*this.scale,bottom:btnbottom,position:'absolute','z-index':100
 
 p6p1 = ''
@@ -516,8 +523,9 @@ initP6 = (image, id)->
         else if result.result
           lid = result.result.lid
           lot = result.result.lot
-          lotteryBGS[lot+1].show()
           $('.p6p3').show()
+          $('.p6lbg').hide()
+          lotteryBGS[lot+1].show()
         else
           $('.p6p2').show()
       ).fail ->
@@ -537,7 +545,7 @@ initP6 = (image, id)->
     lindex = parseInt(id.replace('p6-l', ''))
     lotteryBGS[lindex] = p6p3
     p6p3.hide()
-    p6p3.addClass 'p6p3'
+    p6p3.addClass 'p6p3 p6lbg'
     p6p3.css top:0,position:'absolute',display:'none'
   else if id == 'p6-sub'
     s5.append image
@@ -582,6 +590,9 @@ initP6 = (image, id)->
     s5.find(image).css css
     s5.find(image).on 'click', ->
       toPageSlide(false,4)
+      $('.p6p1').show()
+      $('.p6p2').hide()
+      $('.p6p3').hide()
 
 playVideoImg = ''
 videoEnded = ->

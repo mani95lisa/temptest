@@ -491,6 +491,7 @@
     });
     limit = {
       9: [10, 10, 10, 10],
+      10: [10, 10, 10, 10],
       12: [15, 1, 1, 1],
       13: [15, 1, 1, 1],
       14: [7, 0, 0, 0],
@@ -563,6 +564,7 @@
         } else if (rm < 0.9) {
           gotid = 3;
         }
+        console.log(rm, gotid);
         if (gotid !== '') {
           return LotteryRecord.count({
             day: today,
