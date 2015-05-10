@@ -1000,13 +1000,11 @@
       playVideoImg = s1.find(image);
       video = document.getElementById('video');
       $('#video').on('click', function() {
-        alert('v');
         playVideoImg.show();
         $('#video').hide();
         return video.pause();
       });
       s1.find(image).on('click', function() {
-        playVideoImg.hide();
         $('#video').show();
         video.width = $(window).width();
         video.height = $(window).height();

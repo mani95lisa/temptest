@@ -3,8 +3,6 @@
 <link rel="stylesheet" href="libs/animate.min.css"/>
 <script type="text/javascript" src="libs/easeljs-NEXT.min.js"></script>
 <script type="text/javascript" src="libs/preloadjs-NEXT.min.js"></script>
-<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
-<script src="//vjs.zencdn.net/4.12/video.js"></script>
 
 <script type="text/javascript">
 
@@ -72,7 +70,7 @@
         <img class="arrow" src="imgs/down-arrow.png">
     </div>
     <div class="section" id="section1"style="background-color: #ffffed">
-        <video style="position: absolute" class=" video video-js vjs-default-skin vjs-big-play-centered"
+        <video style="position: absolute"
                controls preload="auto" width="0" id="video" onended="videoEnded()">
             <source src="video/17.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
         </video>

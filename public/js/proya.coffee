@@ -615,12 +615,11 @@ initP2 = (image, id)->
     playVideoImg = s1.find(image)
     video = document.getElementById('video')
     $('#video').on 'click', ->
-      alert 'v'
       playVideoImg.show()
       $('#video').hide();
       video.pause()
     s1.find(image).on 'click', ->
-      playVideoImg.hide()
+#      playVideoImg.hide()
       $('#video').show()
       video.width = $(window).width()
       video.height = $(window).height()
