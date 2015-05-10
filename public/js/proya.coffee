@@ -340,7 +340,7 @@ handleComplete = (event)->
         else
           rightHandler()
     )
-    toPageSlide(true, 5)
+#    toPageSlide(true, 5)
 #    $('.p6p1').show()
 #    $('.p6p3').show()
 #    $('#section2').show()
