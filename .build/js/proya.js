@@ -290,7 +290,7 @@
   };
 
   toPageSlide = function(fromtop, page, slide) {
-    var doChange, hidec, hidetop, newsection, old, oldsection, showtop, video, videoplaying;
+    var hidec, hidetop, newsection, old, oldsection, showtop, toc, video, videoplaying;
     if ((fromtop && page_index >= 5) || (!fromtop && page_index <= 0)) {
       return;
     }
@@ -316,40 +316,34 @@
     oldsection = $('#section' + old);
     showtop = fromtop ? this.wh : -this.wh;
     newsection = $('#section' + page_index);
-    newsection.show();
-    doChange = function() {
-      var toc;
-      oldsection.addClass(hidec);
-      oldsection.addClass('active');
+    oldsection.addClass(hidec);
+    oldsection.addClass('active');
+    oldsection.css({
+      'z-index': -100
+    });
+    oldsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+      oldsection.removeClass(hidec);
       oldsection.css({
-        'z-index': -100
+        top: hidetop
       });
-      oldsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-        oldsection.removeClass(hidec);
-        oldsection.css({
-          top: hidetop
-        });
-        if (page_index === 5 && $('.p6p3').is(':visible')) {
-          $('#form').show();
-        }
-        return enablePlay();
-      });
-      toc = !fromtop ? 'animated slideInDown' : 'animated slideInUp';
-      newsection.css({
-        top: 0,
-        'z-index': 0
-      });
-      newsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-        return newsection.removeClass(toc);
-      });
-      newsection.removeClass('active');
-      return newsection.addClass(toc);
-    };
-    if (page) {
-      setTimeout(doChange, 100);
-    } else {
-      doChange();
-    }
+      if (page_index === 5 && $('.p6p3').is(':visible')) {
+        $('#form').show();
+      } else {
+        $('#form').hide();
+      }
+      return enablePlay();
+    });
+    toc = !fromtop ? 'animated slideInDown' : 'animated slideInUp';
+    newsection.css({
+      top: 0,
+      'z-index': 0
+    });
+    newsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+      return newsection.removeClass(toc);
+    });
+    newsection.removeClass('active');
+    newsection.addClass(toc);
+    newsection.show();
     if (page_index !== 5) {
       $('#form').hide();
     }

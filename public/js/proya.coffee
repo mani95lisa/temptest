@@ -149,7 +149,6 @@ toPageSlide = (fromtop,page, slide)->
   slide_index = slide if slide
   playing = true
   old = page_index
-
   if page
     page_index = page
   else
@@ -160,27 +159,24 @@ toPageSlide = (fromtop,page, slide)->
   showtop = if fromtop then this.wh else -this.wh
 
   newsection = $('#section'+page_index)
+  oldsection.addClass hidec
+  oldsection.addClass 'active'
+  oldsection.css 'z-index':-100
+  oldsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+    oldsection.removeClass hidec
+    oldsection.css top:hidetop
+    if page_index == 5 && $('.p6p3').is(':visible')
+      $('#form').show()
+    else
+      $('#form').hide()
+    enablePlay()
+  toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
+  newsection.css top:0, 'z-index':0
+  newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+    newsection.removeClass toc
+  newsection.removeClass 'active'
+  newsection.addClass toc
   newsection.show()
-  doChange = ->
-    oldsection.addClass hidec
-    oldsection.addClass 'active'
-    oldsection.css 'z-index':-100
-    oldsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
-      oldsection.removeClass hidec
-      oldsection.css top:hidetop
-      if page_index == 5 && $('.p6p3').is(':visible')
-        $('#form').show()
-      enablePlay()
-    toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
-    newsection.css top:0, 'z-index':0
-    newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
-      newsection.removeClass toc
-    newsection.removeClass 'active'
-    newsection.addClass toc
-  if page
-    setTimeout doChange, 100
-  else
-    doChange()
   if page_index != 5
     $('#form').hide()
 #  $('#section'+page_index).animate {top:0}, 500
