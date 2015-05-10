@@ -118,20 +118,21 @@ init()
 p5()
 
 playing = false
+pageplaying = false
 max_page = 5
 
 enablePlay = ->
-#  setTimeout ->
-  playing = false
-#  , 300
+  setTimeout ->
+    playing = false
+  , 100
 
 upHandler = ->
-  if playing
+  if pageplaying
     return
   toPageSlide(true)
 
 downHandler = ->
-  if playing
+  if pageplaying
     return
   toPageSlide(false)
 
@@ -147,14 +148,14 @@ toPageSlide = (fromtop,page, slide)->
     videoplaying = false
 
   slide_index = slide if slide
-  playing = true
+  pageplaying = true
   old = page_index
   if page
     page_index = page
   else
     page_index = if fromtop then page_index+1 else page_index-1
   hidetop = if fromtop then -this.wh else this.wh
-  hidec = if fromtop then 'animated zoomOutUp' else 'animated zoomOutDown'
+  hidec = if fromtop then 'animated slideOutUp' else 'animated zoomOutDown'
   oldsection = $('#section'+old)
   showtop = if fromtop then this.wh else -this.wh
 
@@ -166,15 +167,15 @@ toPageSlide = (fromtop,page, slide)->
     oldsection.removeClass hidec
     oldsection.removeClass 'active'
     oldsection.css top:hidetop
+  toc = if !fromtop then 'animated slideInDown' else 'animated zoomInUp'
+  newsection.css top:0, 'z-index':0
+  newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
+    newsection.removeClass toc
     if page_index == 5 && $('.p6p3').is(':visible')
       $('#form').show()
     else
       $('#form').hide()
-    enablePlay()
-  toc = if !fromtop then 'animated slideInDown' else 'animated slideInUp'
-  newsection.css top:0, 'z-index':0
-  newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
-    newsection.removeClass toc
+    pageplaying = false
   newsection.addClass toc
   newsection.show()
   if page_index != 5
