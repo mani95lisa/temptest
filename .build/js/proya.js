@@ -533,7 +533,7 @@
         }
       };
       animate();
-      $(document).swipe({
+      return $(document).swipe({
         swipe: function(event, direction) {
           if (direction === 'up') {
             return upHandler();
@@ -546,7 +546,6 @@
           }
         }
       });
-      return toPageSlide(true, 5);
     });
   };
 

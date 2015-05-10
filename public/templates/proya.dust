@@ -120,7 +120,7 @@
     <div class="section" id="section5"style="background-color: #f2ebd1">
         <form id="form" class="p6p3" style="display: none">
             <div id="field1" class="field">
-                <input id="truename" type="text" name="truename" placeholder="请输入姓名">
+                <input type="text" name="truename" placeholder="请输入姓名">
             </div>
             <div id="field2" class="field" id="mobile">
                 <input type="number" name="mobile" placeholder="请输入电话">
