@@ -24,6 +24,7 @@
     truename: String,
     address: String,
     mobile: Number,
+    email: Number,
     lottery: String
   });
 

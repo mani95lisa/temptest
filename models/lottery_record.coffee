@@ -10,6 +10,7 @@ LotteryRecordSchema = new Schema
   truename:String
   address:String
   mobile:Number
+  email:Number
   lottery:String
 
 Timestamps = require('mongoose-times')

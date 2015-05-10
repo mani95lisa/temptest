@@ -89,12 +89,11 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
     $scope.gridOptions =
       enableSorting: false
       columnDefs:[
-        {name:'用户手机号', field:'user.mobile', width:100, enableSorting: false}
-        {name:'用户昵称', field:'user.nickname', width:100, enableSorting: false}
-        {name:'抽奖号', field:'number', width:100, enableSorting: false}
-        {name: '已中奖',field: 'status',width: 80, enableSorting: false}
-        {name: '日期',field: 'created_at',width: 100, enableSorting: false}
-        {name: '操作',field: 'created_at',width: 120, enableSorting: false, cellTemplate:handler}
+        {name:'用户手机号', field:'mobile', enableSorting: false}
+        {name:'用户姓名', field:'truename', enableSorting: false}
+        {name:'中奖奖品', field:'lottery', enableSorting: false}
+        {name: '邮箱地址',field: 'email', enableSorting: false}
+        {name: '日期',field: 'created_at', enableSorting: false}
       ]
 
     $scope.getData = ->
@@ -115,6 +114,8 @@ define ['console', 'humane', 'moment'], (console, humane, moment)->
           $scope.count = result.count
           if result.result
             result.result.forEach (r)->
+              arr = ['黄金BB正品', '春漾优雅大拎包', '春漾遮阳伞', '春漾闪耀长方巾']
+              r.lottery = arr[parseInt(r.lottery)]
               r.created_at = moment(r.created_at).format('MM-DD HH:mm:ss')
           $scope.gridOptions.data = result.result
       ).error (err)->

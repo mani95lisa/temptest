@@ -23,7 +23,7 @@
 
   module.exports = function(router) {
     return router.get('/list', auth.isAuthenticated(), function(req, res) {
-      var ca, data, ep, ep2, filter, options, query;
+      var ca, data, ep, ep2, options, query;
       data = req.query;
       if (data.category) {
         ca = JSON.parse(data.category);
@@ -58,69 +58,10 @@
       ep2 = new EventProxy();
       ep2.on('ok', function() {
         console.log('LRQuerry:' + JSON.stringify(query));
-        LotteryRecord.find(query, null, options).populate('lottery', 'name').populate('user', 'mobile nickname').exec(ep.done('result'));
+        LotteryRecord.find(query, null, options).exec(ep.done('result'));
         return LotteryRecord.count(query, ep.done('count'));
       });
-      filter = data.filter;
-      switch (filter) {
-        case '1':
-          query['status'] = false;
-          break;
-        case '2':
-          query['status'] = true;
-          break;
-        case '3':
-          query['dispatched'] = true;
-      }
-      if (ca && ca._id) {
-        query.lottery = ca._id;
-      }
-      if (data.keywords) {
-        switch (parseInt(data.keywords).toString().length) {
-          case 11:
-            return User.findOne({
-              mobile: data.keywords
-            }, '_id', function(err, result) {
-              if (err) {
-                res.json({
-                  err: err
-                });
-                return logger.error('FindU:' + err);
-              } else {
-                if (result) {
-                  query['user'] = result._id;
-                }
-                return ep2.emit('ok');
-              }
-            });
-          case 7:
-            query['number'] = {
-              $gte: parseInt(data.keywords)
-            };
-            options.sort = {
-              number: 1
-            };
-            return ep2.emit('ok');
-          default:
-            return Lottery.findOne({
-              name: new RegExp(data.keywords, 'i')
-            }, '_id', function(err, result) {
-              if (err) {
-                res.json({
-                  err: err
-                });
-                return logger.error('FindL:' + err);
-              } else {
-                if (result) {
-                  query['lottery'] = result._id;
-                }
-                return ep2.emit('ok');
-              }
-            });
-        }
-      } else {
-        return ep2.emit('ok');
-      }
+      return ep2.emit('ok');
     });
   };
 
