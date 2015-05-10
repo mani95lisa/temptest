@@ -270,9 +270,7 @@
   max_page = 5;
 
   enablePlay = function() {
-    return setTimeout(function() {
-      return playing = false;
-    }, 500);
+    return playing = false;
   };
 
   upHandler = function() {
@@ -317,12 +315,13 @@
     showtop = fromtop ? this.wh : -this.wh;
     newsection = $('#section' + page_index);
     oldsection.addClass(hidec);
-    oldsection.addClass('active');
+    newsection.addClass('active');
     oldsection.css({
       'z-index': -100
     });
     oldsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
       oldsection.removeClass(hidec);
+      oldsection.removeClass('active');
       oldsection.css({
         top: hidetop
       });
@@ -341,7 +340,6 @@
     newsection.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
       return newsection.removeClass(toc);
     });
-    newsection.removeClass('active');
     newsection.addClass(toc);
     newsection.show();
     if (page_index !== 5) {

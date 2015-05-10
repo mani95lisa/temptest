@@ -121,9 +121,9 @@ playing = false
 max_page = 5
 
 enablePlay = ->
-  setTimeout ->
-    playing = false
-  , 500
+#  setTimeout ->
+  playing = false
+#  , 300
 
 upHandler = ->
   if playing
@@ -160,10 +160,11 @@ toPageSlide = (fromtop,page, slide)->
 
   newsection = $('#section'+page_index)
   oldsection.addClass hidec
-  oldsection.addClass 'active'
+  newsection.addClass 'active'
   oldsection.css 'z-index':-100
   oldsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     oldsection.removeClass hidec
+    oldsection.removeClass 'active'
     oldsection.css top:hidetop
     if page_index == 5 && $('.p6p3').is(':visible')
       $('#form').show()
@@ -174,7 +175,6 @@ toPageSlide = (fromtop,page, slide)->
   newsection.css top:0, 'z-index':0
   newsection.one 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ->
     newsection.removeClass toc
-  newsection.removeClass 'active'
   newsection.addClass toc
   newsection.show()
   if page_index != 5
