@@ -23,8 +23,8 @@
     },
     truename: String,
     address: String,
-    mobile: Number,
-    email: Number,
+    mobile: String,
+    email: String,
     lottery: String
   });
 

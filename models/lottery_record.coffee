@@ -9,8 +9,8 @@ LotteryRecordSchema = new Schema
   day:type:String,index:true
   truename:String
   address:String
-  mobile:Number
-  email:Number
+  mobile:String
+  email:String
   lottery:String
 
 Timestamps = require('mongoose-times')

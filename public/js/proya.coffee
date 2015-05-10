@@ -71,6 +71,12 @@ p1 = ->
   top2 = top1+lh+30
   $('#loading-label').css(top:top2)
 
+p5 = ->
+  formH = 262*this.scale
+  $('#form').css width:278*this.scale,height:formH,left:302*this.scale,top:640*this.scale
+  $('.field').css height:formH/3
+  $('.field input').css 'margin-bottom':15*this.scale
+
 refresh = ->
   if count > 10
     clearInterval intv
@@ -103,6 +109,7 @@ init = ->
   $('.knowpro').on 'click', ->
     toPageSlide(true, 4)
   p1()
+  p5()
 
 init()
 
@@ -333,7 +340,9 @@ handleComplete = (event)->
         else
           rightHandler()
     )
-#    toPageSlide(true, 5)
+    toPageSlide(true, 5)
+#    $('.p6p1').show()
+#    $('.p6p3').show()
 #    $('#section2').show()
 #  setTimeout ->
 #    $.fn.fullpage.moveTo(3,1);
@@ -437,6 +446,7 @@ initP3 = (image, id)->
 
 initP5 = (image, id)->
   s4 = $('#section4')
+  url = 'http://taoquan.taobao.com/coupon/unify_apply.htm?sellerId=379424083&activityId=226562573'
   if id.indexOf('p5-i') == -1
     s4.prepend image
   else
@@ -452,9 +462,13 @@ initP5 = (image, id)->
   else if id == 'p5-right-arrow'
     s4.find(image).css width:28*this.scale,right:10,top:(this.windowHeight-image.height)/2, position: 'absolute','z-index': 100
   else if id == 'p5-b1'
-    s4.find(image).css width:291*this.scale,left:57*this.scale,bottom:btnbottom,position:'absolute'
+    s4.find(image).on 'click', ->
+      window.location =url
+    s4.find(image).css width:291*this.scale,left:57*this.scale,bottom:btnbottom,position:'absolute','z-index':100
   else if id == 'p5-b2'
-    s4.find(image).css width:291*this.scale,right:57*this.scale,bottom:btnbottom,position:'absolute'
+    s4.find(image).on 'click', ->
+      window.location =url
+    s4.find(image).css width:291*this.scale,right:57*this.scale,bottom:btnbottom,position:'absolute','z-index':100
 
 p6p1 = ''
 p6p2 = ''
@@ -467,7 +481,7 @@ lotteryBGS = []
 
 initP6 = (image, id)->
   s5 = $('#section5')
-  $('#form').css width:278*this.scale,height:262*this.scale,left:302*this.scale,top:650*this.scale
+
   if id == 'p6-bg1'
     s5.prepend image
     image.width = $(window).width()
@@ -502,7 +516,7 @@ initP6 = (image, id)->
         else if result.result
           lid = result.result.lid
           lot = result.result.lot
-          lotteryBGS[lot].show()
+          lotteryBGS[lot+1].show()
           $('.p6p3').show()
         else
           $('.p6p2').show()
