@@ -421,6 +421,8 @@ module.exports = (router)->
   router.get '/draw_lottery', (req, res)->
     session = req.session
     user = session.user
+    res.json result:false
+    return
     if !user
       console.log 'no user:'
       errorHandler res, TIME_OUT_ERROR
