@@ -43,5 +43,8 @@
     "wechat-oauth": "^1.0.1",
     "xlsx": "^0.7.10",
     "xml2js": "^0.4.6"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
   }
 }
